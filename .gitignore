@@ -82,3 +82,4 @@ temp_*.php
 System.Drawing.Drawing2D.GraphicsPath
 uploads/cache/
 uploads/cache/**
+uploads/*.pdf
