@@ -1,0 +1,22 @@
+Options -Indexes
+DirectoryIndex index.php
+ErrorDocument 404 /404.php
+
+RewriteEngine On
+
+RewriteRule ^react-app/index\.html$ index.php [L]
+RewriteRule ^$ index.php [L]
+RewriteRule ^index/?$ ./ [R=302,L]
+RewriteRule ^index/(.+)$ $1 [R=302,L]
+
+RewriteCond %{REQUEST_URI} !/(api)/ [NC]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^(.+?)\.php$ $1 [R=302,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ 404.php [L]

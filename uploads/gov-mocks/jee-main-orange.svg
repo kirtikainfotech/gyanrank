@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#2b1d0e"/>
+      <stop offset=".52" stop-color="#ff8a00"/>
+      <stop offset="1" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="420" rx="34" fill="url(#g)"/>
+  <path d="M640 44h190v190H640z" fill="#fff" opacity=".10" transform="rotate(12 735 139)"/>
+  <path d="M55 330h260v44H55z" fill="#fff" opacity=".16"/>
+  <text x="54" y="112" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800">TARGET TEST SERIES</text>
+  <text x="54" y="190" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="900">JEE Main 2026</text>
+  <text x="56" y="242" fill="#fff7ed" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700">Full syllabus speed and accuracy mock</text>
+  <text x="76" y="360" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="900">75 Questions  |  300 Marks  |  180 Min</text>
+</svg>

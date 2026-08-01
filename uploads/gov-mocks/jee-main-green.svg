@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#052e1b"/>
+      <stop offset=".55" stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="420" rx="34" fill="url(#g)"/>
+  <circle cx="706" cy="210" r="132" fill="#fff" opacity=".10"/>
+  <circle cx="706" cy="210" r="78" fill="#fff" opacity=".12"/>
+  <text x="56" y="112" fill="#dcfce7" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800">RANK BOOSTER</text>
+  <text x="56" y="190" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="56" font-weight="900">JEE Main Mock</text>
+  <text x="58" y="242" fill="#dcfce7" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700">Chapter mixed PYQ practice</text>
+  <rect x="56" y="300" width="270" height="54" rx="18" fill="#fff" opacity=".15"/>
+  <text x="84" y="335" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="900">Instant Result</text>
+</svg>
