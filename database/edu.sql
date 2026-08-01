@@ -1,0 +1,470 @@
+CREATE DATABASE IF NOT EXISTS `edu` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `edu`;
+
+CREATE TABLE IF NOT EXISTS `roles` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `parent_id` INT UNSIGNED NULL,
+    `name` VARCHAR(80) NOT NULL,
+    `slug` VARCHAR(80) NOT NULL,
+    `role_group` VARCHAR(40) NOT NULL DEFAULT 'staff',
+    `description` VARCHAR(255) DEFAULT NULL,
+    `is_system` TINYINT(1) NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `roles_slug_unique` (`slug`),
+    KEY `roles_parent_id_index` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `role_permissions` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `role_id` INT UNSIGNED NOT NULL,
+    `permission_key` VARCHAR(120) NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `role_permissions_unique` (`role_id`, `permission_key`),
+    CONSTRAINT `role_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `role_id` INT UNSIGNED NOT NULL,
+    `full_name` VARCHAR(120) NOT NULL,
+    `username` VARCHAR(80) NOT NULL,
+    `email` VARCHAR(160) DEFAULT NULL,
+    `phone` VARCHAR(30) DEFAULT NULL,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `status` ENUM('active','inactive','blocked') NOT NULL DEFAULT 'active',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `users_username_unique` (`username`),
+    UNIQUE KEY `users_email_unique` (`email`),
+    KEY `users_role_id_index` (`role_id`),
+    CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `licenses` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `product_name` VARCHAR(120) NOT NULL,
+    `license_key` VARCHAR(191) NOT NULL,
+    `status` ENUM('active','expired','suspended') NOT NULL DEFAULT 'active',
+    `starts_at` DATE NOT NULL,
+    `expires_at` DATE NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `licenses_key_unique` (`license_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `login_attempts` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(80) NOT NULL,
+    `ip_address` VARCHAR(45) NOT NULL,
+    `success` TINYINT(1) NOT NULL DEFAULT 0,
+    `attempted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `login_attempts_lookup_index` (`username`, `ip_address`, `success`, `attempted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `system_settings` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `setting_key` VARCHAR(120) NOT NULL,
+    `setting_value` TEXT NULL,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `system_settings_key_unique` (`setting_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `support_assignments` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `assigned_user_id` INT UNSIGNED NOT NULL,
+    `support_user_id` INT UNSIGNED NOT NULL,
+    `assignment_type` ENUM('student','instructor') NOT NULL,
+    `status` ENUM('active','inactive') NOT NULL DEFAULT 'active',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `support_assignments_unique` (`assigned_user_id`, `assignment_type`),
+    KEY `support_assignments_support_user_index` (`support_user_id`),
+    CONSTRAINT `support_assignments_assigned_user_foreign` FOREIGN KEY (`assigned_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `support_assignments_support_user_foreign` FOREIGN KEY (`support_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_profiles` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
+    `phone` VARCHAR(30) DEFAULT NULL,
+    `expertise` VARCHAR(180) DEFAULT NULL,
+    `experience_years` DECIMAL(4,1) NOT NULL DEFAULT 0,
+    `qualification` VARCHAR(180) DEFAULT NULL,
+    `bio` TEXT NULL,
+    `referral_code` VARCHAR(40) DEFAULT NULL,
+    `referred_by_code` VARCHAR(40) DEFAULT NULL,
+    `commission_type` ENUM('percent','fixed') NOT NULL DEFAULT 'percent',
+    `commission_value` DECIMAL(10,2) NOT NULL DEFAULT 40.00,
+    `approval_status` ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `instructor_profiles_user_unique` (`user_id`),
+    UNIQUE KEY `instructor_profiles_referral_unique` (`referral_code`),
+    KEY `instructor_profiles_referred_by_index` (`referred_by_code`),
+    CONSTRAINT `instructor_profiles_user_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `referral_commissions` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `recipient_user_id` INT UNSIGNED NOT NULL,
+    `referred_user_id` INT UNSIGNED NOT NULL,
+    `source_type` ENUM('instructor_signup','user_signup') NOT NULL,
+    `referral_code` VARCHAR(40) NOT NULL,
+    `commission_type` ENUM('percent','fixed') NOT NULL,
+    `commission_value` DECIMAL(10,2) NOT NULL DEFAULT 0,
+    `status` ENUM('pending','approved','paid','cancelled') NOT NULL DEFAULT 'pending',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `referral_commissions_recipient_index` (`recipient_user_id`),
+    KEY `referral_commissions_referred_index` (`referred_user_id`),
+    CONSTRAINT `referral_commissions_recipient_foreign` FOREIGN KEY (`recipient_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `referral_commissions_referred_foreign` FOREIGN KEY (`referred_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `email_verifications` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
+    `token_hash` VARCHAR(128) NOT NULL,
+    `purpose` ENUM('instructor_signup','user_signup') NOT NULL DEFAULT 'instructor_signup',
+    `expires_at` DATETIME NOT NULL,
+    `verified_at` DATETIME NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email_verifications_token_unique` (`token_hash`),
+    KEY `email_verifications_user_index` (`user_id`),
+    CONSTRAINT `email_verifications_user_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `course_categories` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `parent_id` INT UNSIGNED NULL,
+    `name` VARCHAR(120) NOT NULL,
+    `slug` VARCHAR(140) NOT NULL,
+    `description` VARCHAR(255) DEFAULT NULL,
+    `status` ENUM('active','inactive') NOT NULL DEFAULT 'active',
+    `sort_order` INT UNSIGNED NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `course_categories_slug_unique` (`slug`),
+    KEY `course_categories_parent_index` (`parent_id`),
+    CONSTRAINT `course_categories_parent_foreign` FOREIGN KEY (`parent_id`) REFERENCES `course_categories` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_batches` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `instructor_id` INT UNSIGNED NOT NULL,
+    `batch_name` VARCHAR(120) NOT NULL,
+    `course_title` VARCHAR(160) NOT NULL,
+    `mode` ENUM('online','offline','hybrid') NOT NULL DEFAULT 'online',
+    `start_date` DATE NULL,
+    `class_time` VARCHAR(40) DEFAULT NULL,
+    `capacity` INT UNSIGNED NOT NULL DEFAULT 30,
+    `status` ENUM('active','paused','completed') NOT NULL DEFAULT 'active',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `instructor_batches_user_index` (`instructor_id`),
+    CONSTRAINT `instructor_batches_user_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_classes` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `instructor_id` INT UNSIGNED NOT NULL,
+    `batch_id` INT UNSIGNED NULL,
+    `class_title` VARCHAR(160) NOT NULL,
+    `class_type` ENUM('online','offline') NOT NULL DEFAULT 'online',
+    `class_date` DATE NOT NULL,
+    `starts_at` TIME NULL,
+    `duration_minutes` INT UNSIGNED NOT NULL DEFAULT 60,
+    `meeting_link` VARCHAR(255) DEFAULT NULL,
+    `room_name` VARCHAR(120) DEFAULT NULL,
+    `class_status` ENUM('scheduled','live','completed','cancelled') NOT NULL DEFAULT 'scheduled',
+    `notes` TEXT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `instructor_classes_user_index` (`instructor_id`),
+    KEY `instructor_classes_batch_index` (`batch_id`),
+    CONSTRAINT `instructor_classes_user_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `instructor_classes_batch_foreign` FOREIGN KEY (`batch_id`) REFERENCES `instructor_batches` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_courses` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `instructor_id` INT UNSIGNED NOT NULL,
+    `category_id` INT UNSIGNED NULL,
+    `subcategory_id` INT UNSIGNED NULL,
+    `title` VARCHAR(180) NOT NULL,
+    `category` VARCHAR(120) DEFAULT NULL,
+    `price` DECIMAL(10,2) NOT NULL DEFAULT 0,
+    `price_unit` VARCHAR(40) NOT NULL DEFAULT 'course',
+    `learning_mode` ENUM('online','offline','hybrid','recorded') NOT NULL DEFAULT 'online',
+    `course_level` ENUM('beginner','intermediate','advanced','all') NOT NULL DEFAULT 'beginner',
+    `course_language` ENUM('hindi','english') NOT NULL DEFAULT 'hindi',
+    `duration` VARCHAR(80) DEFAULT NULL,
+    `city` VARCHAR(80) DEFAULT NULL,
+    `locality` VARCHAR(120) DEFAULT NULL,
+    `featured` TINYINT(1) NOT NULL DEFAULT 0,
+    `is_free` TINYINT(1) NOT NULL DEFAULT 0,
+    `status` ENUM('draft','published','paused') NOT NULL DEFAULT 'draft',
+    `short_description` TEXT NULL,
+    `address` TEXT NULL,
+    `call_number` VARCHAR(30) DEFAULT NULL,
+    `whatsapp_number` VARCHAR(30) DEFAULT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `instructor_courses_user_index` (`instructor_id`),
+    KEY `instructor_courses_category_index` (`category_id`),
+    KEY `instructor_courses_subcategory_index` (`subcategory_id`),
+    CONSTRAINT `instructor_courses_user_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_course_contents` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `instructor_id` INT UNSIGNED NOT NULL,
+    `course_id` INT UNSIGNED NOT NULL,
+    `content_title` VARCHAR(180) NOT NULL,
+    `content_type` ENUM('pdf','lecture','video_upload','live','youtube','vimeo','quiz','assignment','resource') NOT NULL DEFAULT 'lecture',
+    `resource_url` VARCHAR(255) DEFAULT NULL,
+    `duration_minutes` INT UNSIGNED NOT NULL DEFAULT 0,
+    `sort_order` INT UNSIGNED NOT NULL DEFAULT 1,
+    `is_preview` TINYINT(1) NOT NULL DEFAULT 0,
+    `status` ENUM('draft','published') NOT NULL DEFAULT 'draft',
+    `instructions` TEXT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `instructor_course_contents_user_index` (`instructor_id`),
+    KEY `instructor_course_contents_course_index` (`course_id`),
+    CONSTRAINT `instructor_course_contents_user_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `instructor_course_contents_course_foreign` FOREIGN KEY (`course_id`) REFERENCES `instructor_courses` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `instructor_settings` (
+    `instructor_id` INT UNSIGNED NOT NULL,
+    `default_class_mode` ENUM('online','offline','hybrid') NOT NULL DEFAULT 'online',
+    `contact_number` VARCHAR(30) DEFAULT NULL,
+    `whatsapp_number` VARCHAR(30) DEFAULT NULL,
+    `profile_headline` VARCHAR(160) DEFAULT NULL,
+    `profile_bio` TEXT NULL,
+    `expertise` VARCHAR(255) DEFAULT NULL,
+    `qualification` VARCHAR(255) DEFAULT NULL,
+    `profile_logo_path` VARCHAR(255) DEFAULT NULL,
+    `profile_banner_path` VARCHAR(255) DEFAULT NULL,
+    `support_email` VARCHAR(160) DEFAULT NULL,
+    `telegram_channel` VARCHAR(255) DEFAULT NULL,
+    `instagram_url` VARCHAR(255) DEFAULT NULL,
+    `youtube_channel` VARCHAR(255) DEFAULT NULL,
+    `live_platform` ENUM('google_meet','youtube_live') NOT NULL DEFAULT 'google_meet',
+    `google_meet_link` VARCHAR(255) DEFAULT NULL,
+    `youtube_live_link` VARCHAR(255) DEFAULT NULL,
+    `kyc_document_type` VARCHAR(60) DEFAULT NULL,
+    `kyc_document_number` VARCHAR(80) DEFAULT NULL,
+    `kyc_document_path` VARCHAR(255) DEFAULT NULL,
+    `kyc_status` ENUM('not_submitted','pending','verified','rejected') NOT NULL DEFAULT 'not_submitted',
+    `public_profile` TINYINT(1) NOT NULL DEFAULT 1,
+    `auto_recording` TINYINT(1) NOT NULL DEFAULT 0,
+    `notification_email` TINYINT(1) NOT NULL DEFAULT 1,
+    `teaching_timezone` VARCHAR(80) NOT NULL DEFAULT 'Asia/Kolkata',
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`instructor_id`),
+    CONSTRAINT `instructor_settings_user_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `roles` (`id`, `parent_id`, `name`, `slug`, `role_group`, `description`, `is_system`) VALUES
+    (1, NULL, 'Superadmin', 'superadmin', 'management', 'Full system owner with all permissions.', 1),
+    (2, 1, 'Admin', 'admin', 'management', 'Institute administration and day-to-day LMS control.', 1),
+    (3, 2, 'HR Head', 'hr-head', 'management', 'Staff onboarding, salary and attendance reporting.', 1),
+    (4, 2, 'Academic Head', 'academic-head', 'academic', 'Academic operations, courses and instructor supervision.', 1),
+    (5, 4, 'Instructor', 'instructor', 'academic', 'Course teaching and learner progress management.', 1),
+    (6, 2, 'Support Manager', 'support-manager', 'support', 'Owns support staff assignment for instructors and students.', 1),
+    (7, 6, 'Support Staff', 'support-staff', 'support', 'Assigned fixed students and instructors for support/reporting.', 1),
+    (8, 6, 'Calling Team', 'calling-team', 'support', 'Calling, follow-up and lead/student communication.', 1),
+    (9, 2, 'Accountant', 'accountant', 'finance', 'Fees, invoices, GST, taxation and commission reports.', 1),
+    (10, NULL, 'Student', 'student', 'learner', 'Learner access role.', 1)
+ON DUPLICATE KEY UPDATE
+    `parent_id` = VALUES(`parent_id`),
+    `name` = VALUES(`name`),
+    `role_group` = VALUES(`role_group`),
+    `description` = VALUES(`description`),
+    `is_system` = VALUES(`is_system`);
+
+INSERT IGNORE INTO `role_permissions` (`role_id`, `permission_key`) VALUES
+    (1, 'settings.manage'), (1, 'roles.manage'), (1, 'license.manage'), (1, 'reports.view'),
+    (2, 'students.manage'), (2, 'instructors.manage'), (2, 'courses.manage'), (2, 'reports.view'),
+    (3, 'staff.manage'), (3, 'attendance.manage'), (3, 'salary.manage'), (3, 'reports.view'),
+    (4, 'courses.manage'), (4, 'classes.manage'), (4, 'exams.manage'), (4, 'instructors.manage'),
+    (5, 'courses.view'), (5, 'classes.manage'), (5, 'students.view'), (5, 'exams.manage'),
+    (6, 'support.manage'), (6, 'students.view'), (6, 'instructors.view'), (6, 'reports.view'),
+    (7, 'support.manage'), (7, 'students.view'), (7, 'instructors.view'),
+    (8, 'calling.manage'), (8, 'students.view'), (8, 'reports.view'),
+    (9, 'fees.manage'), (9, 'invoices.manage'), (9, 'tax.manage'), (9, 'commission.manage'),
+    (10, 'courses.view');
+
+INSERT INTO `course_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `status`, `sort_order`) VALUES
+    (1, NULL, 'Computer Course', 'computer-course', 'Computer and IT course category', 'active', 1),
+    (2, 1, 'Web Development', 'computer-course-web-development', 'Website and web app development', 'active', 1),
+    (3, 1, 'Python', 'computer-course-python', 'Python programming and backend', 'active', 2),
+    (4, 1, 'Artificial Intelligence', 'computer-course-artificial-intelligence', 'AI and automation courses', 'active', 3),
+    (5, NULL, 'Digital Marketing', 'digital-marketing', 'Marketing and growth category', 'active', 2),
+    (6, 5, 'SEO', 'digital-marketing-seo', 'Search engine optimization', 'active', 1),
+    (7, 5, 'Google Ads', 'digital-marketing-google-ads', 'Paid ads and campaigns', 'active', 2),
+    (8, 5, 'Social Media Marketing', 'digital-marketing-social-media-marketing', 'Social platform marketing', 'active', 3),
+    (9, NULL, 'Language Course', 'language-course', 'Language and communication category', 'active', 3),
+    (10, 9, 'Spoken English', 'language-course-spoken-english', 'English speaking practice', 'active', 1),
+    (11, 9, 'Interview Skills', 'language-course-interview-skills', 'Interview and confidence training', 'active', 2),
+    (12, NULL, 'Academic Course', 'academic-course', 'School and college academic courses', 'active', 4),
+    (13, 12, 'Mathematics', 'academic-course-mathematics', 'Maths courses', 'active', 1),
+    (14, 12, 'Physics', 'academic-course-physics', 'Physics courses', 'active', 2),
+    (15, NULL, 'Competitive Exam', 'competitive-exam', 'Exam preparation category', 'active', 5),
+    (16, 15, 'Banking', 'competitive-exam-banking', 'Banking preparation', 'active', 1),
+    (17, 15, 'SSC', 'competitive-exam-ssc', 'SSC preparation', 'active', 2)
+ON DUPLICATE KEY UPDATE
+    `parent_id` = VALUES(`parent_id`),
+    `name` = VALUES(`name`),
+    `description` = VALUES(`description`),
+    `status` = VALUES(`status`),
+    `sort_order` = VALUES(`sort_order`);
+
+INSERT INTO `users` (`id`, `role_id`, `full_name`, `username`, `email`, `phone`, `password_hash`, `status`) VALUES
+    (1, 1, 'Super Admin', 'admin', 'superadmin@example.com', NULL, '$2y$10$ikrgeX56jSGNi5xRgVV1.ub0jPJXe7Zk4mMvEv2EFLlaTLHny7aiq', 'active')
+ON DUPLICATE KEY UPDATE
+    `role_id` = VALUES(`role_id`),
+    `full_name` = VALUES(`full_name`),
+    `phone` = VALUES(`phone`),
+    `password_hash` = VALUES(`password_hash`),
+    `status` = VALUES(`status`);
+
+INSERT INTO `licenses` (`id`, `product_name`, `license_key`, `status`, `starts_at`, `expires_at`) VALUES
+    (1, 'eLearning', 'ELRN-DEMO-2026', 'active', '2026-01-01', '2026-12-31')
+ON DUPLICATE KEY UPDATE
+    `status` = VALUES(`status`),
+    `starts_at` = VALUES(`starts_at`),
+    `expires_at` = VALUES(`expires_at`);
+
+INSERT INTO `system_settings` (`setting_key`, `setting_value`) VALUES
+    ('site_name', 'eLearning'),
+    ('site_tagline', 'Secure Online Learning Management System'),
+    ('site_email', 'admin@example.com'),
+    ('site_phone', ''),
+    ('site_address', ''),
+    ('support_call_number', ''),
+    ('support_whatsapp_number', ''),
+    ('support_email', ''),
+    ('google_login_enabled', '0'),
+    ('google_client_id', ''),
+    ('google_client_secret', ''),
+    ('google_redirect_uri', ''),
+    ('footer_title', 'eLearning'),
+    ('footer_line', 'License based annual renewal system.'),
+    ('copyright_text', '© 2026 eLearning LMS. All rights reserved.'),
+    ('logo_path', ''),
+    ('app_logo_path', ''),
+    ('app_icon_path', ''),
+    ('website_logo_path', ''),
+    ('favicon_path', ''),
+    ('facebook_url', ''),
+    ('instagram_url', ''),
+    ('youtube_url', ''),
+    ('playstore_url', ''),
+    ('instructor_referral_commission_type', 'percent'),
+    ('instructor_referral_commission_value', '10'),
+    ('user_referral_commission_type', 'fixed'),
+    ('user_referral_commission_value', '100'),
+    ('mail_driver', 'smtp'),
+    ('mail_host', ''),
+    ('mail_port', '587'),
+    ('mail_username', ''),
+    ('mail_password', ''),
+    ('mail_encryption', 'tls'),
+    ('mail_from_email', ''),
+    ('mail_from_name', 'eLearning'),
+    ('firebase_enabled', '0'),
+    ('firebase_project_id', ''),
+    ('firebase_api_key', ''),
+    ('firebase_auth_domain', ''),
+    ('firebase_storage_bucket', ''),
+    ('firebase_messaging_sender_id', ''),
+    ('firebase_app_id', ''),
+    ('firebase_vapid_key', ''),
+    ('firebase_server_key', ''),
+    ('invoice_prefix', 'INV'),
+    ('invoice_format', '{PREFIX}/{FY}/{NO}'),
+    ('invoice_starting_no', '1'),
+    ('invoice_current_no', '1'),
+    ('financial_year_start', '2026-04-01'),
+    ('financial_year_close_reset', '1'),
+    ('invoice_footer', 'Thank you for learning with us.'),
+    ('invoice_terms', 'Fees once paid are non-refundable unless approved by management.'),
+    ('invoice_thank_you_note', 'Thank you for choosing us.'),
+    ('gst_number', ''),
+    ('billing_address', ''),
+    ('billing_state_code', '09'),
+    ('billing_state_name', 'Uttar Pradesh'),
+    ('default_supply_state_code', '09'),
+    ('tax_rate', '18'),
+    ('currency', 'INR'),
+    ('currency_symbol', '₹'),
+    ('email_template_header', 'Welcome to {site_name}'),
+    ('email_template_footer', 'Regards, {site_name}'),
+    ('email_welcome_enabled', '1'),
+    ('email_welcome_subject', 'Welcome to {site_name}, {user_name}'),
+    ('email_welcome_body', '<h2>Welcome to {site_name}</h2><p>Hello {user_name}, your account is ready. You can login and continue your learning journey.</p><p><a href="{login_url}">Login to your account</a></p>'),
+    ('email_referral_enabled', '1'),
+    ('email_referral_subject', '{user_name} invited you to {site_name}'),
+    ('email_referral_body', '<h2>You are invited</h2><p>{user_name} has referred you to join {site_name}. Use referral code <strong>{referral_code}</strong> while signup.</p><p><a href="{signup_url}">Create your account</a></p>'),
+    ('email_forgot_password_enabled', '1'),
+    ('email_forgot_password_subject', 'Reset your {site_name} password'),
+    ('email_forgot_password_body', '<h2>Password reset request</h2><p>Hello {user_name}, click the button below to reset your password. This link will expire soon.</p><p><a href="{reset_url}">Reset Password</a></p>'),
+    ('email_verification_enabled', '1'),
+    ('email_verification_subject', 'Verify your email for {site_name}'),
+    ('email_verification_body', '<h2>Verify your email</h2><p>Hello {user_name}, please verify your email to activate your account.</p><p><a href="{verification_url}">Verify Email</a></p>'),
+    ('email_referral_signup_enabled', '1'),
+    ('email_referral_signup_subject', 'Referral signup received'),
+    ('email_referral_signup_body', '<h2>New referral signup</h2><p>Hello {user_name}, a new user signed up using your referral code <strong>{referral_code}</strong>.</p>'),
+    ('email_instructor_signup_enabled', '1'),
+    ('email_instructor_signup_subject', 'Instructor signup submitted'),
+    ('email_instructor_signup_body', '<h2>Instructor application received</h2><p>Hello {instructor_name}, your instructor signup request has been submitted. Our academic team will review it shortly.</p>'),
+    ('email_instructor_approval_enabled', '1'),
+    ('email_instructor_approval_subject', 'Instructor account approved'),
+    ('email_instructor_approval_body', '<h2>You are approved</h2><p>Hello {instructor_name}, your instructor account has been approved. You can now access your instructor panel.</p><p><a href="{login_url}">Open Instructor Panel</a></p>'),
+    ('email_student_enrollment_enabled', '1'),
+    ('email_student_enrollment_subject', 'Course enrollment confirmed'),
+    ('email_student_enrollment_body', '<h2>Enrollment confirmed</h2><p>Hello {user_name}, you have been enrolled in <strong>{course_name}</strong>.</p><p><a href="{course_url}">Start Learning</a></p>'),
+    ('email_payment_success_enabled', '1'),
+    ('email_payment_success_subject', 'Payment received - Invoice {invoice_no}'),
+    ('email_payment_success_body', '<h2>Payment received</h2><p>Hello {user_name}, we have received your payment of <strong>{amount}</strong>.</p><p>Invoice No: <strong>{invoice_no}</strong></p>'),
+    ('email_license_renewal_enabled', '1'),
+    ('email_license_renewal_subject', 'License renewal reminder'),
+    ('email_license_renewal_body', '<h2>Renewal reminder</h2><p>Your {site_name} license will expire on <strong>{expiry_date}</strong>. Please renew to keep all services active.</p><p><a href="{renewal_url}">Renew License</a></p>'),
+    ('email_license_expired_enabled', '1'),
+    ('email_license_expired_subject', 'License expired - action required'),
+    ('email_license_expired_body', '<h2>License expired</h2><p>Your license expired on <strong>{expiry_date}</strong>. System features are paused until renewal is completed.</p>'),
+    ('email_support_assigned_enabled', '1'),
+    ('email_support_assigned_subject', 'Support staff assigned'),
+    ('email_support_assigned_body', '<h2>Support assigned</h2><p>Hello {user_name}, <strong>{support_name}</strong> has been assigned as your support contact.</p><p>Contact: {support_email}</p>'),
+    ('instructor_commission_type', 'percent'),
+    ('instructor_commission_value', '40'),
+    ('default_role', 'student'),
+    ('default_instructor_support_role', 'support-manager'),
+    ('default_student_support_role', 'support-staff'),
+    ('support_assignment_mode', 'manual'),
+    ('support_auto_assign_enabled', '1'),
+    ('max_students_per_support', '80'),
+    ('max_instructors_per_support', '15'),
+    ('support_escalation_hours', '24'),
+    ('salary_cycle', 'monthly'),
+    ('salary_pay_day', '7'),
+    ('probation_days', '90'),
+    ('monthly_paid_leaves', '2'),
+    ('attendance_mode', 'daily'),
+    ('attendance_grace_minutes', '10'),
+    ('half_day_after_minutes', '240'),
+    ('report_approval_flow', 'manager'),
+    ('report_timezone', 'Asia/Kolkata')
+ON DUPLICATE KEY UPDATE `setting_value` = `setting_value`;

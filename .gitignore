@@ -1,4 +1,6 @@
 /*
+**/.git/
+**/.git/**
 
 !.gitignore
 !.htaccess
@@ -41,19 +43,32 @@
 
 !assets/
 !assets/**
-assets/css/admin.css
-assets/css/instructor-erp-panel.css
-assets/css/panel-theme.css
-assets/css/sadmin-erp-sidebar.css
 
 !includes/
 !includes/**
 
 !ins/
-ins/*
-!ins/includes/
-ins/includes/*
-!ins/includes/functions.php
+!ins/**
+
+!sadmin/
+!sadmin/**
+
+!smart_school_src/
+!smart_school_src/**
+smart_school_src/application/cache/
+smart_school_src/application/cache/**
+smart_school_src/application/logs/
+smart_school_src/application/logs/**
+smart_school_src/temp/
+smart_school_src/temp/**
+smart_school_src/backup/
+smart_school_src/backup/**
+
+!theme/
+!theme/**
+
+!database/
+!database/edu.sql
 
 !react-app/
 !react-app/index.html

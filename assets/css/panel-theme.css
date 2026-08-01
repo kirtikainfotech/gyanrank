@@ -1,0 +1,5483 @@
+/* Template bridge for sadmin + instructor only. Front website/student pages do not load it. */
+html,
+body,
+.gr-panel-shell {
+    font-family: var(--default-font-family);
+    background-color: var(--default-body-bg-color);
+    color: var(--default-text-color);
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.gr-panel-shell > main.main {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 15rem);
+    min-height: 100vh;
+    margin-inline-start: 15rem;
+    padding-block-start: 3.75rem;
+    background-color: var(--default-body-bg-color);
+    overflow-x: hidden;
+    transition: margin-inline-start .2s ease;
+}
+
+.gr-panel-shell .gr-template-header {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 15rem;
+    inset-inline-end: 0;
+    z-index: 103;
+    width: auto !important;
+    max-width: calc(100% - 15rem);
+    padding-inline-start: 0 !important;
+    transition: inset-inline-start .2s ease;
+}
+
+.gr-panel-container {
+    flex: 1 0 auto;
+    padding-inline: 1.5rem;
+}
+
+.gr-panel-shell .content {
+    padding: 0;
+    max-width: none;
+    min-width: 0;
+}
+
+.gr-panel-shell .content > * + * {
+    margin-block-start: 1rem;
+}
+
+.gr-panel-shell .custom-card,
+.gr-panel-shell .card,
+.gr-panel-shell .table-responsive {
+    max-width: 100%;
+}
+
+.gr-panel-shell .table-responsive {
+    overflow-x: auto;
+}
+
+.gr-panel-shell .main-sidebar-header {
+    height: 4.375rem;
+}
+
+.gr-panel-logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.5rem;
+}
+
+.gr-panel-logo img {
+    max-width: 11.25rem;
+    max-height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+}
+
+.gr-panel-shell .page-header-breadcrumb {
+    min-height: 2.25rem;
+}
+
+.gr-panel-shell .header-link {
+    position: relative;
+}
+
+.gr-panel-shell .header-icon-badge {
+    position: absolute;
+    inset-block-start: .6rem;
+    inset-inline-end: .45rem;
+    font-size: .625rem;
+    padding: .12rem .32rem;
+}
+
+.gr-profile-menu {
+    min-width: 12rem;
+}
+
+.gr-panel-shell .footer {
+    flex-shrink: 0;
+    margin: auto -1.5rem 0;
+    padding-block: 1rem !important;
+    background-color: var(--custom-white) !important;
+    border-top: 1px solid var(--default-border);
+    box-shadow: none;
+    font-size: .8125rem;
+    overflow: hidden;
+    white-space: normal;
+}
+
+.gr-panel-shell .footer .container,
+.gr-panel-shell .footer .container-fluid {
+    max-width: 100%;
+    padding-inline: 1rem;
+}
+
+.gr-panel-shell .app-sidebar {
+    transition: transform .2s ease;
+}
+
+html.gr-sidebar-collapsed .gr-panel-shell .app-sidebar {
+    transform: translateX(-15rem);
+}
+
+html.gr-sidebar-collapsed .gr-panel-shell > main.main {
+    margin-inline-start: 0;
+    width: 100%;
+}
+
+html.gr-sidebar-collapsed .gr-panel-shell .gr-template-header {
+    inset-inline-start: 0;
+    max-width: 100%;
+}
+
+/* Old page blocks mapped to template cards without changing every page file. */
+.settings-detail-card,
+.settings-hero-card,
+.dashboard-card,
+.instructor-hero,
+.course-console-hero,
+.settings-command-card,
+.settings-summary-table,
+.settings-grid-menu,
+.question-bank-shell,
+.course-form-section,
+.live-room-main,
+.live-side-panel,
+.live-panel,
+.live-help-card,
+.role-table-wrap,
+.settings-mini-table,
+.question-table-wrap,
+.panel-card,
+.content-card,
+.list-card,
+.stats-card {
+    background-color: var(--custom-white);
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    box-shadow: 0 .125rem 0 rgba(10, 10, 10, .015);
+}
+
+.gr-panel-shell .settings-detail-card.card,
+.gr-panel-shell .settings-summary-table.card,
+.gr-panel-shell .settings-mini-table.card,
+.gr-panel-shell .question-bank-shell.card,
+.gr-panel-shell .gov-prep-card.card {
+    padding: 0;
+}
+
+.gr-panel-shell .settings-detail-card > .card-body,
+.gr-panel-shell .settings-summary-table > .card-body,
+.gr-panel-shell .settings-mini-table > .card-body,
+.gr-panel-shell .question-bank-shell > .card-body,
+.gr-panel-shell .gov-prep-card > .card-body {
+    margin: 0;
+    padding: 0;
+}
+
+.gr-panel-shell .settings-detail-card > .card-body:not(:has(table)),
+.gr-panel-shell .settings-summary-table > .card-body:not(:has(table)),
+.gr-panel-shell .question-bank-shell > .card-body:not(:has(table)) {
+    padding: 1.25rem;
+}
+
+.detail-head,
+.table-head,
+.mini-table-title,
+.card-head,
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.detail-head.card-header,
+.table-head.card-header,
+.mini-table-title.card-header {
+    margin: 0;
+}
+
+.detail-head > div:first-child > span,
+.table-head > div:first-child > span,
+.mini-table-title > div:first-child > span,
+.card-head > div:first-child > span {
+    color: var(--primary-color);
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.detail-head h1,
+.detail-head h2,
+.table-head h1,
+.table-head h2,
+.mini-table-title h2,
+.section-head h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.detail-head p,
+.table-head p,
+.mini-table-title p,
+.section-head p {
+    margin: .25rem 0 0;
+    color: var(--text-muted);
+    font-size: .8125rem;
+}
+
+.settings-grid,
+.dashboard-grid,
+.stats-grid,
+.summary-grid,
+.ins-grid,
+.live-grid,
+.live-bottom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+}
+
+.ins-grid,
+.live-room-shell,
+.live-work-grid,
+.live-bottom-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .8fr);
+    gap: 1rem;
+}
+
+.settings-card,
+.stat-card,
+.metric-card,
+.summary-card,
+.settings-grid-menu > a,
+.settings-grid-menu > article,
+.settings-grid-menu > div {
+    background-color: var(--custom-white);
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+.course-console-hero,
+.settings-command-card,
+.question-bank-shell,
+.live-room-main,
+.live-side-panel,
+.live-panel,
+.live-help-card {
+    padding: 1.25rem;
+}
+
+.course-console-hero.card,
+.instructor-hero.card,
+.live-room-main.card,
+.live-side-panel.card,
+.live-panel.card,
+.live-help-card.card {
+    padding: 0;
+}
+
+.course-console-hero > .card-body,
+.instructor-hero > .card-body,
+.live-room-main > .card-body,
+.live-side-panel > .card-body,
+.live-panel > .card-body,
+.live-help-card > .card-body {
+    padding: 1.25rem;
+}
+
+.course-console-hero > span,
+.instructor-hero > span,
+.live-panel > span {
+    display: inline-flex;
+    width: fit-content;
+    margin-block-end: .35rem;
+    padding: .2rem .5rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.course-console-hero h1,
+.course-console-hero h2,
+.instructor-hero h1,
+.instructor-hero h2,
+.live-panel h2,
+.live-side-panel h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.course-console-hero p,
+.instructor-hero p,
+.live-panel p,
+.live-side-panel p {
+    margin: .25rem 0 0;
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.course-console-actions,
+.table-actions,
+.live-quick-actions,
+.exam-manage-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+}
+
+.course-summary-strip,
+.combo-summary-strip,
+.document-summary-strip,
+.stats.instructor-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+}
+
+.course-summary-strip > *,
+.stats.instructor-stats > * {
+    padding: .85rem 1rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--custom-white);
+}
+
+.settings-grid-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.settings-overview-page,
+.settings-page,
+.sadmin-dashboard-page,
+.govt-prep-page,
+.govt-question-page,
+.instructor-content {
+    display: grid;
+    gap: 1rem;
+}
+
+.instructor-dashboard-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), .12), rgba(var(--primary-rgb), .03) 55%, var(--custom-white));
+    box-shadow: 0 .75rem 2rem rgba(15, 23, 42, .04);
+}
+
+.instructor-dashboard-hero .hero-copy span {
+    display: inline-flex;
+    margin-block-end: .35rem;
+    padding: .25rem .55rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.instructor-dashboard-hero h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.instructor-dashboard-hero p {
+    max-width: 46rem;
+    margin: .35rem 0 0;
+    color: var(--text-muted);
+    font-size: .9rem;
+}
+
+.instructor-dashboard-hero .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.instructor-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .75rem;
+}
+
+.instructor-kpi-card {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    min-width: 0;
+    padding: .85rem;
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background-color: var(--custom-white);
+    color: var(--default-text-color);
+    text-decoration: none;
+    box-shadow: 0 .125rem 0 rgba(10, 10, 10, .015);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.instructor-kpi-card:hover {
+    border-color: rgba(var(--primary-rgb), .25);
+    color: var(--default-text-color);
+    transform: translateY(-1px);
+    box-shadow: 0 .75rem 1.75rem rgba(15, 23, 42, .06);
+}
+
+.instructor-kpi-card .kpi-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: .55rem;
+    font-size: 1.25rem;
+}
+
+.instructor-kpi-card small {
+    display: block;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.instructor-kpi-card strong {
+    display: block;
+    margin-block-start: .25rem;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.instructor-dashboard .content {
+    gap: .9rem;
+}
+
+.instructor-dashboard .content > .premium-instructor-dashboard,
+.instructor-dashboard .content > .instructor-dashboard-hero,
+.instructor-dashboard .content > .instructor-kpi-grid,
+.instructor-dashboard .content > .ins-grid,
+.instructor-dashboard .content > .settings-detail-card {
+    display: none !important;
+}
+
+.instructor-dashboard .content > .row.g-3 {
+    display: flex !important;
+}
+
+.pid-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #111827, #1d4ed8 58%, #7c3aed);
+    color: #fff;
+    box-shadow: 0 1rem 2.5rem rgba(15, 23, 42, .16);
+}
+
+.pid-kicker {
+    display: inline-flex;
+    margin-block-end: .45rem;
+    padding: .28rem .65rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, .14);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.pid-hero h2 {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.pid-hero p {
+    max-width: 45rem;
+    margin: .35rem 0 0;
+    color: rgba(255, 255, 255, .78);
+    font-size: .9rem;
+}
+
+.pid-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.pid-actions .btn-light {
+    border-color: rgba(255, 255, 255, .18);
+    background-color: rgba(255, 255, 255, .14);
+    color: #fff;
+}
+
+.pid-metrics {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .75rem;
+}
+
+.pid-metrics a,
+.pid-card {
+    border: 1px solid var(--default-border);
+    border-radius: .85rem;
+    background-color: var(--custom-white);
+    box-shadow: 0 .45rem 1.4rem rgba(15, 23, 42, .045);
+}
+
+.pid-metrics a {
+    display: grid;
+    gap: .45rem;
+    min-height: 7rem;
+    padding: 1rem;
+    color: var(--default-text-color);
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.pid-metrics a:hover {
+    color: var(--default-text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 1rem 2rem rgba(15, 23, 42, .08);
+}
+
+.pid-metrics i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: .7rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.pid-metrics span {
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.pid-metrics strong {
+    font-size: 1.45rem;
+    line-height: 1;
+}
+
+.pid-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(20rem, .8fr);
+    gap: 1rem;
+}
+
+.pid-grid-equal {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pid-card {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.pid-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.pid-card-head span {
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.pid-card-head h3 {
+    margin: .15rem 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pid-card-head a {
+    flex: 0 0 auto;
+    padding: .42rem .75rem;
+    border-radius: .5rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .8rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.pid-list,
+.pid-mini-list,
+.pid-course-list {
+    display: grid;
+}
+
+.pid-list-item,
+.pid-mini-row,
+.pid-course-row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-width: 0;
+    padding: .85rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+    color: var(--default-text-color);
+    text-decoration: none;
+}
+
+.pid-list-item:last-child,
+.pid-mini-row:last-child,
+.pid-course-row:last-child {
+    border-bottom: 0;
+}
+
+.pid-list-item:hover,
+.pid-course-row:hover {
+    color: var(--default-text-color);
+    background-color: var(--default-background);
+}
+
+.pid-dot {
+    width: .55rem;
+    height: .55rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background-color: var(--primary-color);
+}
+
+.pid-dot.live {
+    background-color: rgb(var(--success-rgb));
+    box-shadow: 0 0 0 .28rem rgba(var(--success-rgb), .12);
+}
+
+.pid-list-item > div,
+.pid-mini-row > div,
+.pid-course-row > div {
+    min-width: 0;
+    flex: 1;
+}
+
+.pid-list-item strong,
+.pid-mini-row strong,
+.pid-course-row strong {
+    display: block;
+    overflow: hidden;
+    color: var(--default-text-color);
+    font-size: .9rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pid-list-item small,
+.pid-mini-row small,
+.pid-course-row small {
+    display: block;
+    overflow: hidden;
+    margin-block-start: .15rem;
+    color: var(--text-muted);
+    font-size: .76rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pid-list-item em,
+.pid-mini-row span {
+    flex: 0 0 auto;
+    padding: .25rem .55rem;
+    border-radius: 999px;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.pid-course-row > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: .7rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+.pid-empty {
+    padding: 1.25rem;
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.instructor-dashboard .settings-detail-card {
+    border: 0;
+    box-shadow: 0 .35rem 1.25rem rgba(15, 23, 42, .04);
+}
+
+.instructor-dashboard .detail-head {
+    padding: .9rem 1rem;
+}
+
+.instructor-dashboard .detail-head h2 {
+    font-size: 1rem;
+}
+
+.instructor-dashboard .detail-head p {
+    font-size: .78rem;
+}
+
+.instructor-dashboard .gr-table-toolbar {
+    padding: .65rem .9rem;
+}
+
+.instructor-dashboard .gr-table-toolbar .form-control {
+    width: min(100%, 18rem);
+}
+
+.instructor-dashboard .table-responsive {
+    overflow-x: hidden;
+}
+
+.instructor-dashboard table.table {
+    table-layout: fixed;
+}
+
+.instructor-dashboard .table > :not(caption) > * > * {
+    padding: .7rem .9rem;
+    white-space: normal;
+}
+
+.instructor-dashboard .table thead th,
+.instructor-dashboard .table tbody td {
+    font-size: .82rem;
+}
+
+.instructor-dashboard .table td strong {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.35;
+}
+
+.instructor-dashboard .table td small {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.instructor-dashboard .ins-grid {
+    grid-template-columns: minmax(0, 1.45fr) minmax(19rem, .85fr);
+    gap: .9rem;
+}
+
+.instructor-dashboard .settings-detail-card:nth-of-type(n+5) {
+    display: none;
+}
+
+.instructor-dashboard .dashboard-classes-card th:nth-child(3),
+.instructor-dashboard .dashboard-classes-card td:nth-child(3),
+.instructor-dashboard .dashboard-classes-card th:nth-child(4),
+.instructor-dashboard .dashboard-classes-card td:nth-child(4),
+.instructor-dashboard .dashboard-batches-card th:nth-child(3),
+.instructor-dashboard .dashboard-batches-card td:nth-child(3),
+.instructor-dashboard .dashboard-batches-card th:nth-child(4),
+.instructor-dashboard .dashboard-batches-card td:nth-child(4),
+.instructor-dashboard .dashboard-courses-card th:nth-child(3),
+.instructor-dashboard .dashboard-courses-card td:nth-child(3),
+.instructor-dashboard .dashboard-courses-card th:nth-child(4),
+.instructor-dashboard .dashboard-courses-card td:nth-child(4),
+.instructor-dashboard .dashboard-exams-card th:nth-child(2),
+.instructor-dashboard .dashboard-exams-card td:nth-child(2),
+.instructor-dashboard .dashboard-exams-card th:nth-child(3),
+.instructor-dashboard .dashboard-exams-card td:nth-child(3) {
+    display: none;
+}
+
+.instructor-dashboard .dashboard-batches-card th:nth-child(5),
+.instructor-dashboard .dashboard-batches-card td:nth-child(5),
+.instructor-dashboard .dashboard-exams-card th:nth-child(4),
+.instructor-dashboard .dashboard-exams-card td:nth-child(4) {
+    width: 7rem;
+}
+
+.instructor-courses-page .content,
+.instructor-combos-page .content,
+.instructor-live-page .content {
+    gap: 1rem;
+}
+
+.instructor-content .course-console-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-radius: .65rem;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), .08), var(--custom-white) 62%);
+}
+
+.instructor-content .course-console-hero > div:first-child {
+    min-width: 0;
+}
+
+.instructor-content .course-summary-strip {
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+.instructor-content .course-summary-strip article {
+    position: relative;
+    min-height: 5.25rem;
+    padding: .95rem 1rem;
+    overflow: hidden;
+}
+
+.instructor-content .course-summary-strip article::after {
+    content: "";
+    position: absolute;
+    inset-block-start: .85rem;
+    inset-inline-end: .85rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: .5rem;
+    background-color: var(--primary01);
+}
+
+.instructor-content .course-summary-strip span {
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.instructor-content .course-summary-strip strong {
+    display: block;
+    margin-block-start: .35rem;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.instructor-content .course-summary-strip small {
+    display: block;
+    margin-block-start: .25rem;
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.compact-manager-table.table > :not(caption) > * > *,
+.document-library-table.table > :not(caption) > * > *,
+.combo-manager-table.table > :not(caption) > * > *,
+.course-inventory-table.table > :not(caption) > * > * {
+    padding: .7rem .85rem;
+}
+
+.compact-manager-table td,
+.document-library-table td,
+.combo-manager-table td,
+.course-inventory-table td {
+    white-space: normal;
+}
+
+.mini-action-stack,
+.recording-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+.mini-action-stack .table-edit-icon,
+.recording-actions a,
+.recording-actions button {
+    min-height: 2rem;
+    padding: .35rem .65rem;
+    font-size: .78rem;
+}
+
+.recording-actions form {
+    margin: 0;
+}
+
+.recording-actions button {
+    border: 0;
+    border-radius: .35rem;
+    background-color: rgba(var(--danger-rgb), .1);
+    color: rgb(var(--danger-rgb));
+    font-weight: 600;
+}
+
+.task-list {
+    margin: 0 !important;
+    padding: .75rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.task-list > strong {
+    display: inline-flex;
+    margin-block-end: .5rem;
+    padding: .25rem .55rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color) !important;
+    font-size: .78rem !important;
+    font-weight: 700;
+}
+
+.detail-view-grid {
+    display: grid;
+    grid-template-columns: minmax(12rem, .75fr) minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1rem;
+}
+
+.detail-view-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 11rem;
+    overflow: hidden;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--default-background);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.detail-view-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-kicker {
+    display: inline-flex;
+    margin-block-end: .4rem;
+    padding: .25rem .55rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.detail-view-modal h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.detail-view-modal p {
+    margin: .35rem 0 0;
+    color: var(--text-muted);
+}
+
+.detail-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-block-start: .75rem;
+}
+
+.detail-chip-row span {
+    padding: .3rem .55rem;
+    border-radius: .35rem;
+    background-color: var(--default-background);
+    color: var(--default-text-color);
+    font-size: .76rem;
+    font-weight: 600;
+}
+
+.detail-info-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: .75rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.detail-info-table > div {
+    padding: .75rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--default-background);
+}
+
+.detail-info-table span {
+    display: block;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.detail-info-table strong {
+    display: block;
+    margin-block-start: .25rem;
+    font-size: .9rem;
+}
+
+.detail-note {
+    padding: .85rem 1rem;
+    border-radius: .5rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+}
+
+.settings-command-card .card-body {
+    min-height: 5.5rem;
+}
+
+.settings-command-card span,
+.settings-command-card > div > span {
+    color: var(--primary-color);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.settings-command-card h1,
+.settings-command-card h2 {
+    margin: .25rem 0 .2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.settings-command-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.settings-health {
+    min-width: 8.5rem;
+    padding: .85rem 1rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--default-background);
+    text-align: center;
+}
+
+.settings-health strong {
+    display: block;
+    color: var(--default-text-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.settings-health span,
+.settings-health b {
+    display: block;
+    margin-block-start: .25rem;
+    color: var(--text-muted);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.settings-health b {
+    color: rgb(var(--warning-rgb));
+    text-transform: none;
+}
+
+.settings-table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap: 1rem;
+}
+
+.settings-area-grid,
+.billing-summary-grid,
+.instructor-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+}
+
+.settings-page .billing-summary-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .75rem;
+    padding: 1rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.settings-page .billing-summary-grid > div {
+    display: block;
+    min-height: auto;
+    padding: .75rem .85rem;
+    border-radius: .55rem;
+    background: var(--default-background);
+    box-shadow: none;
+}
+
+.settings-page .billing-summary-grid strong {
+    display: block;
+    color: var(--text-muted);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.settings-page .billing-summary-grid b {
+    display: block;
+    margin-top: .35rem;
+    color: var(--default-text-color);
+    font-size: .95rem;
+    font-weight: 700;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 1399.98px) {
+    .settings-page .billing-summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .settings-page .billing-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.settings-area-card,
+.billing-summary-grid > div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .85rem;
+    padding: 1rem;
+    background-color: var(--custom-white);
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    color: var(--default-text-color);
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.settings-area-card:hover {
+    border-color: rgba(var(--primary-rgb), .25);
+    box-shadow: 0 .75rem 1.75rem rgba(15, 23, 42, .06);
+    transform: translateY(-1px);
+}
+
+.settings-area-icon,
+.settings-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: .5rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+}
+
+.settings-area-icon svg,
+.settings-card-icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.settings-area-icon svg path,
+.settings-card-icon svg path,
+.settings-submenu svg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.settings-submenu svg {
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: 0 0 1.15rem;
+}
+
+.sadmin-settings-main .settings-submenu {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: .55rem;
+    margin: 1rem 0;
+}
+
+.sadmin-settings-main .settings-subitem {
+    display: grid;
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    align-items: center;
+    gap: .5rem;
+    min-height: 3.35rem;
+    padding: .55rem .65rem;
+    border: 1px solid var(--default-border);
+    border-radius: .55rem;
+    background: var(--custom-white);
+    color: var(--default-text-color);
+    text-decoration: none;
+    box-shadow: 0 .55rem 1.25rem rgba(15, 23, 42, .035);
+}
+
+.sadmin-settings-main .settings-subitem > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: .45rem;
+    background: rgba(var(--primary-rgb), .09);
+    color: rgb(var(--primary-rgb));
+}
+
+.sadmin-settings-main .settings-subitem strong,
+.sadmin-settings-main .settings-subitem small {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sadmin-settings-main .settings-subitem strong {
+    color: var(--default-text-color);
+    font-size: .72rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.sadmin-settings-main .settings-subitem small {
+    margin-top: .12rem;
+    color: var(--text-muted);
+    font-size: .61rem;
+    line-height: 1.1;
+}
+
+.sadmin-settings-main .settings-subitem.active {
+    border-color: rgba(var(--primary-rgb), .35);
+    background: rgba(var(--primary-rgb), .08);
+}
+
+.sadmin-settings-main .settings-subitem.active strong {
+    color: rgb(var(--primary-rgb));
+}
+
+@media (max-width: 1399.98px) {
+    .sadmin-settings-main .settings-submenu {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991.98px) {
+    .sadmin-settings-main .settings-submenu {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575.98px) {
+    .sadmin-settings-main .settings-submenu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.settings-area-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    grid-column: 2 / -1;
+}
+
+.settings-area-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .25rem .5rem;
+    border-radius: .35rem;
+    background-color: var(--default-background);
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.settings-area-card em {
+    grid-row: 1;
+    grid-column: 3;
+    padding: .35rem .65rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .75rem;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.settings-area-card h3,
+.billing-summary-grid strong {
+    margin: 0;
+    font-size: .9375rem;
+    font-weight: 600;
+}
+
+.settings-area-card p,
+.settings-area-card span,
+.billing-summary-grid b {
+    color: var(--text-muted);
+    font-size: .8125rem;
+}
+
+.settings-area-card p {
+    margin: .15rem 0 0;
+}
+
+.sadmin-settings-main .settings-area-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+    margin: 1rem 0;
+}
+
+.sadmin-settings-main .settings-area-card {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .65rem;
+    min-height: 4.75rem;
+    padding: .75rem .85rem;
+    background: var(--custom-white);
+    border: 0;
+    border-radius: .65rem;
+    color: var(--default-text-color);
+    text-decoration: none;
+    box-shadow: 0 .85rem 1.85rem rgba(15, 23, 42, .045);
+}
+
+.sadmin-settings-main .settings-area-card h3 {
+    margin: 0;
+    overflow: hidden;
+    color: var(--default-text-color);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.sadmin-settings-main .settings-area-card p {
+    margin: .12rem 0 0;
+    overflow: hidden;
+    color: var(--text-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .68rem;
+}
+
+.sadmin-settings-main .settings-area-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: .5rem;
+    background: rgba(var(--primary-rgb), .09);
+    color: rgb(var(--primary-rgb));
+}
+
+.sadmin-settings-main .settings-area-icon svg {
+    display: block;
+    width: 1.05rem;
+    height: 1.05rem;
+    max-width: 1.05rem;
+    max-height: 1.05rem;
+    flex: 0 0 1.05rem;
+}
+
+.settings-mini-table .mini-table-title a,
+.table-head a,
+.detail-head a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    padding: .45rem .85rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .8125rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.settings-card h3,
+.stat-card h3,
+.metric-card h3,
+.summary-card h3 {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.settings-card strong,
+.stat-card strong,
+.metric-card strong,
+.summary-card strong {
+    display: block;
+    margin-block-start: .35rem;
+    color: var(--default-text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.gr-panel-shell table:not(.table) {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.gr-panel-shell .table {
+    --bs-table-bg: var(--custom-white);
+    --bs-table-striped-bg: var(--default-background);
+    margin-bottom: 0;
+}
+
+.gr-panel-shell .table > :not(caption) > * > * {
+    padding: .85rem 1rem;
+    border-color: var(--default-border);
+}
+
+.gr-panel-shell .table thead th {
+    background-color: var(--default-background);
+    color: var(--default-text-color);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.gr-panel-shell .table tbody td {
+    color: var(--default-text-color);
+    font-size: .875rem;
+}
+
+.gr-panel-shell .gr-register-table {
+    table-layout: fixed;
+    min-width: 980px;
+}
+
+.gr-panel-shell .gr-register-table th,
+.gr-panel-shell .gr-register-table td {
+    white-space: normal;
+    overflow: hidden;
+    padding: .55rem .75rem;
+    font-size: .8125rem;
+}
+
+.gr-panel-shell .gr-register-table .gr-cell-title,
+.gr-panel-shell .gr-register-table .gr-cell-subtitle {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gr-panel-shell .gr-register-table .d-flex {
+    min-width: 0;
+}
+
+.gr-panel-shell .gr-register-table .d-flex > div {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.gr-panel-shell .gr-register-table .avatar {
+    flex: 0 0 auto;
+}
+
+.gr-panel-shell .gr-register-table .btn-list {
+    flex-wrap: wrap;
+    gap: .25rem;
+}
+
+.gr-panel-shell .gr-register-table .btn {
+    padding: .25rem .55rem;
+    font-size: .75rem;
+    min-height: 1.875rem;
+}
+
+.gr-panel-shell .gr-register-table thead th {
+    font-size: .6875rem;
+    padding-block: .65rem;
+}
+
+.gr-panel-shell .gr-register-table .avatar-sm {
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.gr-panel-shell .gr-table-thumb {
+    width: 44px;
+    height: 28px;
+}
+
+.gr-panel-shell .gr-back-admin-btn {
+    color: var(--primary-color) !important;
+    background-color: rgba(var(--primary-rgb), .12) !important;
+    border-color: transparent !important;
+    white-space: nowrap;
+}
+
+.gr-panel-shell .card-body > .table-responsive,
+.gr-panel-shell .custom-card > .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.gr-panel-shell .gr-register-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-top: 1px solid var(--default-border);
+    background: var(--custom-white);
+}
+
+.gr-panel-shell .gr-register-pager .btn {
+    min-width: 4rem;
+}
+
+.gr-panel-shell .gr-register-pager .badge {
+    min-width: 4.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gr-panel-shell table:not(.table) th,
+.gr-panel-shell table:not(.table) td {
+    padding: .75rem;
+    border-bottom: 1px solid var(--default-border);
+    vertical-align: middle;
+}
+
+.gr-panel-shell table:not(.table) th {
+    color: var(--default-text-color);
+    background-color: var(--default-background);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.gr-panel-shell td strong,
+.gr-panel-shell td small,
+.gr-panel-shell .detail-table strong,
+.gr-panel-shell .detail-table small {
+    display: block;
+}
+
+.gr-panel-shell td small,
+.gr-panel-shell .detail-table small {
+    color: var(--text-muted);
+    font-size: .75rem;
+    margin-block-start: .15rem;
+}
+
+.detail-table,
+.settings-summary-table table,
+.question-table-wrap table,
+.role-table-wrap table {
+    width: 100%;
+}
+
+.settings-page .detail-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.settings-page .detail-table th,
+.settings-page .detail-table td {
+    padding: .72rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+    vertical-align: middle;
+    font-size: .875rem;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.settings-page .detail-table th {
+    width: 14rem;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .brand-upload.compact-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: .85rem;
+    padding: 1rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.settings-page .preview-box {
+    overflow: hidden;
+    min-height: 8.25rem;
+    padding: .85rem;
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background: var(--custom-white);
+}
+
+.settings-page .preview-box img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 5.5rem;
+    object-fit: contain;
+    object-position: center;
+    border-radius: .45rem;
+    background: var(--default-background);
+}
+
+.settings-page .preview-box strong {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 5.5rem;
+    border-radius: .45rem;
+    background: var(--primary01);
+    color: var(--primary-color);
+}
+
+.settings-page .preview-box p {
+    margin: .65rem 0 0;
+    color: var(--text-muted);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .template-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+    padding: 1rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.settings-page .template-stat-grid > div {
+    padding: .75rem .85rem;
+    border-radius: .55rem;
+    background: var(--default-background);
+}
+
+.settings-page .template-stat-grid strong {
+    display: block;
+    color: var(--text-muted);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .template-stat-grid b {
+    display: block;
+    margin-top: .35rem;
+    color: var(--default-text-color);
+    font-size: 1rem;
+}
+
+.settings-page .email-template-table-wrap {
+    overflow: auto;
+}
+
+.settings-page .email-template-table {
+    width: 100%;
+    min-width: 62rem;
+    border-collapse: collapse;
+}
+
+.settings-page .email-template-table th,
+.settings-page .email-template-table td {
+    padding: .62rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+    font-size: .82rem;
+    line-height: 1.35;
+    vertical-align: middle;
+}
+
+.settings-page .email-template-table th {
+    background: var(--default-background);
+    color: var(--default-text-color);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .email-template-table td:first-child {
+    width: 18rem;
+}
+
+.settings-page .email-template-table th:last-child,
+.settings-page .email-template-table td:last-child {
+    width: 6.5rem;
+    text-align: right;
+}
+
+.settings-page .email-template-table code {
+    display: inline-block;
+    max-width: 22rem;
+    padding: .2rem .45rem;
+    border-radius: .35rem;
+    background: var(--default-background);
+    color: var(--text-muted);
+    font-size: .72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.settings-page .compact-heading,
+.settings-page .section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.settings-page .compact-heading h1,
+.settings-page .compact-heading h2,
+.settings-page .section-heading h1,
+.settings-page .section-heading h2 {
+    margin: .15rem 0 .2rem;
+    color: var(--default-text-color);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.settings-page .compact-heading p,
+.settings-page .section-heading p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: .85rem;
+}
+
+.settings-page .section-kicker {
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.settings-page .settings-table.simple-table {
+    width: 100%;
+    min-width: 64rem;
+    border-collapse: collapse;
+}
+
+.settings-page .settings-table.simple-table th,
+.settings-page .settings-table.simple-table td {
+    padding: .55rem .65rem;
+    border-bottom: 1px solid var(--default-border);
+    font-size: .8rem;
+    vertical-align: middle;
+}
+
+.settings-page .settings-table.simple-table th {
+    background: var(--default-background);
+    color: var(--default-text-color);
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .settings-table.simple-table td:first-child {
+    width: 13rem;
+}
+
+.settings-page .settings-table.simple-table td strong {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--text-muted);
+    font-size: .68rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.settings-page .settings-table.simple-table input {
+    width: 100%;
+    min-height: 2rem;
+    padding: .28rem .5rem;
+    border: 1px solid var(--input-border);
+    border-radius: .35rem;
+    background: var(--custom-white);
+    color: var(--default-text-color);
+    font-size: .8rem;
+}
+
+.settings-page .settings-table.simple-table input:focus {
+    border-color: rgba(var(--primary-rgb), .45);
+    box-shadow: 0 0 0 .12rem rgba(var(--primary-rgb), .08);
+    outline: 0;
+}
+
+.settings-page .mini-switch {
+    display: inline-flex;
+    margin: 0;
+}
+
+.settings-page .mini-switch span {
+    min-width: 2.25rem;
+}
+
+.template-editor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .85fr);
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.template-editor-shell,
+.template-preview-panel {
+    min-width: 0;
+    border: 1px solid var(--default-border);
+    border-radius: .55rem;
+    background: var(--custom-white);
+}
+
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    padding: .55rem;
+    border-bottom: 1px solid var(--default-border);
+    background: var(--default-background);
+}
+
+.editor-toolbar button {
+    min-height: 1.9rem;
+    padding: .25rem .55rem;
+    border: 0;
+    border-radius: .35rem;
+    background: var(--primary01);
+    color: var(--primary-color);
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.html-editor {
+    min-height: 15rem;
+    max-height: 24rem;
+    overflow: auto;
+    padding: .85rem;
+    outline: none;
+    font-size: .86rem;
+    line-height: 1.55;
+}
+
+.template-token-row {
+    display: flex;
+    gap: .5rem;
+    padding: .65rem .85rem;
+    border-top: 1px solid var(--default-border);
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.preview-label {
+    padding: .65rem .85rem;
+    border-bottom: 1px solid var(--default-border);
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.email-design-preview {
+    padding: .85rem;
+}
+
+.email-preview-top,
+.email-preview-foot {
+    padding: .65rem;
+    border-radius: .45rem;
+    background: var(--default-background);
+    color: var(--text-muted);
+    font-size: .78rem;
+}
+
+.email-preview-body {
+    min-height: 12rem;
+    max-height: 21rem;
+    overflow: auto;
+    padding: .85rem 0;
+    font-size: .86rem;
+    line-height: 1.55;
+}
+
+@media (max-width: 1199.98px) {
+    .template-editor-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .settings-page .template-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.empty-state,
+.premium-empty {
+    padding: 2rem !important;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.gr-table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.gr-table-toolbar .form-control {
+    width: min(100%, 22rem);
+}
+
+.modal-button,
+.mini-action-btn,
+.table-edit-icon,
+.question-mini-button,
+.soft-action,
+.form-actions button,
+.modal-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    padding: .45rem .85rem;
+    border: 1px solid transparent;
+    border-radius: .35rem;
+    background-color: var(--primary-color);
+    color: #fff !important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.soft-action,
+.modal-button.ghost,
+.btn-primary-light,
+.mini-action-btn,
+.table-edit-icon,
+.question-mini-button {
+    background-color: var(--primary01);
+    border-color: transparent;
+    color: var(--primary-color) !important;
+}
+
+.modal-button:hover,
+.mini-action-btn:hover,
+.question-mini-button:hover {
+    color: #fff !important;
+    background-color: var(--primary-color);
+}
+
+.modal-button.ghost:hover,
+.btn-primary-light:hover,
+.soft-action:hover,
+.table-edit-icon:hover {
+    color: var(--primary-color) !important;
+    background-color: rgba(var(--primary-rgb), .16);
+}
+
+.course-table-thumb-img,
+.course-thumb-empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 2.75rem;
+    border: 1px solid var(--default-border);
+    border-radius: .35rem;
+    background-color: var(--default-background);
+    color: var(--text-muted);
+    object-fit: cover;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.live-preview-card,
+.live-thumbnail-frame {
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #0f172a;
+}
+
+.live-preview-card {
+    border: 1px solid var(--default-border);
+    background-color: var(--custom-white);
+}
+
+.live-thumbnail-frame img {
+    width: 100%;
+    max-height: 16rem;
+    object-fit: cover;
+}
+
+.course-modal .course-form-sections {
+    display: grid;
+    gap: 1rem;
+}
+
+.course-modal .course-form-section {
+    overflow: hidden;
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background: var(--custom-white);
+}
+
+.course-modal .course-form-section h3 {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+    color: var(--default-text-color);
+    font-size: .92rem;
+    font-weight: 700;
+}
+
+.course-modal .course-form-section h3 span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: .4rem;
+    background: var(--primary01);
+    color: var(--primary-color);
+    font-size: .75rem;
+}
+
+.course-modal .compact-form {
+    padding: 1rem;
+}
+
+.course-modal .span-3 {
+    grid-column: 1 / -1;
+}
+
+.course-modal .course-pricing-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+    padding: .75rem;
+    border: 1px solid rgba(var(--primary-rgb), .18);
+    border-radius: .65rem;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), .055), rgba(var(--primary-rgb), .02));
+}
+
+.course-modal .course-pricing-row label {
+    margin: 0;
+}
+
+.course-modal .course-form-thumb {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-height: 6.25rem;
+    padding: .6rem;
+    border: 1px solid var(--default-border);
+    border-radius: .55rem;
+    background: var(--default-background);
+}
+
+.course-modal .course-form-thumb img {
+    display: block;
+    width: 11rem;
+    max-width: 100%;
+    height: 5.5rem;
+    object-fit: contain;
+    object-position: center;
+    border-radius: .45rem;
+    background: #fff;
+}
+
+.course-modal .check-line {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.375rem;
+    padding: .45rem .65rem;
+    border: 1px solid var(--input-border);
+    border-radius: .45rem;
+    background: var(--custom-white);
+}
+
+.course-modal .check-line input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+}
+
+.course-modal .check-line.is-disabled {
+    opacity: .62;
+    background: var(--default-background);
+}
+
+.course-modal .check-line input:disabled {
+    cursor: not-allowed;
+}
+
+@media (max-width: 991.98px) {
+    .course-modal .course-pricing-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575.98px) {
+    .course-modal .course-pricing-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.live-thumbnail-empty {
+    display: grid;
+    place-items: center;
+    min-height: 12rem;
+    padding: 1.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.live-thumbnail-empty span {
+    display: inline-flex;
+    margin-block-end: .5rem;
+    padding: .25rem .65rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, .12);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.live-thumbnail-empty strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.live-thumbnail-empty small {
+    color: rgba(255, 255, 255, .72);
+}
+
+.live-on-thumb {
+    position: absolute;
+    inset-block-start: .75rem;
+    inset-inline-end: .75rem;
+    padding: .28rem .65rem;
+    border-radius: 999px;
+    background-color: rgba(var(--danger-rgb), .95);
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.live-thumbnail-frame {
+    position: relative;
+}
+
+.live-class-copy {
+    padding: 1rem;
+}
+
+.live-class-copy span,
+.live-side-panel > span,
+.live-help-card > span {
+    color: var(--primary-color);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.live-class-copy h2,
+.live-side-panel h3 {
+    margin: .25rem 0 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.live-class-copy p,
+.live-side-panel p {
+    margin: .35rem 0 0;
+    color: var(--text-muted);
+    font-size: .85rem;
+}
+
+.live-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: .75rem;
+    margin-block-start: 1rem;
+}
+
+.live-info-grid > div,
+.live-copy-list > div {
+    padding: .75rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--default-background);
+}
+
+.live-info-grid span,
+.live-copy-list span {
+    display: block;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.live-info-grid strong,
+.live-copy-list input {
+    margin-block-start: .25rem;
+}
+
+.live-side-panel code {
+    display: block;
+    margin-block-start: .75rem;
+    padding: .75rem;
+    border-radius: .4rem;
+    background-color: #0f172a;
+    color: #fff;
+    white-space: normal;
+    word-break: break-all;
+}
+
+.live-help-card ol {
+    margin: .75rem 0 0;
+    padding-inline-start: 1.15rem;
+}
+
+.live-help-card li + li {
+    margin-block-start: .4rem;
+}
+
+.live-copy-list {
+    display: grid;
+    gap: .75rem;
+}
+
+.status-pill,
+.mini-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .35rem .65rem;
+    border-radius: .35rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.notice {
+    padding: .85rem 1rem;
+    border: 1px solid rgba(var(--primary-rgb), .2);
+    border-radius: .5rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+}
+
+.toast-notice {
+    padding: .85rem 1rem;
+    border: 1px solid rgba(var(--primary-rgb), .2);
+    border-radius: .5rem;
+    background-color: var(--primary01);
+    color: var(--primary-color);
+    font-size: .875rem;
+}
+
+.toast-notice.success {
+    border-color: rgba(var(--success-rgb), .2);
+    background-color: rgba(var(--success-rgb), .1);
+    color: rgb(var(--success-rgb));
+}
+
+.toast-notice.danger {
+    border-color: rgba(var(--danger-rgb), .2);
+    background-color: rgba(var(--danger-rgb), .1);
+    color: rgb(var(--danger-rgb));
+}
+
+.notice.danger {
+    border-color: rgba(var(--danger-rgb), .2);
+    background-color: rgba(var(--danger-rgb), .1);
+    color: rgb(var(--danger-rgb));
+}
+
+.form-grid,
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+}
+
+.form-grid label,
+.modal-grid label {
+    display: grid;
+    gap: .4rem;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea,
+.modal-grid input,
+.modal-grid select,
+.modal-grid textarea,
+.test-email-bar input,
+.test-email-bar select,
+.test-email-bar textarea {
+    width: 100%;
+    min-height: 2.375rem;
+    padding: .375rem .75rem;
+    border: 1px solid var(--input-border);
+    border-radius: .35rem;
+    background-color: var(--form-control-bg);
+    color: var(--default-text-color);
+}
+
+.gr-panel-shell input.form-control,
+.gr-panel-shell select.form-select,
+.gr-panel-shell textarea.form-control {
+    border-color: var(--input-border);
+    border-radius: .35rem;
+    box-shadow: none;
+}
+
+.gr-panel-shell input.form-control:focus,
+.gr-panel-shell select.form-select:focus,
+.gr-panel-shell textarea.form-control:focus {
+    border-color: rgba(var(--primary-rgb), .5);
+    box-shadow: 0 0 0 .15rem rgba(var(--primary-rgb), .1);
+}
+
+.sticky-settings-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(10px);
+}
+
+.question-bank-hero,
+.question-bank-metrics,
+.admin-filter-row,
+.question-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+}
+
+.edu-cockpit {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem 1.75rem;
+    color: var(--default-text-color);
+}
+
+.edu-page-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.edu-page-head h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.edu-page-head p {
+    margin: .25rem 0 0;
+    color: var(--text-muted);
+    font-size: .85rem;
+}
+
+.edu-head-actions,
+.edu-table-tools,
+.edu-actions > div {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.edu-head-actions a,
+.edu-live-panel a,
+.edu-table-tools a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    min-height: 2.2rem;
+    padding: .45rem .8rem;
+    border: 1px solid var(--default-border);
+    border-radius: .45rem;
+    background: var(--custom-white);
+    color: var(--default-text-color);
+    font-size: .82rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.edu-head-actions a.primary,
+.edu-live-panel a {
+    border-color: rgb(var(--primary-rgb));
+    background: rgb(var(--primary-rgb));
+    color: #fff;
+}
+
+.edu-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .8rem;
+}
+
+.edu-metric-card {
+    display: grid;
+    gap: .9rem;
+    min-height: 7.25rem;
+    padding: 1rem;
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background: var(--custom-white);
+    box-shadow: 0 .75rem 1.65rem rgba(15, 23, 42, .045);
+}
+
+.edu-metric-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+.edu-icon,
+.edu-bottom-grid > article > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .6rem;
+    background: rgba(var(--primary-rgb), .1);
+    color: rgb(var(--primary-rgb));
+    font-size: 1.35rem;
+}
+
+.edu-metric-card.secondary .edu-icon { background: rgba(132, 90, 223, .12); color: #845adf; }
+.edu-metric-card.tertiary .edu-icon { background: rgba(35, 183, 229, .12); color: #23b7e5; }
+.edu-metric-card.amber .edu-icon { background: rgba(245, 184, 73, .16); color: #f5a623; }
+
+.edu-delta {
+    display: grid;
+    justify-items: end;
+    gap: .1rem;
+    color: #00a76f;
+    font-size: .74rem;
+    font-weight: 700;
+}
+
+.edu-delta small {
+    color: var(--text-muted);
+    font-size: .68rem;
+    font-weight: 500;
+}
+
+.edu-metric-card p {
+    margin: 0 0 .2rem;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.edu-metric-card strong {
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.edu-metric-card div > small {
+    color: var(--text-muted);
+    font-size: .72rem;
+}
+
+.edu-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(20rem, .72fr);
+    gap: .9rem;
+    align-items: start;
+}
+
+.edu-panel,
+.edu-live-panel,
+.edu-calendar,
+.edu-bottom-grid > article {
+    border: 1px solid var(--default-border);
+    border-radius: .65rem;
+    background: var(--custom-white);
+    box-shadow: 0 .65rem 1.5rem rgba(15, 23, 42, .04);
+    overflow: hidden;
+}
+
+.edu-panel-head,
+.edu-live-panel header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .9rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.edu-panel-head h3,
+.edu-live-panel h3,
+.edu-calendar h3,
+.edu-actions h4 {
+    margin: 0;
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.edu-panel-head p,
+.edu-live-panel small {
+    margin: .15rem 0 0;
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.edu-table-tools label {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    width: 13rem;
+    min-height: 2.2rem;
+    padding: 0 .6rem;
+    border: 1px solid var(--default-border);
+    border-radius: .45rem;
+    background: var(--default-background);
+    color: var(--text-muted);
+}
+
+.edu-table-tools input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--default-text-color);
+    font-size: .78rem;
+}
+
+.edu-table-wrap {
+    overflow-x: auto;
+}
+
+.edu-table-wrap table {
+    width: 100%;
+    min-width: 45rem;
+    border-collapse: collapse;
+}
+
+.edu-table-wrap th,
+.edu-table-wrap td {
+    padding: .72rem 1rem;
+    border-bottom: 1px solid var(--default-border);
+    font-size: .78rem;
+    vertical-align: middle;
+}
+
+.edu-table-wrap th {
+    background: var(--default-background);
+    color: var(--default-text-color);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.edu-table-wrap td {
+    color: var(--text-muted);
+}
+
+.edu-table-wrap td b {
+    color: var(--default-text-color);
+}
+
+.edu-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-inline-end: .5rem;
+    border-radius: .35rem;
+    background: rgba(var(--primary-rgb), .1);
+    color: rgb(var(--primary-rgb));
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.edu-status,
+.edu-table-wrap em {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.45rem;
+    padding: .18rem .55rem;
+    border-radius: 999px;
+    background: rgba(0, 167, 111, .1);
+    color: #00a76f;
+    font-size: .72rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.edu-table-wrap em {
+    background: rgba(var(--primary-rgb), .1);
+    color: rgb(var(--primary-rgb));
+}
+
+.edu-status.pending {
+    background: rgba(245, 184, 73, .14);
+    color: #d88700;
+}
+
+.edu-actions {
+    padding: .9rem 1rem 1rem;
+}
+
+.edu-actions h4 {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    margin-bottom: .75rem;
+}
+
+.edu-actions > div {
+    align-items: stretch;
+}
+
+.edu-actions article {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .55rem;
+    flex: 1;
+    padding: .65rem .8rem;
+    border: 1px solid var(--default-border);
+    border-radius: .45rem;
+    background: var(--default-background);
+}
+
+.edu-actions small {
+    display: block;
+    color: var(--text-muted);
+    font-size: .7rem;
+}
+
+.edu-side-stack {
+    display: grid;
+    gap: .9rem;
+}
+
+.edu-live-panel header {
+    background: #111827;
+    color: #fff;
+    border: 0;
+}
+
+.edu-live-panel header span {
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    background: #d946ef;
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 800;
+}
+
+.edu-live-panel > div {
+    display: grid;
+    gap: .75rem;
+    padding: 1rem;
+}
+
+.edu-live-panel article {
+    position: relative;
+    padding-inline-start: 1rem;
+}
+
+.edu-live-panel article::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: .25rem;
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: rgb(var(--primary-rgb));
+}
+
+.edu-live-panel p {
+    margin: 0;
+    color: rgb(var(--primary-rgb));
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.edu-live-panel h4 {
+    margin: .1rem 0;
+    font-size: .86rem;
+    font-weight: 700;
+}
+
+.edu-live-panel a {
+    width: 100%;
+    min-height: 1.75rem;
+    margin-top: .45rem;
+    padding: .25rem .6rem;
+    font-size: .72rem;
+}
+
+.edu-calendar {
+    padding: 1rem;
+}
+
+.edu-calendar > div:first-child,
+.edu-calendar .week,
+.edu-calendar .days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: .45rem;
+    text-align: center;
+}
+
+.edu-calendar > div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .8rem;
+    text-align: start;
+}
+
+.edu-calendar .week {
+    color: var(--text-muted);
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+.edu-calendar .days span {
+    display: grid;
+    place-items: center;
+    min-height: 1.8rem;
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.edu-calendar .days span.active {
+    background: rgb(var(--primary-rgb));
+    color: #fff;
+    font-weight: 800;
+}
+
+.edu-bottom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+}
+
+.edu-bottom-grid > article {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-items: center;
+    gap: .8rem;
+    padding: .9rem 1rem;
+}
+
+.edu-bottom-grid h4,
+.edu-bottom-grid p {
+    margin: 0;
+}
+
+.edu-bottom-grid h4 {
+    font-size: .86rem;
+    font-weight: 700;
+}
+
+.edu-bottom-grid p {
+    color: var(--text-muted);
+    font-size: .72rem;
+}
+
+.edu-bottom-grid i {
+    display: block;
+    width: 100%;
+    height: .25rem;
+    margin-top: .4rem;
+    border-radius: 999px;
+    background: var(--default-border);
+    overflow: hidden;
+}
+
+.edu-bottom-grid i b {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgb(var(--primary-rgb)), #845adf);
+}
+
+@media (max-width: 1199.98px) {
+    .edu-metric-grid,
+    .edu-bottom-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .edu-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .edu-cockpit {
+        padding: 1rem;
+    }
+    .edu-page-head,
+    .edu-panel-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .edu-head-actions,
+    .edu-actions > div {
+        width: 100%;
+        flex-direction: column;
+    }
+    .edu-head-actions a,
+    .edu-actions article,
+    .edu-table-tools label {
+        width: 100%;
+    }
+    .edu-metric-grid,
+    .edu-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.question-bank-metrics > *,
+.dashboard-stat,
+.edu-stat,
+.summary-metric {
+    padding: .85rem 1rem;
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    background-color: var(--custom-white);
+}
+
+.test-email-bar {
+    display: flex;
+    align-items: end;
+    gap: .75rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.test-email-bar label {
+    flex: 1;
+    margin: 0;
+}
+
+.test-email-bar button {
+    min-height: 2.375rem;
+    padding: .375rem .85rem;
+    border: 0;
+    border-radius: .35rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.firebase-fields {
+    display: none;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+    padding-top: .25rem;
+}
+
+.firebase-fields.show {
+    display: grid;
+}
+
+.switch-field {
+    align-content: center;
+    min-height: 2.375rem;
+}
+
+.switch-field span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, .45);
+    z-index: 1055;
+}
+
+.modal-overlay:target,
+.modal-overlay.open,
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    width: min(54rem, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    background-color: var(--custom-white);
+    border: 1px solid var(--default-border);
+    border-radius: .5rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .18);
+}
+
+.modal-box > * {
+    padding-inline: 1.25rem;
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--default-border);
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--default-border);
+}
+
+.gr-toast,
+.gr-swal-popup {
+    border: 1px solid var(--default-border);
+    border-radius: .5rem !important;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12) !important;
+}
+
+.sadmin-instructor-card .card-header {
+    padding: 1.25rem;
+}
+
+.sadmin-instructor-table .btn-list {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.sadmin-instructor-table .inline-panel-login {
+    margin: 0;
+}
+
+@media (max-width: 991.98px) {
+    .gr-panel-shell > main.main {
+        margin-inline-start: 0;
+        width: 100%;
+    }
+
+    .gr-panel-shell .gr-template-header {
+        inset-inline-start: 0;
+    }
+
+    .gr-panel-container {
+        padding-inline: .75rem;
+    }
+
+    .ins-grid,
+    .live-room-shell,
+    .live-work-grid,
+    .live-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .instructor-dashboard-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pid-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pid-actions {
+        justify-content: flex-start;
+    }
+
+    .instructor-dashboard-hero .hero-actions {
+        justify-content: flex-start;
+    }
+
+    .pid-metrics,
+    .instructor-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pid-grid,
+    .pid-grid-equal {
+        grid-template-columns: 1fr;
+    }
+
+    .instructor-content .course-console-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .detail-view-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .detail-head,
+    .table-head,
+    .mini-table-title,
+    .card-head,
+    .section-head,
+    .gr-table-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .settings-area-card {
+        grid-template-columns: 2.5rem minmax(0, 1fr);
+    }
+
+    .settings-area-card em {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        width: fit-content;
+    }
+
+    .instructor-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pid-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .pid-hero {
+        padding: 1rem;
+        border-radius: .8rem;
+    }
+
+    .instructor-dashboard-hero {
+        padding: 1rem;
+    }
+}
+
+/* GyanRank ERP-style panel skin for Super Admin and institute operations. */
+.gr-sadmin-shell {
+    --gr-navy: #06345f;
+    --gr-navy-deep: #052844;
+    --gr-navy-soft: #0b416f;
+    --gr-orange: #f68a00;
+    --gr-page: #f4f7fb;
+    --gr-line: #d6e3ee;
+    --primary-rgb: 6, 52, 95;
+    --primary-color: var(--gr-navy);
+    --default-body-bg-color: var(--gr-page);
+    --default-background: #eef5fb;
+    --default-border: var(--gr-line);
+    --input-border: #cbd8e5;
+}
+
+.gr-sadmin-shell .app-sidebar {
+    background: var(--gr-navy-deep) !important;
+    border-inline-end: 0 !important;
+    box-shadow: 8px 0 24px rgba(6, 52, 95, .14);
+}
+
+.gr-sadmin-shell .main-sidebar-header {
+    background: #ffffff !important;
+    border-block-end: 1px solid rgba(6, 52, 95, .14);
+}
+
+.gr-sadmin-shell .gr-panel-logo {
+    justify-content: flex-start;
+    padding-inline: 1.15rem;
+}
+
+.gr-sadmin-shell .gr-panel-logo img {
+    max-width: 12rem;
+    max-height: 3rem;
+    background: transparent;
+}
+
+.gr-sadmin-shell .main-menu {
+    padding: .75rem .65rem 1.25rem;
+}
+
+.gr-sadmin-shell .slide__category {
+    margin: .35rem .55rem .5rem;
+}
+
+.gr-sadmin-shell .category-name {
+    color: rgba(255, 255, 255, .58) !important;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.gr-sadmin-shell .side-menu__item {
+    min-height: 2.8rem;
+    margin-block: .08rem;
+    border-inline-start: 4px solid transparent;
+    border-radius: 0 .55rem .55rem 0;
+    color: #d9e8f6 !important;
+    font-weight: 700;
+}
+
+.gr-sadmin-shell .side-menu__icon {
+    color: rgba(255, 255, 255, .78) !important;
+}
+
+.gr-sadmin-shell .side-menu__item:hover,
+.gr-sadmin-shell .slide.open > .side-menu__item,
+.gr-sadmin-shell .side-menu__item.active {
+    background: var(--gr-navy-soft) !important;
+    border-inline-start-color: var(--gr-orange);
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .side-menu__item:hover .side-menu__icon,
+.gr-sadmin-shell .side-menu__item.active .side-menu__icon {
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .slide-menu {
+    margin: .15rem 0 .35rem;
+    padding: .2rem 0 .25rem 1rem !important;
+    background: rgba(5, 40, 68, .96) !important;
+    border-radius: .4rem;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 2.35rem;
+    margin: 0;
+    border-inline-start: 0;
+    border-radius: .35rem;
+    color: #bdd3e8 !important;
+    font-size: .82rem;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item:hover,
+.gr-sadmin-shell .slide-menu .side-menu__item.active {
+    background: rgba(246, 138, 0, .13) !important;
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .gr-template-header {
+    background: var(--gr-navy) !important;
+    border-block-end: 3px solid var(--gr-orange);
+    box-shadow: 0 8px 20px rgba(6, 52, 95, .13);
+}
+
+.gr-sadmin-shell .app-header .main-header-container {
+    min-height: 3.75rem;
+}
+
+.gr-sadmin-shell .header-link,
+.gr-sadmin-shell .header-link-icon {
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .header-link:hover {
+    background: rgba(255, 255, 255, .08) !important;
+}
+
+.gr-sadmin-shell .header-link .text-muted,
+.gr-sadmin-shell .header-link small {
+    color: rgba(255, 255, 255, .68) !important;
+}
+
+.gr-sadmin-shell .header-icon-badge {
+    background: var(--gr-orange) !important;
+    color: #ffffff;
+}
+
+.gr-sadmin-shell .avatar.bg-light {
+    background: rgba(255, 255, 255, .14) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .page-header-breadcrumb {
+    margin-block: 1.15rem !important;
+}
+
+.gr-sadmin-shell .page-title {
+    color: var(--gr-navy);
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+}
+
+.gr-sadmin-shell .breadcrumb a {
+    color: var(--gr-navy);
+    font-weight: 700;
+}
+
+.gr-sadmin-shell .card,
+.gr-sadmin-shell .custom-card,
+.gr-sadmin-shell .settings-detail-card,
+.gr-sadmin-shell .settings-summary-table,
+.gr-sadmin-shell .settings-mini-table,
+.gr-sadmin-shell .dashboard-card,
+.gr-sadmin-shell .panel-card,
+.gr-sadmin-shell .pid-card,
+.gr-sadmin-shell .edu-panel,
+.gr-sadmin-shell .edu-live-panel,
+.gr-sadmin-shell .edu-calendar,
+.gr-sadmin-shell .edu-bottom-grid > article {
+    border: 1px solid var(--gr-line) !important;
+    border-top: 3px solid var(--gr-orange) !important;
+    border-radius: .5rem !important;
+    box-shadow: 0 8px 24px rgba(6, 52, 95, .08) !important;
+}
+
+.gr-sadmin-shell .card-header,
+.gr-sadmin-shell .detail-head,
+.gr-sadmin-shell .table-head,
+.gr-sadmin-shell .mini-table-title,
+.gr-sadmin-shell .card-head,
+.gr-sadmin-shell .section-head {
+    background: #ffffff;
+    border-bottom-color: var(--gr-line) !important;
+}
+
+.gr-sadmin-shell .card-header span,
+.gr-sadmin-shell .detail-head > div:first-child > span,
+.gr-sadmin-shell .table-head > div:first-child > span,
+.gr-sadmin-shell .mini-table-title > div:first-child > span,
+.gr-sadmin-shell .section-kicker {
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .btn-primary,
+.gr-sadmin-shell .modal-button,
+.gr-sadmin-shell .form-actions button,
+.gr-sadmin-shell .modal-actions button,
+.gr-sadmin-shell input[type="submit"].btn {
+    background: var(--gr-navy) !important;
+    border-color: var(--gr-navy) !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+.gr-sadmin-shell .btn-primary:hover,
+.gr-sadmin-shell .modal-button:hover,
+.gr-sadmin-shell .form-actions button:hover,
+.gr-sadmin-shell .modal-actions button:hover {
+    background: var(--gr-navy-soft) !important;
+    border-color: var(--gr-navy-soft) !important;
+}
+
+.gr-sadmin-shell .btn-success,
+.gr-sadmin-shell .btn-primary-light,
+.gr-sadmin-shell .soft-action,
+.gr-sadmin-shell .mini-action-btn,
+.gr-sadmin-shell .table-edit-icon {
+    background: rgba(246, 138, 0, .12) !important;
+    color: var(--gr-orange) !important;
+    border-color: transparent !important;
+    font-weight: 700;
+}
+
+.gr-sadmin-shell .btn-success:hover,
+.gr-sadmin-shell .btn-primary-light:hover,
+.gr-sadmin-shell .soft-action:hover,
+.gr-sadmin-shell .mini-action-btn:hover,
+.gr-sadmin-shell .table-edit-icon:hover {
+    background: var(--gr-orange) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .table thead th,
+.gr-sadmin-shell table:not(.table) th {
+    background: #eef5fb !important;
+    color: var(--gr-navy) !important;
+    border-bottom-color: var(--gr-line) !important;
+}
+
+.gr-sadmin-shell .table tbody tr:hover > *,
+.gr-sadmin-shell table:not(.table) tbody tr:hover > * {
+    background: #f7fbff !important;
+}
+
+.gr-sadmin-shell input.form-control:focus,
+.gr-sadmin-shell select.form-select:focus,
+.gr-sadmin-shell textarea.form-control:focus,
+.gr-sadmin-shell .form-grid input:focus,
+.gr-sadmin-shell .form-grid select:focus,
+.gr-sadmin-shell .form-grid textarea:focus {
+    border-color: var(--gr-orange) !important;
+    box-shadow: 0 0 0 .15rem rgba(246, 138, 0, .14) !important;
+}
+
+.gr-sadmin-shell .footer {
+    background: #ffffff !important;
+    border-top-color: var(--gr-line) !important;
+}
+
+/* Dashboard finishing pass: closer to the ERP workspace rhythm. */
+.gr-sadmin-shell .gr-panel-container {
+    padding-inline: 1.875rem;
+}
+
+.gr-sadmin-shell .sadmin-dashboard-page,
+.gr-sadmin-shell .edu-cockpit {
+    gap: 1rem;
+}
+
+.gr-sadmin-shell .edu-page-head {
+    margin-bottom: .15rem;
+}
+
+.gr-sadmin-shell .edu-page-head h2,
+.gr-sadmin-shell .settings-detail-card h2,
+.gr-sadmin-shell .table-head h2,
+.gr-sadmin-shell .detail-head h2 {
+    color: #1f2d3d;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.gr-sadmin-shell .edu-page-head p,
+.gr-sadmin-shell .detail-head p,
+.gr-sadmin-shell .table-head p {
+    color: #708195;
+}
+
+.gr-sadmin-shell .edu-head-actions a,
+.gr-sadmin-shell .table-head a,
+.gr-sadmin-shell .detail-head a,
+.gr-sadmin-shell .pid-card-head a {
+    min-height: 2.35rem;
+    border-radius: .4rem;
+    border-color: var(--gr-line);
+    background: #ffffff;
+    color: var(--gr-navy);
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(6, 52, 95, .06);
+}
+
+.gr-sadmin-shell .edu-head-actions a.primary,
+.gr-sadmin-shell .edu-live-panel a {
+    border-color: var(--gr-navy) !important;
+    background: var(--gr-navy) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .edu-head-actions a:hover,
+.gr-sadmin-shell .table-head a:hover,
+.gr-sadmin-shell .detail-head a:hover,
+.gr-sadmin-shell .pid-card-head a:hover {
+    border-color: var(--gr-orange);
+    color: var(--gr-orange);
+}
+
+.gr-sadmin-shell .edu-metric-grid {
+    gap: 1rem;
+}
+
+.gr-sadmin-shell .edu-metric-card,
+.gr-sadmin-shell .stat-card,
+.gr-sadmin-shell .metric-card,
+.gr-sadmin-shell .summary-card,
+.gr-sadmin-shell .settings-card,
+.gr-sadmin-shell .compact-metric-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--gr-line) !important;
+    border-radius: .5rem !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(6, 52, 95, .07) !important;
+}
+
+.gr-sadmin-shell .edu-metric-card::before,
+.gr-sadmin-shell .stat-card::before,
+.gr-sadmin-shell .compact-metric-card::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 3px;
+    background: var(--gr-orange);
+    opacity: .95;
+}
+
+.gr-sadmin-shell .edu-icon,
+.gr-sadmin-shell .settings-card-icon,
+.gr-sadmin-shell .settings-area-icon,
+.gr-sadmin-shell .pid-metrics i,
+.gr-sadmin-shell .edu-bottom-grid > article > span,
+.gr-sadmin-shell .avatar {
+    border-radius: .5rem !important;
+}
+
+.gr-sadmin-shell .edu-icon,
+.gr-sadmin-shell .settings-card-icon,
+.gr-sadmin-shell .pid-metrics i,
+.gr-sadmin-shell .edu-bottom-grid > article > span {
+    background: #eef5fb !important;
+    color: var(--gr-navy) !important;
+}
+
+.gr-sadmin-shell .edu-metric-card.secondary .edu-icon,
+.gr-sadmin-shell .edu-metric-card.tertiary .edu-icon,
+.gr-sadmin-shell .edu-metric-card.amber .edu-icon {
+    background: rgba(246, 138, 0, .12) !important;
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .edu-delta,
+.gr-sadmin-shell .edu-metric-card strong,
+.gr-sadmin-shell .stat-card strong,
+.gr-sadmin-shell .metric-card strong,
+.gr-sadmin-shell .summary-card strong,
+.gr-sadmin-shell .compact-metric-card strong {
+    color: #1f2d3d;
+}
+
+.gr-sadmin-shell .edu-metric-card p,
+.gr-sadmin-shell .stat-card h3,
+.gr-sadmin-shell .stat-card span,
+.gr-sadmin-shell .metric-card h3,
+.gr-sadmin-shell .summary-card h3,
+.gr-sadmin-shell .compact-metric-card span {
+    color: #7b8797;
+    font-size: .74rem;
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+
+.gr-sadmin-shell .edu-panel,
+.gr-sadmin-shell .settings-detail-card,
+.gr-sadmin-shell .role-table-wrap,
+.gr-sadmin-shell .table-responsive {
+    overflow: hidden;
+}
+
+.gr-sadmin-shell .edu-panel-head,
+.gr-sadmin-shell .card-header,
+.gr-sadmin-shell .detail-head,
+.gr-sadmin-shell .table-head {
+    padding: .95rem 1.1rem;
+}
+
+.gr-sadmin-shell .edu-table-tools label,
+.gr-sadmin-shell .gr-table-toolbar .form-control,
+.gr-sadmin-shell .form-control,
+.gr-sadmin-shell .form-select {
+    border-radius: .4rem !important;
+    border-color: var(--gr-line) !important;
+    background: #f7fbff !important;
+}
+
+.gr-sadmin-shell .edu-table-wrap th,
+.gr-sadmin-shell .table thead th,
+.gr-sadmin-shell table:not(.table) th {
+    background: #eef5fb !important;
+    color: var(--gr-navy) !important;
+    font-size: .73rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .035em;
+}
+
+.gr-sadmin-shell .edu-table-wrap td,
+.gr-sadmin-shell .table tbody td,
+.gr-sadmin-shell table:not(.table) td {
+    color: #1f2d3d !important;
+    border-color: var(--gr-line) !important;
+}
+
+.gr-sadmin-shell .edu-avatar {
+    border-radius: .4rem;
+    background: #e8eef5;
+    color: var(--gr-navy);
+    font-weight: 900;
+}
+
+.gr-sadmin-shell .edu-status,
+.gr-sadmin-shell .status-pill,
+.gr-sadmin-shell .badge.bg-success-transparent,
+.gr-sadmin-shell .mini-badge {
+    border-radius: 999px;
+    background: #e8f8f1 !important;
+    color: #009966 !important;
+    font-weight: 900;
+}
+
+.gr-sadmin-shell .status-pill.warning,
+.gr-sadmin-shell .edu-status.pending,
+.gr-sadmin-shell .badge.bg-warning-transparent {
+    background: rgba(246, 138, 0, .13) !important;
+    color: #d77700 !important;
+}
+
+.gr-sadmin-shell .status-pill.empty,
+.gr-sadmin-shell .badge.bg-danger-transparent {
+    background: rgba(220, 38, 38, .09) !important;
+    color: #b91c1c !important;
+}
+
+.gr-sadmin-shell .edu-live-panel {
+    border-top-color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .edu-live-panel header {
+    background: #111827 !important;
+    border-bottom: 0 !important;
+}
+
+.gr-sadmin-shell .edu-live-panel header span {
+    background: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .edu-live-panel article::before {
+    background: var(--gr-navy) !important;
+}
+
+.gr-sadmin-shell .edu-live-panel p {
+    color: var(--gr-navy) !important;
+}
+
+.gr-sadmin-shell .edu-calendar .days span.active {
+    background: var(--gr-orange) !important;
+    color: #ffffff;
+}
+
+.gr-sadmin-shell .header-content-left .header-link,
+.gr-sadmin-shell .header-content-left .sidemenu-toggle,
+.gr-sadmin-shell .header-content-right .header-link {
+    border-radius: .45rem;
+}
+
+.gr-sadmin-shell .sidemenu-toggle span,
+.gr-sadmin-shell .sidemenu-toggle span::before,
+.gr-sadmin-shell .sidemenu-toggle span::after {
+    background: #ffffff !important;
+}
+
+.gr-sadmin-shell .gr-profile-menu {
+    border: 1px solid var(--gr-line);
+    border-top: 3px solid var(--gr-orange);
+    border-radius: .5rem;
+    box-shadow: 0 14px 32px rgba(6, 52, 95, .14);
+}
+
+.gr-sadmin-shell .gr-profile-menu .dropdown-item {
+    color: #1f2d3d;
+    font-weight: 700;
+}
+
+.gr-sadmin-shell .gr-profile-menu .dropdown-item:hover {
+    background: #eef5fb;
+    color: var(--gr-navy);
+}
+
+@media (max-width: 991.98px) {
+    .gr-sadmin-shell .gr-panel-container {
+        padding-inline: 1rem;
+    }
+}
+
+/* ERP clone shell for every Super Admin page. Keep this block last. */
+.gr-sadmin-shell {
+    --gr-erp-sidebar-w: 250px;
+    --gr-erp-topbar-h: 64px;
+    --gr-navy: #06345f;
+    --gr-navy-deep: #072f55;
+    --gr-navy-sub: #052844;
+    --gr-navy-hover: #0b416f;
+    --gr-orange: #f68a00;
+    --gr-panel-bg: #f4f7fb;
+    --gr-border: #d6e3ee;
+    --default-font-family: "Arial", "Helvetica Neue", sans-serif;
+}
+
+.gr-sadmin-shell,
+.gr-sadmin-shell body {
+    background: var(--gr-panel-bg) !important;
+}
+
+.gr-sadmin-shell > main.main {
+    width: calc(100% - var(--gr-erp-sidebar-w)) !important;
+    margin-inline-start: var(--gr-erp-sidebar-w) !important;
+    padding-block-start: var(--gr-erp-topbar-h) !important;
+    background: var(--gr-panel-bg) !important;
+}
+
+.gr-sadmin-shell .app-sidebar {
+    width: var(--gr-erp-sidebar-w) !important;
+    background: var(--gr-navy-deep) !important;
+    box-shadow: 4px 0 14px rgba(0, 0, 0, .18) !important;
+}
+
+.gr-sadmin-shell .main-sidebar-header {
+    width: var(--gr-erp-sidebar-w) !important;
+    height: var(--gr-erp-topbar-h) !important;
+    background: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.gr-sadmin-shell .gr-panel-logo {
+    height: var(--gr-erp-topbar-h);
+    padding: 0 18px !important;
+    justify-content: flex-start !important;
+}
+
+.gr-sadmin-shell .gr-panel-logo img {
+    max-width: 195px !important;
+    max-height: 46px !important;
+}
+
+.gr-sadmin-shell .gr-template-header {
+    inset-inline-start: var(--gr-erp-sidebar-w) !important;
+    max-width: calc(100% - var(--gr-erp-sidebar-w)) !important;
+    height: var(--gr-erp-topbar-h) !important;
+    min-height: var(--gr-erp-topbar-h) !important;
+    background: var(--gr-navy) !important;
+    border-bottom: 3px solid var(--gr-orange) !important;
+    box-shadow: 0 4px 12px rgba(6, 52, 95, .22) !important;
+}
+
+.gr-sadmin-shell .main-header-container {
+    min-height: var(--gr-erp-topbar-h) !important;
+    height: var(--gr-erp-topbar-h) !important;
+    padding-inline: 16px 18px !important;
+}
+
+.gr-sadmin-shell .header-content-left,
+.gr-sadmin-shell .header-content-right {
+    height: var(--gr-erp-topbar-h);
+    display: flex;
+    align-items: center;
+}
+
+.gr-sadmin-shell .sidemenu-toggle.header-link {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    margin-inline-end: 14px;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.gr-sadmin-shell .sidemenu-toggle span,
+.gr-sadmin-shell .sidemenu-toggle span::before,
+.gr-sadmin-shell .sidemenu-toggle span::after {
+    background: #ffffff !important;
+}
+
+.gr-sadmin-shell .gr-topbar-title a {
+    color: var(--gr-orange) !important;
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.gr-sadmin-shell .gr-topbar-search {
+    height: 36px;
+    width: min(280px, 26vw);
+    margin: 0 18px 0 0;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+}
+
+.gr-sadmin-shell .gr-topbar-search input {
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    padding: 0 8px 0 16px;
+    border: 0;
+    outline: 0;
+    background: #ffffff;
+    color: #1f2d3d;
+    font-size: 16px;
+}
+
+.gr-sadmin-shell .gr-topbar-search button {
+    width: 48px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    color: var(--gr-navy);
+    font-size: 23px;
+}
+
+.gr-sadmin-shell .header-link {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .header-link:hover {
+    background: transparent !important;
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .header-link-icon {
+    color: currentColor !important;
+    font-size: 24px !important;
+}
+
+.gr-sadmin-shell .gr-india-flag span {
+    display: block;
+    width: 26px;
+    height: 18px;
+    border-radius: 2px;
+    background: linear-gradient(#ff9933 0 33.33%, #ffffff 33.33% 66.66%, #138808 66.66% 100%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .65);
+    position: relative;
+}
+
+.gr-sadmin-shell .gr-india-flag span::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #000080;
+    border-radius: 50%;
+}
+
+.gr-sadmin-shell .gr-user-trigger {
+    width: auto !important;
+    min-width: auto !important;
+    gap: 10px;
+    padding: 0 8px !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger .avatar {
+    width: 34px !important;
+    height: 34px !important;
+    background: rgba(255, 255, 255, .18) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger .fw-semibold {
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger small {
+    color: rgba(255, 255, 255, .78) !important;
+}
+
+.gr-sadmin-shell .main-sidebar {
+    width: var(--gr-erp-sidebar-w) !important;
+}
+
+.gr-sadmin-shell .main-menu {
+    padding: 8px 0 24px !important;
+}
+
+.gr-sadmin-shell .slide__category {
+    margin: 0 !important;
+    padding: 12px 18px 8px;
+}
+
+.gr-sadmin-shell .category-name {
+    color: #d9e8f6 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+.gr-sadmin-shell .side-menu__item {
+    min-height: 54px !important;
+    margin: 0 !important;
+    padding: 0 18px !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #d9e8f6 !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+.gr-sadmin-shell .side-menu__icon {
+    width: 24px !important;
+    min-width: 24px !important;
+    margin-inline-end: 12px !important;
+    color: #ffffff !important;
+    font-size: 22px !important;
+}
+
+.gr-sadmin-shell .side-menu__angle {
+    color: #ffffff !important;
+    opacity: .9;
+}
+
+.gr-sadmin-shell .side-menu__item:hover,
+.gr-sadmin-shell .side-menu__item.active,
+.gr-sadmin-shell .slide.open > .side-menu__item {
+    background: var(--gr-navy-hover) !important;
+    border-left-color: var(--gr-orange) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .slide-menu {
+    margin: 0 !important;
+    padding: 4px 0 8px !important;
+    background: var(--gr-navy-sub) !important;
+    border-radius: 0 !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    padding: 0 20px 0 38px !important;
+    color: #bdd3e8 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__icon {
+    width: 18px !important;
+    min-width: 18px !important;
+    margin-inline-end: 10px !important;
+    color: #bdd3e8 !important;
+    font-size: 18px !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item:hover,
+.gr-sadmin-shell .slide-menu .side-menu__item.active {
+    background: transparent !important;
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item:hover .side-menu__icon,
+.gr-sadmin-shell .slide-menu .side-menu__item.active .side-menu__icon {
+    color: var(--gr-orange) !important;
+}
+
+.gr-sadmin-shell .gr-panel-container {
+    padding: 10px 12px 0 !important;
+}
+
+.gr-sadmin-shell .page-header-breadcrumb {
+    margin: 12px 0 14px !important;
+}
+
+.gr-sadmin-shell .breadcrumb {
+    display: none !important;
+}
+
+.gr-sadmin-shell .page-title {
+    color: var(--gr-navy) !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+}
+
+.gr-sadmin-shell .page-header-breadcrumb p {
+    color: #708195 !important;
+    font-size: 16px !important;
+}
+
+.gr-sadmin-shell .card,
+.gr-sadmin-shell .custom-card,
+.gr-sadmin-shell .settings-detail-card,
+.gr-sadmin-shell .settings-summary-table,
+.gr-sadmin-shell .settings-mini-table,
+.gr-sadmin-shell .dashboard-card,
+.gr-sadmin-shell .panel-card,
+.gr-sadmin-shell .list-card,
+.gr-sadmin-shell .stats-card,
+.gr-sadmin-shell .edu-panel,
+.gr-sadmin-shell .edu-live-panel,
+.gr-sadmin-shell .edu-calendar,
+.gr-sadmin-shell .edu-metric-card,
+.gr-sadmin-shell .stat-card,
+.gr-sadmin-shell .compact-metric-card {
+    border: 1px solid var(--gr-border) !important;
+    border-top: 3px solid var(--gr-orange) !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .12) !important;
+}
+
+.gr-sadmin-shell .card-header,
+.gr-sadmin-shell .detail-head,
+.gr-sadmin-shell .table-head,
+.gr-sadmin-shell .mini-table-title,
+.gr-sadmin-shell .edu-panel-head {
+    min-height: 54px;
+    padding: 12px 18px !important;
+    border-bottom: 1px solid var(--gr-border) !important;
+    background: #ffffff !important;
+}
+
+.gr-sadmin-shell .card-header h1,
+.gr-sadmin-shell .card-header h2,
+.gr-sadmin-shell .card-header h3,
+.gr-sadmin-shell .card-header h4,
+.gr-sadmin-shell .card-header h5,
+.gr-sadmin-shell .detail-head h1,
+.gr-sadmin-shell .detail-head h2,
+.gr-sadmin-shell .table-head h1,
+.gr-sadmin-shell .table-head h2,
+.gr-sadmin-shell .edu-panel-head h3 {
+    color: #1f2d3d !important;
+    font-size: 24px !important;
+    font-weight: 500 !important;
+}
+
+.gr-sadmin-shell .table > :not(caption) > * > *,
+.gr-sadmin-shell table:not(.table) th,
+.gr-sadmin-shell table:not(.table) td {
+    padding: 14px 20px !important;
+    border-color: var(--gr-border) !important;
+    color: #1f2d3d !important;
+    font-size: 16px !important;
+}
+
+.gr-sadmin-shell .table thead th,
+.gr-sadmin-shell table:not(.table) th,
+.gr-sadmin-shell .edu-table-wrap th {
+    background: #eef5fb !important;
+    color: var(--gr-navy) !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+}
+
+.gr-sadmin-shell .btn,
+.gr-sadmin-shell button,
+.gr-sadmin-shell input[type="submit"] {
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+}
+
+.gr-sadmin-shell .btn-primary,
+.gr-sadmin-shell .edu-head-actions a.primary,
+.gr-sadmin-shell .edu-live-panel a,
+.gr-sadmin-shell .modal-button,
+.gr-sadmin-shell .form-actions button {
+    background: var(--gr-navy) !important;
+    border-color: var(--gr-navy) !important;
+    color: #ffffff !important;
+}
+
+.gr-sadmin-shell .btn-primary:hover,
+.gr-sadmin-shell .edu-head-actions a.primary:hover,
+.gr-sadmin-shell .edu-live-panel a:hover,
+.gr-sadmin-shell .modal-button:hover,
+.gr-sadmin-shell .form-actions button:hover {
+    background: var(--gr-navy-hover) !important;
+    border-color: var(--gr-navy-hover) !important;
+}
+
+.gr-sadmin-shell .form-control,
+.gr-sadmin-shell .form-select,
+.gr-sadmin-shell input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+.gr-sadmin-shell select,
+.gr-sadmin-shell textarea {
+    min-height: 35px;
+    border-radius: 0 !important;
+    border-color: #cbd8e5 !important;
+    background: #ffffff !important;
+    color: #1f2d3d !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(calc(-1 * var(--gr-erp-sidebar-w))) !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell > main.main {
+    width: 100% !important;
+    margin-inline-start: 0 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 0 !important;
+    max-width: 100% !important;
+}
+
+/* FINAL: Smart School sidebar exact width/density. This must stay last. */
+html .gr-sadmin-shell {
+    --gr-erp-sidebar-w: 200px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - 200px) !important;
+    margin-inline-start: 200px !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 200px !important;
+    max-width: calc(100% - 200px) !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu {
+    background: #072f55 !important;
+}
+
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .gr-panel-logo {
+    height: 50px !important;
+    min-height: 50px !important;
+    background: #ffffff !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo {
+    padding: 0 10px !important;
+    justify-content: center !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo img {
+    max-width: 100% !important;
+    max-height: 40px !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu {
+    width: 200px !important;
+    padding: 8px 15px 0 !important;
+    background: #06345f !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .25) !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu a {
+    min-height: 27px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 27px !important;
+}
+
+html .gr-sadmin-shell .side-menu__item {
+    min-height: 54px !important;
+    height: 54px !important;
+    padding: 0 15px !important;
+    border-left: 4px solid transparent !important;
+    background: #072f55 !important;
+    color: #d9e8f6 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 54px !important;
+}
+
+html .gr-sadmin-shell .side-menu__item:hover,
+html .gr-sadmin-shell .side-menu__item.active,
+html .gr-sadmin-shell .slide.open > .side-menu__item,
+html .gr-sadmin-shell .slide.active > .side-menu__item {
+    background: #0b416f !important;
+    border-left-color: #f68a00 !important;
+    color: #ffffff !important;
+}
+
+html .gr-sadmin-shell .side-menu__icon {
+    width: 18px !important;
+    min-width: 18px !important;
+    margin: 0 9px 0 0 !important;
+    font-size: 15px !important;
+}
+
+html .gr-sadmin-shell .side-menu__angle {
+    font-size: 14px !important;
+}
+
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    width: 200px !important;
+    padding: 4px 0 6px !important;
+    background: #052844 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 12px 0 16px !important;
+    background: #052844 !important;
+    color: #bdd3e8 !important;
+    font-size: 14px !important;
+    line-height: 36px !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item::before {
+    content: "\00bb" !important;
+    margin-right: 8px !important;
+    color: #bdd3e8 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active,
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover::before,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active::before {
+    color: #f68a00 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(-200px) !important;
+}
+
+@media (max-width: 991.98px) {
+    html .gr-sadmin-shell > main.main {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+    }
+    html .gr-sadmin-shell .gr-template-header {
+        inset-inline-start: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Pixel-match Smart School sidebar values. Absolute last sidebar rules. */
+html .gr-sadmin-shell {
+    --gr-erp-sidebar-w: 200px !important;
+    --gr-erp-topbar-h: 50px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - 200px) !important;
+    margin-inline-start: 200px !important;
+    padding-block-start: 50px !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 200px !important;
+    max-width: calc(100% - 200px) !important;
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar {
+    background: #072f55 !important;
+    box-shadow: none !important;
+}
+
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .gr-panel-logo {
+    height: 50px !important;
+    min-height: 50px !important;
+    background: #ffffff !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo {
+    padding: 0 10px !important;
+    justify-content: center !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo img {
+    max-width: 100% !important;
+    max-height: 40px !important;
+}
+
+html .gr-sadmin-shell .main-sidebar {
+    padding-top: 0 !important;
+    background: #072f55 !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu {
+    position: relative !important;
+    z-index: 2 !important;
+    width: 200px !important;
+    margin: 0 !important;
+    padding: 8px 15px 0 !important;
+    list-style: none !important;
+    background: #06345f !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .25) !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu a {
+    min-height: 27px !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    background: transparent !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 27px !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu i {
+    font-size: 14px !important;
+}
+
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu {
+    width: 200px !important;
+    padding: 0 !important;
+    background: #072f55 !important;
+}
+
+html .gr-sadmin-shell .side-menu__item {
+    min-height: 54px !important;
+    height: 54px !important;
+    padding: 0 15px !important;
+    border-left: 4px solid transparent !important;
+    background: #072f55 !important;
+    color: #d9e8f6 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 54px !important;
+}
+
+html .gr-sadmin-shell .side-menu__item:hover,
+html .gr-sadmin-shell .side-menu__item.active,
+html .gr-sadmin-shell .slide.open > .side-menu__item,
+html .gr-sadmin-shell .slide.active > .side-menu__item {
+    background: #0b416f !important;
+    border-left-color: #f68a00 !important;
+    color: #ffffff !important;
+}
+
+html .gr-sadmin-shell .side-menu__icon {
+    width: 18px !important;
+    min-width: 18px !important;
+    margin: 0 9px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+}
+
+html .gr-sadmin-shell .side-menu__angle {
+    font-size: 14px !important;
+}
+
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    width: 200px !important;
+    padding: 4px 0 6px !important;
+    background: #052844 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 12px 0 16px !important;
+    background: #052844 !important;
+    color: #bdd3e8 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 36px !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item::before {
+    content: "»" !important;
+    margin-right: 8px !important;
+    color: #bdd3e8 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active {
+    background: #052844 !important;
+    color: #f68a00 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover::before,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active::before {
+    color: #f68a00 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(-200px) !important;
+}
+
+@media (max-width: 991.98px) {
+    html .gr-sadmin-shell > main.main {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+    }
+    html .gr-sadmin-shell .gr-template-header {
+        inset-inline-start: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .gr-sadmin-shell > main.main {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+    }
+
+    .gr-sadmin-shell .gr-template-header {
+        inset-inline-start: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .gr-sadmin-shell .gr-topbar-search {
+        display: none !important;
+    }
+}
+
+/* Compact ERP density pass. Keep this final so the panel does not feel oversized. */
+.gr-sadmin-shell {
+    --gr-erp-sidebar-w: 250px;
+    --gr-erp-topbar-h: 60px;
+}
+
+.gr-sadmin-shell .main-sidebar-header,
+.gr-sadmin-shell .gr-panel-logo {
+    height: var(--gr-erp-topbar-h) !important;
+}
+
+.gr-sadmin-shell .gr-panel-logo img {
+    max-width: 178px !important;
+    max-height: 40px !important;
+}
+
+.gr-sadmin-shell .main-header-container,
+.gr-sadmin-shell .header-content-left,
+.gr-sadmin-shell .header-content-right {
+    height: var(--gr-erp-topbar-h) !important;
+    min-height: var(--gr-erp-topbar-h) !important;
+}
+
+.gr-sadmin-shell .gr-topbar-title a {
+    font-size: 24px !important;
+}
+
+.gr-sadmin-shell .gr-topbar-search {
+    height: 34px !important;
+    width: min(255px, 24vw) !important;
+}
+
+.gr-sadmin-shell .gr-topbar-search input,
+.gr-sadmin-shell .gr-topbar-search button {
+    height: 34px !important;
+}
+
+.gr-sadmin-shell .gr-topbar-search input {
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .gr-topbar-search button {
+    width: 42px !important;
+    font-size: 20px !important;
+}
+
+.gr-sadmin-shell .header-link {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+}
+
+.gr-sadmin-shell .header-link-icon {
+    font-size: 21px !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger .avatar {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 13px !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger .fw-semibold {
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .gr-user-trigger small {
+    font-size: 12px !important;
+}
+
+.gr-sadmin-shell .slide__category {
+    padding: 10px 18px 6px !important;
+}
+
+.gr-sadmin-shell .category-name {
+    font-size: 13px !important;
+    opacity: .82;
+}
+
+.gr-sadmin-shell .side-menu__item {
+    min-height: 43px !important;
+    padding: 0 18px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.gr-sadmin-shell .side-menu__icon {
+    width: 21px !important;
+    min-width: 21px !important;
+    margin-inline-end: 10px !important;
+    font-size: 19px !important;
+}
+
+.gr-sadmin-shell .slide-menu {
+    padding: 3px 0 7px !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 34px !important;
+    padding-left: 34px !important;
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .slide-menu .side-menu__icon {
+    width: 17px !important;
+    min-width: 17px !important;
+    font-size: 16px !important;
+}
+
+.gr-sadmin-shell .gr-panel-container {
+    padding: 8px 12px 0 !important;
+}
+
+.gr-sadmin-shell .page-header-breadcrumb {
+    margin: 10px 0 12px !important;
+    min-height: auto !important;
+}
+
+.gr-sadmin-shell .page-title {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+}
+
+.gr-sadmin-shell .page-header-breadcrumb p {
+    margin-top: 3px !important;
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .edu-page-head h2,
+.gr-sadmin-shell .settings-detail-card h2,
+.gr-sadmin-shell .table-head h2,
+.gr-sadmin-shell .detail-head h2 {
+    font-size: 20px !important;
+}
+
+.gr-sadmin-shell .edu-page-head p,
+.gr-sadmin-shell .detail-head p,
+.gr-sadmin-shell .table-head p {
+    font-size: 13px !important;
+}
+
+.gr-sadmin-shell .edu-metric-grid,
+.gr-sadmin-shell .stats,
+.gr-sadmin-shell .institute-metrics {
+    gap: 12px !important;
+}
+
+.gr-sadmin-shell .edu-metric-card,
+.gr-sadmin-shell .stat-card,
+.gr-sadmin-shell .metric-card,
+.gr-sadmin-shell .summary-card,
+.gr-sadmin-shell .compact-metric-card {
+    min-height: auto !important;
+    padding: 14px !important;
+}
+
+.gr-sadmin-shell .edu-icon,
+.gr-sadmin-shell .settings-card-icon,
+.gr-sadmin-shell .settings-area-icon,
+.gr-sadmin-shell .pid-metrics i,
+.gr-sadmin-shell .edu-bottom-grid > article > span {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 20px !important;
+}
+
+.gr-sadmin-shell .edu-metric-card p,
+.gr-sadmin-shell .stat-card h3,
+.gr-sadmin-shell .stat-card span,
+.gr-sadmin-shell .metric-card h3,
+.gr-sadmin-shell .summary-card h3,
+.gr-sadmin-shell .compact-metric-card span {
+    font-size: 12px !important;
+}
+
+.gr-sadmin-shell .edu-metric-card strong,
+.gr-sadmin-shell .stat-card strong,
+.gr-sadmin-shell .metric-card strong,
+.gr-sadmin-shell .summary-card strong,
+.gr-sadmin-shell .compact-metric-card strong {
+    font-size: 24px !important;
+}
+
+.gr-sadmin-shell .card-header,
+.gr-sadmin-shell .detail-head,
+.gr-sadmin-shell .table-head,
+.gr-sadmin-shell .mini-table-title,
+.gr-sadmin-shell .edu-panel-head {
+    min-height: 48px !important;
+    padding: 10px 14px !important;
+}
+
+.gr-sadmin-shell .card-header h1,
+.gr-sadmin-shell .card-header h2,
+.gr-sadmin-shell .card-header h3,
+.gr-sadmin-shell .card-header h4,
+.gr-sadmin-shell .card-header h5,
+.gr-sadmin-shell .detail-head h1,
+.gr-sadmin-shell .detail-head h2,
+.gr-sadmin-shell .table-head h1,
+.gr-sadmin-shell .table-head h2,
+.gr-sadmin-shell .edu-panel-head h3 {
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+}
+
+.gr-sadmin-shell .table > :not(caption) > * > *,
+.gr-sadmin-shell table:not(.table) th,
+.gr-sadmin-shell table:not(.table) td {
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .table thead th,
+.gr-sadmin-shell table:not(.table) th,
+.gr-sadmin-shell .edu-table-wrap th {
+    font-size: 13px !important;
+}
+
+.gr-sadmin-shell .btn,
+.gr-sadmin-shell button,
+.gr-sadmin-shell input[type="submit"] {
+    min-height: 34px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+}
+
+.gr-sadmin-shell .form-control,
+.gr-sadmin-shell .form-select,
+.gr-sadmin-shell input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+.gr-sadmin-shell select,
+.gr-sadmin-shell textarea {
+    min-height: 34px !important;
+    font-size: 14px !important;
+}
+
+/* Exact ERP shell correction: final override. */
+html .gr-sadmin-shell {
+    --gr-erp-sidebar-w: 250px !important;
+    --gr-erp-topbar-h: 50px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html[data-nav-layout="vertical"] .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+}
+
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .gr-panel-logo {
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo {
+    padding: 0 18px !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo img {
+    max-width: 195px !important;
+    max-height: 38px !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - 250px) !important;
+    margin-inline-start: 250px !important;
+    padding-block-start: 50px !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 250px !important;
+    max-width: calc(100% - 250px) !important;
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+html .gr-sadmin-shell .main-header-container,
+html .gr-sadmin-shell .header-content-left,
+html .gr-sadmin-shell .header-content-right {
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+html .gr-sadmin-shell .main-header-container {
+    padding-inline: 14px 16px !important;
+}
+
+html .gr-sadmin-shell .sidemenu-toggle.header-link {
+    width: 28px !important;
+    height: 50px !important;
+    min-width: 28px !important;
+    margin-inline-end: 14px !important;
+}
+
+html .gr-sadmin-shell .gr-topbar-title a {
+    color: #f68a00 !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell .header-content-right {
+    gap: 10px !important;
+}
+
+html .gr-sadmin-shell .gr-topbar-search {
+    width: 255px !important;
+    height: 34px !important;
+    margin: 0 6px 0 0 !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+}
+
+html .gr-sadmin-shell .gr-topbar-search input {
+    height: 34px !important;
+    padding-left: 16px !important;
+    font-size: 16px !important;
+}
+
+html .gr-sadmin-shell .gr-topbar-search button {
+    width: 42px !important;
+    height: 34px !important;
+    font-size: 24px !important;
+    color: #ffffff !important;
+    background: #06345f !important;
+}
+
+html .gr-sadmin-shell .header-link {
+    width: 28px !important;
+    height: 50px !important;
+    min-width: 28px !important;
+}
+
+html .gr-sadmin-shell .header-link-icon {
+    font-size: 22px !important;
+}
+
+html .gr-sadmin-shell .gr-user-trigger {
+    width: 28px !important;
+    min-width: 28px !important;
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-user-trigger .d-xl-block {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .gr-user-trigger .avatar {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 11px !important;
+    background: rgba(255,255,255,.22) !important;
+}
+
+html .gr-sadmin-shell .header-content-right > .header-element:last-child {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .main-menu {
+    padding-top: 0 !important;
+}
+
+html .gr-sadmin-shell .slide__category {
+    padding: 9px 18px 4px !important;
+}
+
+html .gr-sadmin-shell .category-name {
+    text-transform: none !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+html .gr-sadmin-shell .side-menu__item {
+    min-height: 54px !important;
+    padding: 0 18px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    border-left: 4px solid transparent !important;
+}
+
+html .gr-sadmin-shell .side-menu__icon {
+    width: 22px !important;
+    min-width: 22px !important;
+    margin-inline-end: 10px !important;
+    font-size: 20px !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    padding: 0 18px 0 38px !important;
+    font-size: 16px !important;
+    color: #d9e8f6 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__icon {
+    font-size: 16px !important;
+}
+
+html .gr-sadmin-shell .page-header-breadcrumb {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .gr-panel-container {
+    padding: 12px 10px 0 !important;
+}
+
+html .gr-sadmin-shell .content {
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .edu-page-head,
+html .gr-sadmin-shell .sadmin-dashboard-page > .notice {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .edu-cockpit,
+html .gr-sadmin-shell .sadmin-dashboard-page,
+html .gr-sadmin-shell .settings-page,
+html .gr-sadmin-shell .institute-admin-page {
+    gap: 12px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-grid,
+html .gr-sadmin-shell .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card,
+html .gr-sadmin-shell .stat-card {
+    min-height: 150px !important;
+    padding: 18px !important;
+}
+
+html .gr-sadmin-shell .edu-icon {
+    width: 54px !important;
+    height: 54px !important;
+    font-size: 24px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card p,
+html .gr-sadmin-shell .stat-card span {
+    margin-top: 8px !important;
+    color: #7b8797 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card strong,
+html .gr-sadmin-shell .stat-card strong {
+    margin-top: 8px !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell .edu-main-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(360px, .95fr) !important;
+    gap: 18px !important;
+}
+
+html .gr-sadmin-shell .card,
+html .gr-sadmin-shell .custom-card,
+html .gr-sadmin-shell .settings-detail-card,
+html .gr-sadmin-shell .edu-panel,
+html .gr-sadmin-shell .edu-live-panel,
+html .gr-sadmin-shell .edu-calendar {
+    border-radius: 6px !important;
+    border-top: 3px solid #f68a00 !important;
+    box-shadow: 0 1px 5px rgba(0,0,0,.16) !important;
+}
+
+html .gr-sadmin-shell .edu-panel-head,
+html .gr-sadmin-shell .card-header,
+html .gr-sadmin-shell .detail-head,
+html .gr-sadmin-shell .table-head {
+    min-height: 52px !important;
+    padding: 10px 16px !important;
+}
+
+html .gr-sadmin-shell .edu-panel-head h3,
+html .gr-sadmin-shell .card-header h5,
+html .gr-sadmin-shell .detail-head h2,
+html .gr-sadmin-shell .table-head h2 {
+    font-size: 24px !important;
+    font-weight: 400 !important;
+}
+
+html .gr-sadmin-shell .edu-table-tools label,
+html .gr-sadmin-shell .gr-table-toolbar .form-control {
+    width: 260px !important;
+    min-height: 38px !important;
+    border-radius: 7px !important;
+    background: #f7fbff !important;
+}
+
+html .gr-sadmin-shell .table > :not(caption) > * > *,
+html .gr-sadmin-shell table:not(.table) th,
+html .gr-sadmin-shell table:not(.table) td,
+html .gr-sadmin-shell .edu-table-wrap th,
+html .gr-sadmin-shell .edu-table-wrap td {
+    padding: 13px 18px !important;
+    font-size: 16px !important;
+}
+
+html .gr-sadmin-shell .table thead th,
+html .gr-sadmin-shell table:not(.table) th,
+html .gr-sadmin-shell .edu-table-wrap th {
+    background: #eef5fb !important;
+    color: #06345f !important;
+    font-weight: 800 !important;
+}
+
+@media (max-width: 991.98px) {
+    html .gr-sadmin-shell > main.main {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+    }
+    html .gr-sadmin-shell .gr-template-header {
+        inset-inline-start: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+/* True compact ERP content pass. This is the final density authority. */
+html .gr-sadmin-shell {
+    font-size: 14px !important;
+}
+
+html .gr-sadmin-shell .gr-panel-container {
+    padding: 8px 10px 0 !important;
+}
+
+html .gr-sadmin-shell .content,
+html .gr-sadmin-shell .sadmin-dashboard-page,
+html .gr-sadmin-shell .settings-page,
+html .gr-sadmin-shell .institute-admin-page,
+html .gr-sadmin-shell .edu-cockpit {
+    gap: 10px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-grid,
+html .gr-sadmin-shell .stats,
+html .gr-sadmin-shell .institute-metrics,
+html .gr-sadmin-shell .settings-grid,
+html .gr-sadmin-shell .dashboard-grid,
+html .gr-sadmin-shell .summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    gap: 10px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card,
+html .gr-sadmin-shell .stat-card,
+html .gr-sadmin-shell .metric-card,
+html .gr-sadmin-shell .summary-card,
+html .gr-sadmin-shell .compact-metric-card,
+html .gr-sadmin-shell .settings-card,
+html .gr-sadmin-shell .settings-area-card,
+html .gr-sadmin-shell .billing-summary-grid > div {
+    min-height: 74px !important;
+    padding: 10px 12px !important;
+    border-radius: 5px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card::before,
+html .gr-sadmin-shell .stat-card::before,
+html .gr-sadmin-shell .compact-metric-card::before {
+    height: 2px !important;
+}
+
+html .gr-sadmin-shell .edu-icon,
+html .gr-sadmin-shell .settings-card-icon,
+html .gr-sadmin-shell .settings-area-icon,
+html .gr-sadmin-shell .pid-metrics i,
+html .gr-sadmin-shell .edu-bottom-grid > article > span {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 17px !important;
+    border-radius: 4px !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card p,
+html .gr-sadmin-shell .stat-card h3,
+html .gr-sadmin-shell .stat-card span,
+html .gr-sadmin-shell .metric-card h3,
+html .gr-sadmin-shell .summary-card h3,
+html .gr-sadmin-shell .compact-metric-card span,
+html .gr-sadmin-shell .settings-card h3 {
+    margin: 4px 0 0 !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card strong,
+html .gr-sadmin-shell .stat-card strong,
+html .gr-sadmin-shell .metric-card strong,
+html .gr-sadmin-shell .summary-card strong,
+html .gr-sadmin-shell .compact-metric-card strong {
+    margin-top: 4px !important;
+    font-size: 19px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell .edu-metric-card small,
+html .gr-sadmin-shell .stat-card small,
+html .gr-sadmin-shell .metric-card small,
+html .gr-sadmin-shell .summary-card small,
+html .gr-sadmin-shell .compact-metric-card small {
+    font-size: 11px !important;
+}
+
+html .gr-sadmin-shell .card,
+html .gr-sadmin-shell .custom-card,
+html .gr-sadmin-shell .settings-detail-card,
+html .gr-sadmin-shell .settings-summary-table,
+html .gr-sadmin-shell .settings-mini-table,
+html .gr-sadmin-shell .dashboard-card,
+html .gr-sadmin-shell .panel-card,
+html .gr-sadmin-shell .list-card,
+html .gr-sadmin-shell .stats-card,
+html .gr-sadmin-shell .edu-panel,
+html .gr-sadmin-shell .edu-live-panel,
+html .gr-sadmin-shell .edu-calendar {
+    border-radius: 5px !important;
+    border-top-width: 2px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,.12) !important;
+}
+
+html .gr-sadmin-shell .card-header,
+html .gr-sadmin-shell .detail-head,
+html .gr-sadmin-shell .table-head,
+html .gr-sadmin-shell .mini-table-title,
+html .gr-sadmin-shell .edu-panel-head,
+html .gr-sadmin-shell .pid-card-head {
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+}
+
+html .gr-sadmin-shell .card-header h1,
+html .gr-sadmin-shell .card-header h2,
+html .gr-sadmin-shell .card-header h3,
+html .gr-sadmin-shell .card-header h4,
+html .gr-sadmin-shell .card-header h5,
+html .gr-sadmin-shell .detail-head h1,
+html .gr-sadmin-shell .detail-head h2,
+html .gr-sadmin-shell .table-head h1,
+html .gr-sadmin-shell .table-head h2,
+html .gr-sadmin-shell .mini-table-title h2,
+html .gr-sadmin-shell .edu-panel-head h3,
+html .gr-sadmin-shell .pid-card-head h3 {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    font-weight: 600 !important;
+}
+
+html .gr-sadmin-shell .card-header p,
+html .gr-sadmin-shell .detail-head p,
+html .gr-sadmin-shell .table-head p,
+html .gr-sadmin-shell .mini-table-title p,
+html .gr-sadmin-shell .edu-panel-head p {
+    margin-top: 2px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+}
+
+html .gr-sadmin-shell .card-body,
+html .gr-sadmin-shell .course-console-hero > .card-body,
+html .gr-sadmin-shell .instructor-hero > .card-body,
+html .gr-sadmin-shell .live-room-main > .card-body,
+html .gr-sadmin-shell .live-side-panel > .card-body,
+html .gr-sadmin-shell .live-panel > .card-body,
+html .gr-sadmin-shell .live-help-card > .card-body {
+    padding: 10px 12px !important;
+}
+
+html .gr-sadmin-shell .settings-grid-menu {
+    gap: 8px !important;
+    padding: 10px !important;
+}
+
+html .gr-sadmin-shell .settings-card-link,
+html .gr-sadmin-shell .settings-grid-menu > a,
+html .gr-sadmin-shell .settings-grid-menu > article,
+html .gr-sadmin-shell .settings-grid-menu > div {
+    min-height: 56px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+}
+
+html .gr-sadmin-shell .settings-card-link h3,
+html .gr-sadmin-shell .settings-card-link p,
+html .gr-sadmin-shell .settings-card-link small {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+}
+
+html .gr-sadmin-shell .table-responsive,
+html .gr-sadmin-shell .edu-table-wrap {
+    margin: 0 !important;
+}
+
+html .gr-sadmin-shell .table > :not(caption) > * > *,
+html .gr-sadmin-shell table:not(.table) th,
+html .gr-sadmin-shell table:not(.table) td,
+html .gr-sadmin-shell .edu-table-wrap th,
+html .gr-sadmin-shell .edu-table-wrap td {
+    padding: 7px 10px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+}
+
+html .gr-sadmin-shell .table thead th,
+html .gr-sadmin-shell table:not(.table) th,
+html .gr-sadmin-shell .edu-table-wrap th {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+html .gr-sadmin-shell td strong,
+html .gr-sadmin-shell .detail-table strong {
+    font-size: 13px !important;
+}
+
+html .gr-sadmin-shell td small,
+html .gr-sadmin-shell .detail-table small {
+    font-size: 11px !important;
+}
+
+html .gr-sadmin-shell .status-pill,
+html .gr-sadmin-shell .mini-badge,
+html .gr-sadmin-shell .badge,
+html .gr-sadmin-shell .edu-status {
+    min-height: 20px !important;
+    padding: 2px 8px !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+}
+
+html .gr-sadmin-shell .btn,
+html .gr-sadmin-shell button,
+html .gr-sadmin-shell input[type="submit"],
+html .gr-sadmin-shell .modal-button,
+html .gr-sadmin-shell .mini-action-btn,
+html .gr-sadmin-shell .table-edit-icon,
+html .gr-sadmin-shell .soft-action {
+    min-height: 30px !important;
+    padding: 4px 9px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+}
+
+html .gr-sadmin-shell .form-control,
+html .gr-sadmin-shell .form-select,
+html .gr-sadmin-shell input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+html .gr-sadmin-shell select,
+html .gr-sadmin-shell textarea {
+    min-height: 30px !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+}
+
+html .gr-sadmin-shell .gr-table-toolbar {
+    padding: 6px 10px !important;
+}
+
+html .gr-sadmin-shell .edu-main-grid,
+html .gr-sadmin-shell .pid-grid,
+html .gr-sadmin-shell .ins-grid,
+html .gr-sadmin-shell .live-room-shell,
+html .gr-sadmin-shell .live-work-grid,
+html .gr-sadmin-shell .live-bottom-grid {
+    gap: 10px !important;
+}
+
+html .gr-sadmin-shell .edu-live-panel > div,
+html .gr-sadmin-shell .edu-calendar,
+html .gr-sadmin-shell .edu-actions {
+    padding: 10px !important;
+}
+
+html .gr-sadmin-shell .edu-live-panel h4,
+html .gr-sadmin-shell .edu-calendar h3,
+html .gr-sadmin-shell .edu-actions h4 {
+    font-size: 13px !important;
+}
+
+html .gr-sadmin-shell .edu-live-panel small,
+html .gr-sadmin-shell .edu-live-panel p,
+html .gr-sadmin-shell .edu-calendar .week,
+html .gr-sadmin-shell .edu-calendar .days span {
+    font-size: 11px !important;
+}
+
+/* Sidebar exact ERP clone. Keep last for sidebar authority. */
+html .gr-sadmin-shell {
+    --gr-erp-sidebar-w: 250px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar {
+    background: #06345f !important;
+    border: 0 !important;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, .24) !important;
+}
+
+html .gr-sadmin-shell .main-sidebar-header {
+    height: 60px !important;
+    min-height: 60px !important;
+    background: #ffffff !important;
+    border-bottom: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo {
+    height: 60px !important;
+    min-height: 60px !important;
+    padding: 0 18px !important;
+    justify-content: flex-start !important;
+    background: #ffffff !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo img {
+    width: auto !important;
+    max-width: 195px !important;
+    max-height: 42px !important;
+    object-fit: contain !important;
+}
+
+html .gr-sadmin-shell .main-sidebar {
+    padding: 0 !important;
+    background: #06345f !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    background: #06345f !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 30px !important;
+    padding: 0 18px !important;
+    color: #ffffff !important;
+    background: #06345f !important;
+    border: 0 !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 30px !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu i {
+    color: #ffffff !important;
+    font-size: 18px !important;
+}
+
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #06345f !important;
+}
+
+html .gr-sadmin-shell .slide__category {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide,
+html .gr-sadmin-shell .has-sub {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .side-menu__item {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    margin: 0 !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 0 !important;
+    background: #06345f !important;
+    color: #d9e8f6 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 54px !important;
+    text-decoration: none !important;
+}
+
+html .gr-sadmin-shell .side-menu__item:hover,
+html .gr-sadmin-shell .side-menu__item.active,
+html .gr-sadmin-shell .slide.open > .side-menu__item,
+html .gr-sadmin-shell .slide.active > .side-menu__item {
+    background: #0b416f !important;
+    border-left-color: #f68a00 !important;
+    color: #ffffff !important;
+}
+
+html .gr-sadmin-shell .side-menu__icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    min-width: 22px !important;
+    margin: 0 11px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+}
+
+html .gr-sadmin-shell .side-menu__label {
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+}
+
+html .gr-sadmin-shell .side-menu__angle {
+    margin-left: auto !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    opacity: 1 !important;
+}
+
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    margin: 0 !important;
+    padding: 4px 0 8px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #052844 !important;
+    box-shadow: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__label1 {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 16px 0 22px !important;
+    border-left: 0 !important;
+    background: #052844 !important;
+    color: #c7d8e9 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 36px !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item::before {
+    content: "»";
+    margin-right: 10px;
+    color: #c7d8e9;
+    font-size: 16px;
+    line-height: 1;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__icon {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active {
+    background: #052844 !important;
+    color: #f68a00 !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover::before,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active::before {
+    color: #f68a00 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(-200px) !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell > main.main {
+    width: 100% !important;
+    margin-inline-start: 0 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 0 !important;
+    max-width: 100% !important;
+}
+
+/* Absolute final override after legacy sidebar blocks. */
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .main-menu,
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .gr-erp-session-menu,
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - 200px) !important;
+    margin-inline-start: 200px !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 200px !important;
+    max-width: calc(100% - 200px) !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(-200px) !important;
+}

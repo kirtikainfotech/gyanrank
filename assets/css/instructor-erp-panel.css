@@ -1,0 +1,533 @@
+/* Instructor panel compact GyanRank ERP skin. */
+html .gr-instructor-shell {
+    --gr-ins-sidebar-width: 200px;
+    --gr-ins-header-height: 50px;
+    --gr-ins-blue: #072f55;
+    --gr-ins-blue-2: #06345f;
+    --gr-ins-blue-3: #052844;
+    --gr-ins-hover: #0b416f;
+    --gr-ins-accent: #f68a00;
+    --gr-ins-text: #d9e8f6;
+    --gr-ins-subtext: #bdd3e8;
+}
+
+html .gr-instructor-shell .app-sidebar,
+html .gr-instructor-shell .main-sidebar,
+html .gr-instructor-shell .main-sidebar-header,
+html .gr-instructor-shell .main-menu-container,
+html .gr-instructor-shell .main-menu,
+html .gr-instructor-shell .slide-menu,
+html .gr-instructor-shell .slide-menu.child1 {
+    width: var(--gr-ins-sidebar-width) !important;
+    min-width: var(--gr-ins-sidebar-width) !important;
+    max-width: var(--gr-ins-sidebar-width) !important;
+}
+
+html .gr-instructor-shell > main.main {
+    width: calc(100% - var(--gr-ins-sidebar-width)) !important;
+    margin-left: var(--gr-ins-sidebar-width) !important;
+    margin-inline-start: var(--gr-ins-sidebar-width) !important;
+    padding-block-start: var(--gr-ins-header-height) !important;
+}
+
+html .gr-instructor-shell .gr-template-header {
+    left: var(--gr-ins-sidebar-width) !important;
+    inset-inline-start: var(--gr-ins-sidebar-width) !important;
+    width: calc(100% - var(--gr-ins-sidebar-width)) !important;
+    max-width: calc(100% - var(--gr-ins-sidebar-width)) !important;
+    height: var(--gr-ins-header-height) !important;
+    min-height: var(--gr-ins-header-height) !important;
+    background: var(--gr-ins-blue) !important;
+    border-bottom: 3px solid var(--gr-ins-accent) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .18) !important;
+}
+
+html .gr-instructor-shell .main-header-container,
+html .gr-instructor-shell .header-content-left,
+html .gr-instructor-shell .header-content-right {
+    height: var(--gr-ins-header-height) !important;
+    min-height: var(--gr-ins-header-height) !important;
+}
+
+html .gr-instructor-shell .app-sidebar {
+    position: fixed !important;
+    inset-block-start: 0 !important;
+    inset-inline-start: 0 !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: var(--gr-ins-blue) !important;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, .22) !important;
+    overflow: hidden !important;
+}
+
+html .gr-instructor-shell .main-sidebar-header,
+html .gr-instructor-shell .gr-panel-logo {
+    height: var(--gr-ins-header-height) !important;
+    min-height: var(--gr-ins-header-height) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+}
+
+html .gr-instructor-shell .gr-panel-logo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+html .gr-instructor-shell .gr-panel-logo img {
+    width: auto !important;
+    max-width: 180px !important;
+    max-height: 38px !important;
+    object-fit: contain !important;
+}
+
+html .gr-instructor-shell .main-sidebar,
+html .gr-instructor-shell #sidebar-scroll {
+    height: calc(100vh - var(--gr-ins-header-height)) !important;
+    padding: 0 !important;
+    background: var(--gr-ins-blue) !important;
+    overflow: hidden auto !important;
+    scrollbar-width: none !important;
+}
+
+html .gr-instructor-shell .main-sidebar::-webkit-scrollbar,
+html .gr-instructor-shell #sidebar-scroll::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+html .gr-instructor-shell .main-menu-container,
+html .gr-instructor-shell .main-menu {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--gr-ins-blue) !important;
+}
+
+html .gr-instructor-shell .slide__category,
+html .gr-instructor-shell .side-menu__label1 {
+    display: none !important;
+}
+
+html .gr-instructor-shell .slide,
+html .gr-instructor-shell .has-sub {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html .gr-instructor-shell .side-menu__item {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 15px !important;
+    border: 0 !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 0 !important;
+    background: var(--gr-ins-blue) !important;
+    color: var(--gr-ins-text) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 44px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+html .gr-instructor-shell .side-menu__item:hover,
+html .gr-instructor-shell .side-menu__item.active,
+html .gr-instructor-shell .slide.open > .side-menu__item,
+html .gr-instructor-shell .slide.active > .side-menu__item {
+    border-left-color: var(--gr-ins-accent) !important;
+    background: var(--gr-ins-hover) !important;
+    color: #ffffff !important;
+}
+
+html .gr-instructor-shell .side-menu__icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    min-width: 18px !important;
+    margin: 0 10px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+}
+
+html .gr-instructor-shell .side-menu__label {
+    overflow: hidden !important;
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+html .gr-instructor-shell .side-menu__angle {
+    margin-left: auto !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+}
+
+html .gr-instructor-shell .slide-menu,
+html .gr-instructor-shell .slide-menu.child1 {
+    display: none;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    padding: 5px 0 6px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--gr-ins-blue-3) !important;
+    box-shadow: none !important;
+}
+
+html .gr-instructor-shell .slide.open > .slide-menu,
+html .gr-instructor-shell .slide.active > .slide-menu,
+html .gr-instructor-shell .slide-menu[style*="display:block"],
+html .gr-instructor-shell .slide-menu[style*="display: block"] {
+    display: block !important;
+}
+
+html .gr-instructor-shell .slide-menu .side-menu__item {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 8px 0 20px !important;
+    border-left: 0 !important;
+    background: var(--gr-ins-blue-3) !important;
+    color: var(--gr-ins-subtext) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 36px !important;
+    gap: 6px !important;
+}
+
+html .gr-instructor-shell .slide-menu .side-menu__icon,
+html .gr-instructor-shell .slide-menu .side-menu__item::before {
+    display: none !important;
+    content: none !important;
+}
+
+html .gr-instructor-shell .slide-menu .gr-submenu-arrow {
+    display: inline-flex !important;
+    flex: 0 0 13px !important;
+    width: 13px !important;
+    color: var(--gr-ins-subtext) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+html .gr-instructor-shell .slide-menu .side-menu__item:hover,
+html .gr-instructor-shell .slide-menu .side-menu__item.active {
+    background: var(--gr-ins-blue-3) !important;
+    color: var(--gr-ins-accent) !important;
+}
+
+html .gr-instructor-shell .header-link,
+html .gr-instructor-shell .header-link-icon,
+html .gr-instructor-shell .header-content-right .fw-semibold {
+    color: #ffffff !important;
+}
+
+html .gr-instructor-shell .header-content-right .text-muted,
+html .gr-instructor-shell .header-content-right small {
+    color: rgba(255, 255, 255, .74) !important;
+}
+
+html .gr-instructor-shell .header-content-right .avatar {
+    background: rgba(255, 255, 255, .16) !important;
+    color: #ffffff !important;
+}
+
+html .gr-instructor-shell .gr-back-admin-btn {
+    min-height: 30px !important;
+    border-color: rgba(255, 255, 255, .25) !important;
+    background: rgba(255, 255, 255, .12) !important;
+    color: #ffffff !important;
+}
+
+html .gr-instructor-shell .gr-panel-container {
+    padding: 0 14px !important;
+}
+
+html .gr-instructor-shell .page-header-breadcrumb {
+    margin: 1rem 0 !important;
+}
+
+html .gr-instructor-shell .page-title {
+    color: #06345f !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+}
+
+html .gr-instructor-shell .breadcrumb a {
+    color: var(--gr-ins-accent) !important;
+}
+
+html .gr-instructor-shell .custom-card {
+    border: 1px solid #d6e4f0 !important;
+    border-top: 3px solid var(--gr-ins-accent) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 .35rem 1rem rgba(15, 23, 42, .09) !important;
+    overflow: hidden;
+}
+
+html .gr-instructor-shell .card-header {
+    min-height: 42px !important;
+    padding: .6rem .85rem !important;
+    border-bottom: 1px solid #dbe7f2 !important;
+    background: #ffffff !important;
+}
+
+html .gr-instructor-shell .card-title {
+    color: #102a43 !important;
+    font-size: .95rem !important;
+    font-weight: 800 !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient,
+html .gr-instructor-shell .instructor-dashboard .bg-primary-gradient {
+    border-top-color: var(--gr-ins-accent) !important;
+    background: #ffffff !important;
+    color: #102a43 !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient .text-fixed-white,
+html .gr-instructor-shell .bg-primary-gradient .op-8,
+html .gr-instructor-shell .instructor-dashboard .bg-primary-gradient .text-fixed-white,
+html .gr-instructor-shell .instructor-dashboard .bg-primary-gradient .op-8 {
+    color: #102a43 !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient .badge,
+html .gr-instructor-shell .instructor-dashboard .bg-primary-gradient .badge {
+    background: #fff3e3 !important;
+    color: var(--gr-ins-accent) !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient h4,
+html .gr-instructor-shell .instructor-dashboard .bg-primary-gradient h4 {
+    color: #06345f !important;
+    font-size: 1.15rem !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient .card-body {
+    min-height: auto !important;
+    padding: .85rem 1rem !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient p {
+    font-size: .8rem !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient .btn-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .4rem !important;
+    margin: 0 !important;
+}
+
+html .gr-instructor-shell .bg-primary-gradient .btn {
+    min-height: 1.85rem !important;
+    padding: .28rem .65rem !important;
+    border-color: #d6e4f0 !important;
+    border-radius: 3px !important;
+    background: #f5f9fc !important;
+    color: var(--gr-ins-blue) !important;
+    font-size: .72rem !important;
+    font-weight: 800 !important;
+}
+
+html .gr-instructor-shell .table-responsive {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: visible;
+}
+
+html .gr-instructor-shell .table {
+    width: 100% !important;
+    max-width: none !important;
+    table-layout: fixed;
+}
+
+html .gr-instructor-shell .table th,
+html .gr-instructor-shell .table td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+html .gr-instructor-shell .gr-register-table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    color: #102a43 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+html .gr-instructor-shell .gr-register-table thead th {
+    height: 34px !important;
+    padding: 8px 10px !important;
+    border-bottom: 1px solid #d6e4f0 !important;
+    background: #edf5fb !important;
+    color: #003763 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: .01em !important;
+    line-height: 1.1 !important;
+    text-transform: uppercase !important;
+    vertical-align: middle !important;
+}
+
+html .gr-instructor-shell .gr-register-table tbody td {
+    height: 48px !important;
+    padding: 7px 10px !important;
+    border-bottom: 1px solid #e2edf6 !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    vertical-align: middle !important;
+}
+
+html .gr-instructor-shell .gr-register-table tbody tr:nth-child(even) td {
+    background: #fbfdff !important;
+}
+
+html .gr-instructor-shell .gr-register-table tbody tr:hover td {
+    background: #f5f9fc !important;
+}
+
+html .gr-instructor-shell .gr-register-table .gr-cell-title,
+html .gr-instructor-shell .gr-register-table .fw-semibold {
+    display: block !important;
+    color: #111827 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.22 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    overflow-wrap: anywhere !important;
+}
+
+html .gr-instructor-shell .gr-register-table .text-muted,
+html .gr-instructor-shell .gr-register-table .fs-12 {
+    display: block !important;
+    margin-top: 2px !important;
+    color: #6b7280 !important;
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+}
+
+html .gr-instructor-shell .gr-register-table .badge {
+    min-height: 20px !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+html .gr-instructor-shell .gr-table-thumb {
+    width: 46px !important;
+    height: 28px !important;
+    border: 1px solid #d6e4f0 !important;
+    border-radius: 3px !important;
+    object-fit: cover !important;
+    background: #ffffff !important;
+}
+
+html .gr-instructor-shell .gr-table-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+}
+
+html .gr-instructor-shell .gr-table-actions .btn,
+html .gr-instructor-shell .gr-register-table .btn-sm {
+    min-height: 26px !important;
+    padding: 4px 8px !important;
+    border-radius: 3px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+}
+
+html .gr-instructor-shell .gr-table-actions .btn:nth-child(3) {
+    flex-basis: 100%;
+}
+
+html .gr-instructor-shell .gr-course-inventory-table td:nth-child(1),
+html .gr-instructor-shell .gr-course-inventory-table th:nth-child(1),
+html .gr-instructor-shell .gr-course-inventory-table td:nth-child(4),
+html .gr-instructor-shell .gr-course-inventory-table th:nth-child(4),
+html .gr-instructor-shell .gr-course-inventory-table td:nth-child(6),
+html .gr-instructor-shell .gr-course-inventory-table th:nth-child(6) {
+    text-align: center !important;
+}
+
+html .gr-instructor-shell .gr-course-inventory-table td:last-child,
+html .gr-instructor-shell .gr-course-inventory-table th:last-child {
+    text-align: right !important;
+}
+
+html .gr-instructor-shell .instructor-dashboard .col-xxl-2 .custom-card .card-body {
+    min-height: 76px;
+    padding: .75rem .9rem !important;
+}
+
+html .gr-instructor-shell .btn-primary,
+html .gr-instructor-shell .btn.btn-primary {
+    border-color: var(--gr-ins-blue) !important;
+    background: var(--gr-ins-blue) !important;
+    color: #ffffff !important;
+}
+
+html .gr-instructor-shell .btn-primary-light,
+html .gr-instructor-shell .btn-light {
+    border-color: #d6e4f0 !important;
+    background: #f5f9fc !important;
+    color: var(--gr-ins-blue) !important;
+}
+
+html.gr-sidebar-collapsed .gr-instructor-shell .app-sidebar {
+    transform: translateX(calc(-1 * var(--gr-ins-sidebar-width))) !important;
+}
+
+html.gr-sidebar-collapsed .gr-instructor-shell > main.main {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+}
+
+html.gr-sidebar-collapsed .gr-instructor-shell .gr-template-header {
+    left: 0 !important;
+    inset-inline-start: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 991.98px) {
+    html .gr-instructor-shell > main.main {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-inline-start: 0 !important;
+    }
+
+    html .gr-instructor-shell .gr-template-header {
+        left: 0 !important;
+        inset-inline-start: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}

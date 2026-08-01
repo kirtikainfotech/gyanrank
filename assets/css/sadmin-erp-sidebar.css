@@ -1,0 +1,484 @@
+/* Super Admin sidebar cloned to Smart School ERP density. Loaded after panel-theme.css. */
+html .gr-sadmin-shell {
+    --gr-sidebar-width: 200px;
+    --gr-erp-sidebar-w: 200px !important;
+    --gr-header-height: 50px;
+    --gr-sidebar-bg: #072f55;
+    --gr-sidebar-top-bg: #06345f;
+    --gr-sidebar-sub-bg: #052844;
+    --gr-sidebar-hover: #0b416f;
+    --gr-accent: #f68a00;
+    --gr-sidebar-text: #d9e8f6;
+    --gr-sidebar-sub-text: #bdd3e8;
+}
+
+html .gr-sadmin-shell,
+html[data-nav-layout="vertical"] .gr-sadmin-shell {
+    --gr-sidebar-width: 200px !important;
+    --gr-erp-sidebar-w: 200px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell aside.app-sidebar,
+html .gr-sadmin-shell .app-sidebar.sticky,
+html[data-nav-layout="vertical"] .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu,
+html .gr-sadmin-shell .gr-erp-session-menu,
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    width: var(--gr-sidebar-width) !important;
+    min-width: var(--gr-sidebar-width) !important;
+    max-width: var(--gr-sidebar-width) !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - var(--gr-sidebar-width)) !important;
+    margin-inline-start: var(--gr-sidebar-width) !important;
+    padding-block-start: var(--gr-header-height) !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: var(--gr-sidebar-width) !important;
+    max-width: calc(100% - var(--gr-sidebar-width)) !important;
+    height: var(--gr-header-height) !important;
+    min-height: var(--gr-header-height) !important;
+}
+
+html .gr-sadmin-shell .main-header-container,
+html .gr-sadmin-shell .header-content-left,
+html .gr-sadmin-shell .header-content-right {
+    height: var(--gr-header-height) !important;
+    min-height: var(--gr-header-height) !important;
+}
+
+html .gr-sadmin-shell .app-sidebar {
+    position: fixed !important;
+    inset-block-start: 0 !important;
+    inset-inline-start: 0 !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: var(--gr-sidebar-bg) !important;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, .22) !important;
+    overflow: hidden !important;
+    flex: 0 0 var(--gr-sidebar-width) !important;
+}
+
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .gr-panel-logo {
+    height: var(--gr-header-height) !important;
+    min-height: var(--gr-header-height) !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+html .gr-sadmin-shell .gr-panel-logo img {
+    display: block !important;
+    width: auto !important;
+    max-width: 180px !important;
+    max-height: 38px !important;
+    object-fit: contain !important;
+}
+
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell #sidebar-scroll {
+    height: calc(100vh - var(--gr-header-height)) !important;
+    padding: 0 !important;
+    background: var(--gr-sidebar-bg) !important;
+    overflow: hidden auto !important;
+    scrollbar-width: none !important;
+}
+
+html .gr-sadmin-shell .main-sidebar::-webkit-scrollbar,
+html .gr-sadmin-shell #sidebar-scroll::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu {
+    display: block !important;
+    margin: 0 !important;
+    padding: 7px 15px 6px !important;
+    list-style: none !important;
+    background: var(--gr-sidebar-top-bg) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .25) !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 25px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 25px !important;
+    white-space: nowrap !important;
+}
+
+html .gr-sadmin-shell .gr-erp-session-menu i {
+    color: #ffffff !important;
+    font-size: 16px !important;
+}
+
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--gr-sidebar-bg) !important;
+}
+
+html .gr-sadmin-shell .slide__category,
+html .gr-sadmin-shell .side-menu__label1 {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide,
+html .gr-sadmin-shell .has-sub {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html .gr-sadmin-shell .side-menu__item {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 15px !important;
+    border: 0 !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 0 !important;
+    background: var(--gr-sidebar-bg) !important;
+    color: var(--gr-sidebar-text) !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 44px !important;
+    white-space: nowrap !important;
+}
+
+html .gr-sadmin-shell .side-menu__item:hover,
+html .gr-sadmin-shell .side-menu__item.active,
+html .gr-sadmin-shell .slide.open > .side-menu__item,
+html .gr-sadmin-shell .slide.active > .side-menu__item {
+    background: var(--gr-sidebar-hover) !important;
+    border-left-color: var(--gr-accent) !important;
+    color: #ffffff !important;
+}
+
+html .gr-sadmin-shell .side-menu__icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    min-width: 18px !important;
+    margin: 0 10px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+html .gr-sadmin-shell .side-menu__label {
+    display: inline-block !important;
+    overflow: hidden !important;
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+html .gr-sadmin-shell .side-menu__angle {
+    margin-left: auto !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    opacity: 1 !important;
+}
+
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    display: none;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    padding: 5px 0 6px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--gr-sidebar-sub-bg) !important;
+    box-shadow: none !important;
+}
+
+html .gr-sadmin-shell .slide.open > .slide-menu,
+html .gr-sadmin-shell .slide.active > .slide-menu,
+html .gr-sadmin-shell .slide-menu[style*="display:block"],
+html .gr-sadmin-shell .slide-menu[style*="display: block"] {
+    display: block !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item {
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 8px 0 20px !important;
+    border-left: 0 !important;
+    background: var(--gr-sidebar-sub-bg) !important;
+    color: var(--gr-sidebar-sub-text) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 36px !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item::before {
+    content: none !important;
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .gr-submenu-arrow {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex: 0 0 13px !important;
+    width: 13px !important;
+    min-width: 13px !important;
+    color: var(--gr-sidebar-sub-text) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 36px !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__label {
+    display: block !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 36px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__icon {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__label1,
+html .gr-sadmin-shell .slide-menu .side-menu__label1 a {
+    display: none !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active {
+    background: var(--gr-sidebar-sub-bg) !important;
+    color: var(--gr-accent) !important;
+}
+
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover::before,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active::before,
+html .gr-sadmin-shell .slide-menu .side-menu__item:hover .gr-submenu-arrow,
+html .gr-sadmin-shell .slide-menu .side-menu__item.active .gr-submenu-arrow {
+    color: var(--gr-accent) !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .app-sidebar {
+    transform: translateX(calc(-1 * var(--gr-sidebar-width))) !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell > main.main {
+    width: 100% !important;
+    margin-inline-start: 0 !important;
+}
+
+html.gr-sidebar-collapsed .gr-sadmin-shell .gr-template-header {
+    inset-inline-start: 0 !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 991.98px) {
+    html .gr-sadmin-shell > main.main {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+    }
+
+    html .gr-sadmin-shell .gr-template-header {
+        inset-inline-start: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Last-word correction: keep the sidebar and content offset on one exact width. */
+html .gr-sadmin-shell,
+html[data-nav-layout="vertical"] .gr-sadmin-shell {
+    --gr-sidebar-width: 200px !important;
+    --gr-erp-sidebar-w: 200px !important;
+}
+
+html .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell aside.app-sidebar,
+html .gr-sadmin-shell .app-sidebar.sticky,
+html[data-nav-layout="vertical"] .gr-sadmin-shell .app-sidebar,
+html .gr-sadmin-shell .main-sidebar,
+html .gr-sadmin-shell .main-sidebar-header,
+html .gr-sadmin-shell .main-menu-container,
+html .gr-sadmin-shell .main-menu,
+html .gr-sadmin-shell .gr-erp-session-menu,
+html .gr-sadmin-shell .slide-menu,
+html .gr-sadmin-shell .slide-menu.child1 {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    flex-basis: 200px !important;
+}
+
+html .gr-sadmin-shell > main.main {
+    width: calc(100% - 200px) !important;
+    margin-left: 200px !important;
+    margin-inline-start: 200px !important;
+}
+
+html .gr-sadmin-shell .gr-template-header {
+    left: 200px !important;
+    inset-inline-start: 200px !important;
+    max-width: calc(100% - 200px) !important;
+    width: calc(100% - 200px) !important;
+}
+
+/* Stop template flyout submenu behavior on Super Admin. */
+html .gr-sadmin-shell .main-menu .slide-menu,
+html .gr-sadmin-shell .main-menu .slide-menu.child1,
+html .gr-sadmin-shell .main-menu .slide-menu.child2,
+html .gr-sadmin-shell .main-menu .slide-menu.child3 {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    translate: none !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    z-index: auto !important;
+}
+
+/* Institute master pages: compact top navigation instead of broken raw links. */
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin: 0 0 12px !important;
+    padding: 8px !important;
+    border: 1px solid #cfe0ee !important;
+    border-top: 3px solid var(--gr-accent) !important;
+    border-radius: 4px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12) !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    min-height: 32px !important;
+    padding: 0 11px !important;
+    border: 1px solid #d6e4f0 !important;
+    border-radius: 3px !important;
+    background: #f5f9fc !important;
+    color: #0a3c66 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 32px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 16px !important;
+    height: 16px !important;
+    color: currentColor !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem svg {
+    display: block !important;
+    width: 15px !important;
+    height: 15px !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem svg path {
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem strong {
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem:hover,
+html .gr-sadmin-shell .sadmin-institute-main .institute-submenu .settings-subitem.active {
+    border-color: var(--gr-accent) !important;
+    background: #fff3e3 !important;
+    color: var(--gr-accent) !important;
+}
+
+/* Sadmin data grids should scroll instead of clipping form controls/text. */
+html .gr-sadmin-shell .table-responsive {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+html .gr-sadmin-shell .table {
+    max-width: none !important;
+}
+
+html .gr-sadmin-shell .table th,
+html .gr-sadmin-shell .table td {
+    white-space: normal;
+    vertical-align: middle;
+}
+
+html .gr-sadmin-shell .table .form-control,
+html .gr-sadmin-shell .table .btn {
+    min-width: 0;
+}
