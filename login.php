@@ -166,7 +166,7 @@ unset($_SESSION['login_error']);
                         <input type="checkbox" name="remember" value="1" <?= !empty($old['remember']) ? 'checked' : ''; ?>>
                         <span>Remember</span>
                     </label>
-                    <a href="#">Forgot?</a>
+                    <a href="<?= app_url('forgot-password'); ?>">Forgot?</a>
                 </div>
 
                 <button type="submit">Login</button>
