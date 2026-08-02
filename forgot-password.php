@@ -106,16 +106,13 @@ $whatsapp = 'https://wa.me/918299442665?text=' . rawurlencode('Hello Gyan Rank s
         <link rel="icon" href="<?= h(asset_or_default('favicon_path')); ?>">
     <?php endif; ?>
     <link rel="stylesheet" href="<?= app_url('assets/css/login.css'); ?>">
-    <style>
-        .auth-card.reset-card{max-width:560px}.reset-copy{margin:0 0 22px;color:#5f6e83;line-height:1.55}.reset-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.reset-actions a{flex:1;text-align:center;padding:13px 16px;border-radius:14px;border:1px solid #cfd9e8;font-weight:800}.reset-actions .wa{background:#25d366;color:#fff;border-color:#25d366}.reset-message{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:#ecfff5;color:#087247;border:1px solid #bff3d4}.reset-error{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:#fff2f2;color:#b42318;border:1px solid #ffd0d0}
-    </style>
 </head>
 <body class="auth-page">
-    <main class="auth-shell">
-        <section class="auth-card reset-card" aria-label="Forgot password form">
-            <a class="back-link" href="<?= app_url('#/login'); ?>">Back to Login</a>
-            <div class="auth-brand">
-                <span class="logo-mark">
+    <main class="recovery-shell">
+        <section class="recovery-card" aria-label="Forgot password form">
+            <aside class="recovery-visual">
+                <div>
+                    <span class="recovery-logo">
                     <?php if (asset_or_default('app_logo_path') !== ''): ?>
                         <img src="<?= h(asset_or_default('app_logo_path')); ?>" alt="<?= h(app_name()); ?>">
                     <?php elseif (asset_or_default('logo_path') !== ''): ?>
@@ -123,26 +120,37 @@ $whatsapp = 'https://wa.me/918299442665?text=' . rawurlencode('Hello Gyan Rank s
                     <?php else: ?>
                         GR
                     <?php endif; ?>
-                </span>
-                <p>Account recovery</p>
-                <h1>Forgot password?</h1>
-            </div>
-            <p class="reset-copy">Enter the email, mobile number or username linked with your Gyan Rank account. We will send a secure reset link if the account is available.</p>
-            <?php if ($message): ?><p class="reset-message"><?= h($message); ?></p><?php endif; ?>
-            <?php if ($error): ?><p class="reset-error"><?= h($error); ?></p><?php endif; ?>
-            <form action="<?= app_url('forgot-password'); ?>" method="post" autocomplete="off">
-                <input type="hidden" name="csrf_token" value="<?= h(csrf_token()); ?>">
-                <label class="field">
-                    <span class="icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </span>
-                    <input type="text" name="identity" placeholder="Email, mobile or username" maxlength="120" required>
-                </label>
-                <button type="submit">Send Reset Link</button>
-            </form>
-            <div class="reset-actions">
-                <a href="<?= app_url('#/login'); ?>">Login</a>
-                <a class="wa" href="<?= h($whatsapp); ?>" target="_blank" rel="noopener">WhatsApp Support</a>
+                    <p class="recovery-kicker">Secure Account Recovery</p>
+                    <h1>Reset access without losing your learning progress.</h1>
+                    <p>We verify your account first, then send a time-limited password reset link to keep courses, invoices and reports protected.</p>
+                    <div class="recovery-points">
+                        <span>Secure 30 minute reset link</span>
+                        <span>Email, mobile or username lookup</span>
+                        <span>Support verification available</span>
+                    </div>
+                </div>
+                <div class="recovery-support-note">Need urgent help? WhatsApp support can verify your account details and guide you through recovery.</div>
+            </aside>
+            <div class="recovery-panel">
+                <a class="back-link" href="<?= app_url('#/login'); ?>">Back to Login</a>
+                <p class="recovery-eyebrow">Account Access</p>
+                <h2>Forgot password?</h2>
+                <p class="recovery-copy">Enter the email, mobile number or username linked with your Gyan Rank account. If the account exists, we will send reset instructions.</p>
+                <?php if ($message): ?><p class="reset-message"><?= h($message); ?></p><?php endif; ?>
+                <?php if ($error): ?><p class="reset-error"><?= h($error); ?></p><?php endif; ?>
+                <form class="recovery-form" action="<?= app_url('forgot-password'); ?>" method="post" autocomplete="off">
+                    <input type="hidden" name="csrf_token" value="<?= h(csrf_token()); ?>">
+                    <label>
+                        Email, mobile or username
+                        <input class="recovery-input" type="text" name="identity" placeholder="Enter registered detail" maxlength="120" required>
+                    </label>
+                    <button class="recovery-submit" type="submit">Send Reset Link</button>
+                </form>
+                <div class="recovery-actions">
+                    <a href="<?= app_url('#/login'); ?>">Login</a>
+                    <a class="wa" href="<?= h($whatsapp); ?>" target="_blank" rel="noopener">WhatsApp Support</a>
+                </div>
             </div>
         </section>
     </main>

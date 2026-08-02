@@ -84,16 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
         <link rel="icon" href="<?= h(asset_or_default('favicon_path')); ?>">
     <?php endif; ?>
     <link rel="stylesheet" href="<?= app_url('assets/css/login.css'); ?>">
-    <style>
-        .auth-card.reset-card{max-width:560px}.reset-copy{margin:0 0 22px;color:#5f6e83;line-height:1.55}.reset-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.reset-actions a{flex:1;text-align:center;padding:13px 16px;border-radius:14px;border:1px solid #cfd9e8;font-weight:800}.reset-message{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:#ecfff5;color:#087247;border:1px solid #bff3d4}.reset-error{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:#fff2f2;color:#b42318;border:1px solid #ffd0d0}
-    </style>
 </head>
 <body class="auth-page">
-    <main class="auth-shell">
-        <section class="auth-card reset-card" aria-label="Reset password form">
-            <a class="back-link" href="<?= app_url('#/login'); ?>">Back to Login</a>
-            <div class="auth-brand">
-                <span class="logo-mark">
+    <main class="recovery-shell">
+        <section class="recovery-card" aria-label="Reset password form">
+            <aside class="recovery-visual">
+                <div>
+                    <span class="recovery-logo">
                     <?php if (asset_or_default('app_logo_path') !== ''): ?>
                         <img src="<?= h(asset_or_default('app_logo_path')); ?>" alt="<?= h(app_name()); ?>">
                     <?php elseif (asset_or_default('logo_path') !== ''): ?>
@@ -101,34 +98,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
                     <?php else: ?>
                         GR
                     <?php endif; ?>
-                </span>
-                <p>Secure recovery</p>
-                <h1>Reset password</h1>
-            </div>
-            <?php if ($success): ?><p class="reset-message"><?= h($success); ?></p><?php endif; ?>
-            <?php if ($error): ?><p class="reset-error"><?= h($error); ?></p><?php endif; ?>
-            <?php if ($reset): ?>
-                <p class="reset-copy">Create a new password for <?= h((string) ($reset['full_name'] ?? 'your account')); ?>.</p>
-                <form action="<?= app_url('reset-password'); ?>" method="post" autocomplete="off">
-                    <input type="hidden" name="csrf_token" value="<?= h(csrf_token()); ?>">
-                    <input type="hidden" name="token" value="<?= h($token); ?>">
-                    <label class="field">
-                        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path><path d="M12 14v2"></path></svg></span>
-                        <input type="password" name="password" placeholder="New password" minlength="8" maxlength="128" required>
-                    </label>
-                    <label class="field">
-                        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path><path d="M12 14v2"></path></svg></span>
-                        <input type="password" name="confirm_password" placeholder="Confirm password" minlength="8" maxlength="128" required>
-                    </label>
-                    <button type="submit">Update Password</button>
-                </form>
-            <?php else: ?>
-                <p class="reset-copy">If your reset link expired, request a fresh secure link.</p>
-                <div class="reset-actions">
-                    <a href="<?= app_url('forgot-password'); ?>">Request New Link</a>
-                    <a href="<?= app_url('#/login'); ?>">Login</a>
+                    </span>
+                    <p class="recovery-kicker">Protected Reset</p>
+                    <h1>Create a fresh password for your Gyan Rank account.</h1>
+                    <p>Use a strong password to protect course access, billing history, certificates and progress reports.</p>
+                    <div class="recovery-points">
+                        <span>Reset link verified securely</span>
+                        <span>Password encrypted before saving</span>
+                        <span>Old reset link expires after use</span>
+                    </div>
                 </div>
-            <?php endif; ?>
+                <div class="recovery-support-note">For account ownership issues, request a fresh reset link or contact Gyan Rank support.</div>
+            </aside>
+            <div class="recovery-panel">
+                <a class="back-link" href="<?= app_url('#/login'); ?>">Back to Login</a>
+                <p class="recovery-eyebrow">Secure Recovery</p>
+                <h2>Reset password</h2>
+                <?php if ($success): ?><p class="reset-message"><?= h($success); ?></p><?php endif; ?>
+                <?php if ($error): ?><p class="reset-error"><?= h($error); ?></p><?php endif; ?>
+                <?php if ($reset): ?>
+                    <p class="recovery-copy">Create a new password for <?= h((string) ($reset['full_name'] ?? 'your account')); ?>.</p>
+                    <form class="recovery-form" action="<?= app_url('reset-password'); ?>" method="post" autocomplete="off">
+                        <input type="hidden" name="csrf_token" value="<?= h(csrf_token()); ?>">
+                        <input type="hidden" name="token" value="<?= h($token); ?>">
+                        <label>
+                            New password
+                            <input class="recovery-input" type="password" name="password" placeholder="Minimum 8 characters" minlength="8" maxlength="128" required>
+                        </label>
+                        <label>
+                            Confirm password
+                            <input class="recovery-input" type="password" name="confirm_password" placeholder="Repeat new password" minlength="8" maxlength="128" required>
+                        </label>
+                        <button class="recovery-submit" type="submit">Update Password</button>
+                    </form>
+                <?php else: ?>
+                    <p class="recovery-copy">If your reset link expired, request a fresh secure link.</p>
+                    <div class="recovery-actions">
+                        <a href="<?= app_url('forgot-password'); ?>">Request New Link</a>
+                        <a href="<?= app_url('#/login'); ?>">Login</a>
+                    </div>
+                <?php endif; ?>
+            </div>
         </section>
     </main>
 </body>
