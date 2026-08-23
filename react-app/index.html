@@ -6530,47 +6530,34 @@
         .student-access-card{
             min-height:126px;
             border:1px solid #dde5f0;
-            border-radius:8px;
-            background:#fff;
-            padding:14px 12px 12px;
+            border-radius:10px;
+            background:linear-gradient(180deg,#fff 0%,#f9fbff 100%);
+            padding:16px 12px 14px;
             display:grid;
-            grid-template-rows:52px 1fr auto;
-            gap:9px;
+            grid-template-rows:62px auto;
+            gap:11px;
             color:#0f172a;
             text-align:center;
             text-decoration:none;
-            box-shadow:0 10px 24px rgba(15,23,42,.055);
+            box-shadow:0 12px 28px rgba(15,23,42,.065), inset 0 1px 0 rgba(255,255,255,.95);
             transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
         }
-        .student-access-card:hover{transform:translateY(-2px);border-color:#b8c5d8;box-shadow:0 16px 34px rgba(15,23,42,.10)}
+        .student-access-card:hover{transform:translateY(-3px);border-color:#b8c5d8;box-shadow:0 18px 38px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.95)}
         .student-access-icon{
             position:relative;
             justify-self:center;
             align-self:center;
-            width:52px;
-            height:52px;
-            border-radius:16px;
-            color:#fff;
-            background:#111827;
-            box-shadow:0 12px 24px rgba(15,23,42,.16), inset 0 1px 0 rgba(255,255,255,.20);
+            width:62px;
+            height:62px;
+            border-radius:20px;
+            color:var(--shortcut-color,#2563eb);
+            background:linear-gradient(180deg,var(--shortcut-soft,#eef4ff),#fff);
+            border:1px solid var(--shortcut-border,#cfe0ff);
+            box-shadow:0 14px 28px rgba(15,23,42,.10), inset 0 1px 0 rgba(255,255,255,.92);
         }
-        .student-access-icon:before,.student-access-icon:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-sizing:border-box}
-        .student-access-copy{display:block;min-width:0}.student-access-copy strong{display:block;color:#111827;font-size:14px;line-height:1.18;font-weight:820}.student-access-copy small{display:block;margin-top:4px;color:#64748b;font-size:11.5px;line-height:1.3}
-        .student-access-count{justify-self:center;border:1px solid #e1e8f4;background:#f8fafc;border-radius:999px;padding:4px 8px;color:#334155;font-size:12px;font-weight:800;line-height:1}
-        .student-access-card.tone-blue .student-access-icon{background:#2563eb}.student-access-card.tone-green .student-access-icon{background:#059669}.student-access-card.tone-violet .student-access-icon{background:#7c3aed}.student-access-card.tone-orange .student-access-icon{background:#f97316}.student-access-card.tone-slate .student-access-icon{background:#334155}.student-access-card.tone-teal .student-access-icon{background:#0f766e}
-        .student-access-icon.icon-course:before{width:25px;height:18px;border:2px solid currentColor;border-radius:3px 8px 8px 3px;background:rgba(255,255,255,.12)}
-        .student-access-icon.icon-course:after{width:2px;height:18px;background:currentColor;transform:translate(-7px,-50%)}
-        .student-access-icon.icon-live:before{width:0;height:0;border-left:17px solid currentColor;border-top:11px solid transparent;border-bottom:11px solid transparent;transform:translate(-42%,-50%)}
-        .student-access-icon.icon-test:before{width:24px;height:28px;border:2px solid currentColor;border-radius:5px;background:rgba(255,255,255,.10)}
-        .student-access-icon.icon-test:after{width:13px;height:8px;border-left:3px solid currentColor;border-bottom:3px solid currentColor;transform:translate(-46%,-30%) rotate(-45deg)}
-        .student-access-icon.icon-prep:before{width:28px;height:28px;border:3px solid currentColor;border-radius:50%;background:radial-gradient(circle,currentColor 0 3px,transparent 4px)}
-        .student-access-icon.icon-prep:after{width:34px;height:2px;background:currentColor;transform:translate(-50%,-50%) rotate(-32deg)}
-        .student-access-icon.icon-pdf:before{width:23px;height:29px;border:2px solid currentColor;border-radius:5px;background:linear-gradient(135deg,rgba(255,255,255,.22) 0 10px,transparent 11px)}
-        .student-access-icon.icon-pdf:after{width:13px;height:2px;background:currentColor;box-shadow:0 6px 0 currentColor;transform:translate(-50%,2px)}
-        .student-access-icon.icon-login:before{width:13px;height:13px;border:2px solid currentColor;border-radius:50%;transform:translate(-50%,-80%)}
-        .student-access-icon.icon-login:after{width:24px;height:13px;border:2px solid currentColor;border-radius:14px 14px 5px 5px;transform:translate(-50%,20%)}
-        .student-access-icon.icon-dash:before{width:28px;height:22px;border:2px solid currentColor;border-radius:5px;background:rgba(255,255,255,.10)}
-        .student-access-icon.icon-dash:after{width:4px;height:13px;background:currentColor;box-shadow:8px -5px 0 currentColor,16px 3px 0 currentColor;transform:translate(-12px,-3px)}
+        .student-access-icon svg{position:absolute;left:50%;top:50%;width:31px;height:31px;transform:translate(-50%,-50%);fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+        .student-access-copy{display:block;min-width:0}.student-access-copy strong{display:block;color:#111827;font-size:14.5px;line-height:1.16;font-weight:850}.student-access-copy small{display:block;margin-top:5px;color:#64748b;font-size:11.5px;line-height:1.32}
+        .student-access-card.tone-blue{--shortcut-color:#2563eb;--shortcut-soft:#eff6ff;--shortcut-border:#bfdbfe}.student-access-card.tone-green{--shortcut-color:#059669;--shortcut-soft:#ecfdf5;--shortcut-border:#bbf7d0}.student-access-card.tone-violet{--shortcut-color:#7c3aed;--shortcut-soft:#f5f3ff;--shortcut-border:#ddd6fe}.student-access-card.tone-orange{--shortcut-color:#f97316;--shortcut-soft:#fff7ed;--shortcut-border:#fed7aa}.student-access-card.tone-slate{--shortcut-color:#334155;--shortcut-soft:#f8fafc;--shortcut-border:#cbd5e1}.student-access-card.tone-teal{--shortcut-color:#0f766e;--shortcut-soft:#f0fdfa;--shortcut-border:#99f6e4}
         @media(max-width:980px){
             .student-access-grid{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
             .student-access-grid::-webkit-scrollbar{display:none}
@@ -6587,7 +6574,7 @@
             .saas-btn{width:100%!important;height:44px!important;font-size:13px!important;padding:0 10px!important}
             .student-access-band{width:94%!important;margin-top:14px!important;margin-bottom:20px!important;padding:12px!important;border-left:0;border-right:0;border-radius:0}
             .student-access-head{display:block;margin-bottom:12px}.student-access-head > span{margin-bottom:9px}.student-access-head h2{font-size:21px}.student-access-head p{font-size:12.5px}
-            .student-access-card{min-width:188px;max-width:188px;min-height:118px;padding:12px 11px}.student-access-icon{width:48px;height:48px;border-radius:15px}.student-access-copy strong{font-size:13.5px}.student-access-copy small{font-size:11px}
+            .student-access-card{min-width:180px;max-width:180px;min-height:118px;padding:14px 11px}.student-access-icon{width:56px;height:56px;border-radius:18px}.student-access-icon svg{width:28px;height:28px}.student-access-copy strong{font-size:13.5px}.student-access-copy small{font-size:11px}
         }
         .topbar > .inline:last-child{gap:10px!important}
         .topbar > .inline:last-child .btn{
@@ -7785,6 +7772,18 @@ function HomeComboCard({ combo }) {
     );
 }
 
+function StudentShortcutIcon({ type }) {
+    const icons = {
+        course: <><path d="M7 7.5c1.7-.9 3.5-.9 5.2.1v15.1c-1.7-1-3.5-1-5.2-.1V7.5Z"/><path d="M12.2 7.6c1.7-1 3.5-1 5.3-.1v15.1c-1.8-.9-3.6-.9-5.3.1"/></>,
+        live: <><rect x="5" y="7" width="14" height="10" rx="2"/><path d="M10.5 10.1v3.8l3.4-1.9-3.4-1.9Z"/><path d="M9 21h6"/><path d="M12 17v4"/></>,
+        test: <><rect x="7" y="5" width="12" height="16" rx="2"/><path d="M10 9h6"/><path d="M10 13h6"/><path d="M10 17l1.5 1.5L15 15"/></>,
+        prep: <><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/></>,
+        pdf: <><path d="M7 4h7l4 4v12H7V4Z"/><path d="M14 4v4h4"/><path d="M9.5 13h5"/><path d="M9.5 16h4"/></>,
+        login: <><circle cx="12" cy="8" r="3.2"/><path d="M6.5 20c.8-3 2.7-4.5 5.5-4.5s4.7 1.5 5.5 4.5"/></>,
+        dash: <><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M8.5 14.5v2"/><path d="M12 11v5.5"/><path d="M15.5 8.5v8"/></>,
+    };
+    return <svg viewBox="0 0 24 24" aria-hidden="true">{icons[type] || icons.course}</svg>;
+}
 function HomePage({ token }) {
     const { settings: globalSettings } = React.useContext(AppContext);
     const [state, setState] = useState({ loading: true, courses: [], plans: [], live: [], exams: [], documents: [], combos: [], myCourses: [], govPrep: { documents: [], live: [], mocks: [] } });
@@ -7871,12 +7870,12 @@ function HomePage({ token }) {
         liveCount: (state.live || []).filter((item) => (item.instructor_name || 'Instructor') === ins.name).length
     })).slice(0, 6);
     const quickAccess = [
-        { label: 'Recorded Courses', sub: 'Video lessons and chapters', href: '#/courses', count: state.courses.length, tone: 'blue', icon: 'course' },
-        { label: 'Live Classes', sub: 'Batches and upcoming sessions', href: '#/batches', count: state.live.length, tone: 'green', icon: 'live' },
-        { label: 'Mock Tests', sub: 'Practice sets with reports', href: '#/exams', count: state.exams.length, tone: 'violet', icon: 'test' },
-        { label: 'Govt Exam Prep', sub: 'Category-wise practice', href: '#/govt-prep', count: state.govPrep.mocks.length, tone: 'orange', icon: 'prep' },
-        { label: 'Study PDFs', sub: 'Notes and resources', href: '#/courses', count: state.documents.length, tone: 'slate', icon: 'pdf' },
-        { label: token ? 'My Learning' : 'Student Login', sub: token ? 'Dashboard and progress' : 'Continue your account', href: token ? '#/dashboard' : '#/login', count: state.myCourses.length, tone: 'teal', icon: token ? 'dash' : 'login' },
+        { label: 'Recorded Courses', sub: 'Video lessons and chapters', href: '#/courses', tone: 'blue', icon: 'course' },
+        { label: 'Live Classes', sub: 'Batches and upcoming sessions', href: '#/batches', tone: 'green', icon: 'live' },
+        { label: 'Mock Tests', sub: 'Practice sets with reports', href: '#/exams', tone: 'violet', icon: 'test' },
+        { label: 'Govt Exam Prep', sub: 'Category-wise practice', href: '#/govt-prep', tone: 'orange', icon: 'prep' },
+        { label: 'Study PDFs', sub: 'Notes and resources', href: '#/courses', tone: 'slate', icon: 'pdf' },
+        { label: token ? 'My Learning' : 'Student Login', sub: token ? 'Dashboard and progress' : 'Continue your account', href: token ? '#/dashboard' : '#/login', tone: 'teal', icon: token ? 'dash' : 'login' },
     ];
     return (
         <>
@@ -7894,9 +7893,8 @@ function HomePage({ token }) {
                 <div className="student-access-grid">
                     {quickAccess.map((item) => (
                         <a className={`student-access-card tone-${item.tone}`} href={item.href} key={item.label}>
-                            <span className={`student-access-icon icon-${item.icon}`} aria-hidden="true"></span>
+                            <span className="student-access-icon" aria-hidden="true"><StudentShortcutIcon type={item.icon} /></span>
                             <span className="student-access-copy"><strong>{item.label}</strong><small>{item.sub}</small></span>
-                            <span className="student-access-count">{item.count}</span>
                         </a>
                     ))}
                 </div>
