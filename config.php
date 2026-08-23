@@ -18,30 +18,23 @@ if (is_file(__DIR__ . '/.env')) {
 
 define('APP_NAME', 'Gyan Nexa');
 define('APP_BASE', app_base_path());
-define('DB_HOST', db_config_value('DB_HOST', 'srv1878.hstgr.io', '127.0.0.1'));
-define('DB_USER', db_config_value('DB_USER', 'u436668434_vGRank55', 'root'));
-define('DB_PASS', db_config_value('DB_PASS', 'Ni0^~e$p', ''));
-define('DB_NAME', db_config_value('DB_NAME', 'u436668434_gyanrank', 'edu'));
+define('DB_HOST', env_config_value('DB_HOST'));
+define('DB_USER', env_config_value('DB_USER'));
+define('DB_PASS', env_config_value('DB_PASS'));
+define('DB_NAME', env_config_value('DB_NAME'));
 define('UPLOAD_BASE', 'uploads/settings');
 
 send_security_headers();
 enforce_maintenance_mode();
 
-function db_config_value(string $key, string $productionDefault, string $localDefault): string
+function env_config_value(string $key): string
 {
     $env = getenv($key);
-    if (is_string($env) && $env !== '') {
-        return $env;
+    if ($env !== false) {
+        return (string) $env;
     }
 
-    $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? ''));
-    $isLocal = PHP_SAPI === 'cli'
-        || $host === ''
-        || str_contains($host, 'localhost')
-        || str_contains($host, '127.0.0.1')
-        || preg_match('/^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/', $host);
-
-    return $isLocal ? $localDefault : $productionDefault;
+    throw new RuntimeException('Missing required environment variable: ' . $key);
 }
 
 function app_base_path(): string

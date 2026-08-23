@@ -102,7 +102,7 @@ if (!function_exists('gyanrank_load_root_env')) {
 }
 
 if (!function_exists('gyanrank_db_config')) {
-    function gyanrank_db_config(string $constant, string $envKey, string $default): string
+    function gyanrank_db_config(string $constant, string $envKey): string
     {
         if (defined($constant)) {
             return (string) constant($constant);
@@ -110,16 +110,20 @@ if (!function_exists('gyanrank_db_config')) {
 
         gyanrank_load_root_env();
         $value = getenv($envKey);
-        return is_string($value) && $value !== '' ? $value : $default;
+        if ($value !== false) {
+            return (string) $value;
+        }
+
+        throw new RuntimeException('Missing required environment variable: ' . $envKey);
     }
 }
 
 $db['default'] = array(
     'dsn' => '',
-    'hostname' => gyanrank_db_config('GYANRANK_TENANT_DB_HOST', 'SMART_SCHOOL_DB_HOST', 'localhost'),
-    'username' => gyanrank_db_config('GYANRANK_TENANT_DB_USER', 'SMART_SCHOOL_DB_USER', 'root'),
-    'password' => gyanrank_db_config('GYANRANK_TENANT_DB_PASS', 'SMART_SCHOOL_DB_PASS', ''),
-    'database' => gyanrank_db_config('GYANRANK_TENANT_DB_NAME', 'SMART_SCHOOL_DB_NAME', 'ssnodb'),
+    'hostname' => gyanrank_db_config('GYANRANK_TENANT_DB_HOST', 'SMART_SCHOOL_DB_HOST'),
+    'username' => gyanrank_db_config('GYANRANK_TENANT_DB_USER', 'SMART_SCHOOL_DB_USER'),
+    'password' => gyanrank_db_config('GYANRANK_TENANT_DB_PASS', 'SMART_SCHOOL_DB_PASS'),
+    'database' => gyanrank_db_config('GYANRANK_TENANT_DB_NAME', 'SMART_SCHOOL_DB_NAME'),
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
