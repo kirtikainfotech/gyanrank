@@ -71,15 +71,9 @@ if (stripos($html, '</body>') !== false) {
 header('Content-Type: text/html; charset=UTF-8');
 $lastModified = filemtime($reactApp) ?: time();
 $etag = '"' . md5($html) . '"';
-header('Cache-Control: public, max-age=60');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
 header('ETag: ' . $etag);
-
-$ifNoneMatch = trim((string) ($_SERVER['HTTP_IF_NONE_MATCH'] ?? ''));
-$ifModifiedSince = strtotime((string) ($_SERVER['HTTP_IF_MODIFIED_SINCE'] ?? '')) ?: 0;
-if ($ifNoneMatch === $etag || $ifModifiedSince >= $lastModified) {
-    http_response_code(304);
-    exit;
-}
 
 echo $html;

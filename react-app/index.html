@@ -7013,17 +7013,8 @@ function Message({ text, kind = 'info' }) {
     return <div className={kind === 'error' ? 'msg danger' : 'msg'}>{text}</div>;
 }
 
-function PageLoader({ label = 'Loading content', sub = 'Please wait while we prepare your learning space.' }) {
-    return (
-        <div className="app-loader">
-            <div className="loader-card">
-                <div className="loader-mark"><img src={APP_LOGO_URL} alt="GYAN NEXA" /></div>
-                <b>{label}</b>
-                <span>{sub}</span>
-                <div className="loader-lines"><i></i><i></i><i></i></div>
-            </div>
-        </div>
-    );
+function PageLoader() {
+    return null;
 }
 
 function CourseCard({ course, onClick, showButton = true }) {
