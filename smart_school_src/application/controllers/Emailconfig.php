@@ -79,7 +79,7 @@ class Emailconfig extends Admin_Controller
             $array = array('status' => 'fail', 'error' => $msg, 'message' => '');
         } else {
 
-            $this->mailer->send_mail($this->input->post('email'), 'GyanRank Email Test', 'GyanRank Email Test Successful.');
+            $this->mailer->send_mail($this->input->post('email'), 'Gyan Nexa Email Test', 'Gyan Nexa Email Test Successful.');
             $array = array('status' => 'success', 'error' => '', 'message' => 'Test Email Sent Successfully. Please check your email inbox if you have received.');
         }
         echo json_encode($array);

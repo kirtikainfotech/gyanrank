@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#424242" />
-        <title>GyanRank ERP</title>
+        <title>Gyan Nexa ERP</title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css"> 
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css"> 
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/style-main.css"> 

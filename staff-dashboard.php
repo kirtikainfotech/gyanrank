@@ -101,7 +101,7 @@ unset($_SESSION['staff_dash_message'], $_SESSION['staff_dash_error']);
 <body class="legal-page institution-app-page">
     <main class="institution-app-shell">
         <aside class="institution-app-sidebar">
-            <a class="institution-app-logo" href="<?= h(app_url('staff-dashboard')); ?>"><img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="GYAN RANK"></a>
+            <a class="institution-app-logo" href="<?= h(app_url('staff-dashboard')); ?>"><img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="GYAN NEXA"></a>
             <div class="institution-app-user">
                 <b><?= h(strtoupper(substr((string) ($user['full_name'] ?? 'S'), 0, 1))); ?></b>
                 <span><?= h((string) ($user['full_name'] ?? 'Staff')); ?></span>

@@ -30,7 +30,7 @@ $body = important_page_body($slug);
             <a href="<?= app_url('instructor-signup'); ?>">Instructor Signup</a>
         </nav>
         <article class="legal-card">
-            <span>GYAN RANK</span>
+            <span>GYAN NEXA</span>
             <h1><?= h($title); ?></h1>
             <div class="legal-content"><?= $body; ?></div>
         </article>

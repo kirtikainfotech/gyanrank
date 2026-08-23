@@ -505,7 +505,7 @@ function institute_erp_backup_tenant_database(int $tenantId, int $createdBy = 0,
     }
     $erp->set_charset('utf8mb4');
 
-    fwrite($handle, "-- GyanRank ERP tenant backup\n");
+    fwrite($handle, "-- Gyan Nexa ERP tenant backup\n");
     fwrite($handle, "-- Tenant: " . (string) $tenant['tenant_code'] . "\n");
     fwrite($handle, "-- Database: {$dbName}\n");
     fwrite($handle, "-- Created: " . date('Y-m-d H:i:s') . "\n\n");
@@ -628,7 +628,7 @@ function institute_erp_restore_tenant_database(int $tenantId, int $backupId, str
     }
 
     $header = file_get_contents($filePath, false, null, 0, 512);
-    if (strpos((string) $header, '-- GyanRank ERP tenant backup') === false || strpos((string) $header, '-- Database: ' . $dbName) === false) {
+    if (strpos((string) $header, '-- Gyan Nexa ERP tenant backup') === false || strpos((string) $header, '-- Database: ' . $dbName) === false) {
         return ['ok' => false, 'message' => 'Backup file does not match this tenant database.'];
     }
 
@@ -904,7 +904,7 @@ function institute_erp_install_tenant(int $tenantId): array
 
     $source = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'smart_school_src';
     if (!is_dir($source) || !is_file($source . DIRECTORY_SEPARATOR . 'index.php')) {
-        return ['ok' => false, 'message' => 'GyanRank ERP source folder missing.'];
+        return ['ok' => false, 'message' => 'Gyan Nexa ERP source folder missing.'];
     }
 
     $tenantPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, (string) $tenant['erp_base_path']);
@@ -930,7 +930,7 @@ function institute_erp_install_tenant(int $tenantId): array
 
         $status = 'active';
         $setup = 'installed';
-        $note = 'GyanRank ERP tenant bootstrap installed and connected to ' . $dbName . '.';
+        $note = 'Gyan Nexa ERP tenant bootstrap installed and connected to ' . $dbName . '.';
         $stmt = db()->prepare("UPDATE institution_erp_tenants SET erp_db_name = ?, erp_status = ?, setup_status = ?, setup_note = ?, updated_at = NOW() WHERE id = ?");
         $stmt->bind_param('ssssi', $dbName, $status, $setup, $note, $tenantId);
         $stmt->execute();
@@ -978,7 +978,7 @@ function institute_erp_write_tenant_bootstrap(string $tenantPath, string $tenant
     $index .= "require __DIR__ . '/" . $relativeSource . "/index.php';\n";
 
     if (!is_dir($source) || !is_file($source . DIRECTORY_SEPARATOR . 'index.php')) {
-        throw new RuntimeException('Shared GyanRank ERP runtime missing.');
+        throw new RuntimeException('Shared Gyan Nexa ERP runtime missing.');
     }
     if (file_put_contents($tenantPath . DIRECTORY_SEPARATOR . 'index.php', $index) === false) {
         throw new RuntimeException('Unable to write tenant bootstrap.');
@@ -1045,7 +1045,7 @@ function institute_erp_create_and_import_database(string $dbName): void
     $sqlFile = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'smart_school_src' . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'database.sql';
     $sql = file_get_contents($sqlFile);
     if ($sql === false || trim($sql) === '') {
-        throw new RuntimeException('GyanRank ERP SQL file is empty or missing.');
+        throw new RuntimeException('Gyan Nexa ERP SQL file is empty or missing.');
     }
 
     $import = new mysqli(DB_HOST, DB_USER, DB_PASS, $dbName);
@@ -1071,7 +1071,7 @@ function institute_erp_apply_branding_defaults(string $dbName): void
     $erp = new mysqli(DB_HOST, DB_USER, DB_PASS, $dbName);
     $erp->set_charset('utf8');
 
-    $schoolName = 'GyanRank';
+    $schoolName = 'Gyan Nexa';
     $currency = 'INR';
     $currencySymbol = '₹';
     $image = '1.png';
@@ -1088,7 +1088,7 @@ function institute_erp_apply_branding_defaults(string $dbName): void
 
     $frontLogo = 'uploads/school_content/logo/1.png';
     $favIcon = 'uploads/school_content/admin_small_logo/1.png';
-    $footerText = '© ' . date('Y') . ' GyanRank';
+    $footerText = '© ' . date('Y') . ' Gyan Nexa';
     $stmt = $erp->prepare("UPDATE front_cms_settings
         SET logo = ?, fav_icon = ?, footer_text = ?
         WHERE id = 1");
@@ -1100,7 +1100,7 @@ function institute_erp_apply_branding_defaults(string $dbName): void
     $legacyTitleBrand = 'Smart' . ' School';
     $legacyUpperBrand = 'SMART' . ' SCHOOL';
     $stmt = $erp->prepare("UPDATE notification_setting
-        SET template = REPLACE(REPLACE(REPLACE(REPLACE(template, ?, 'GyanRank'), ?, 'GyanRank'), ?, 'GyanRank'), ?, 'GyanRank')");
+        SET template = REPLACE(REPLACE(REPLACE(REPLACE(template, ?, 'Gyan Nexa'), ?, 'Gyan Nexa'), ?, 'Gyan Nexa'), ?, 'Gyan Nexa')");
     $stmt->bind_param('ssss', $legacySchoolName, $legacyLowerBrand, $legacyTitleBrand, $legacyUpperBrand);
     $stmt->execute();
 
@@ -1141,8 +1141,8 @@ function institute_erp_apply_legacy_teacher_compatibility(string $dbName): void
         $password = password_hash('teacher123', PASSWORD_DEFAULT);
         $image = 'uploads/student_images/no_image.png';
         $teachers = [
-            ['Priya Sharma', 'priya.sharma@gyanrank.test', 'Female', '1988-04-14', 'Knowledge Park, Tonk Road, Jaipur', '9876543211'],
-            ['Amit Verma', 'amit.verma@gyanrank.test', 'Male', '1985-09-22', 'C-Scheme, Jaipur', '9876543212'],
+            ['Priya Sharma', 'priya.sharma@gyannexa.test', 'Female', '1988-04-14', 'Knowledge Park, Tonk Road, Jaipur', '9876543211'],
+            ['Amit Verma', 'amit.verma@gyannexa.test', 'Male', '1985-09-22', 'C-Scheme, Jaipur', '9876543212'],
         ];
         $stmt = $erp->prepare('INSERT INTO teachers (name, email, password, sex, dob, address, phone, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         foreach ($teachers as $teacher) {
@@ -1569,8 +1569,8 @@ function institute_erp_seed_operational_demo_data(string $dbName): void
 
     if (institute_erp_table_count($erp, 'hostel') === 0) {
         $erp->query("INSERT INTO hostel (hostel_name, type, address, intake, description, is_active) VALUES
-            ('GyanRank Boys Residence', 'Boys', 'Knowledge Park Campus, Jaipur', 80, 'Demo hostel block for senior students.', 'yes'),
-            ('GyanRank Girls Residence', 'Girls', 'Knowledge Park Campus, Jaipur', 80, 'Demo hostel block with supervised study area.', 'yes')");
+            ('Gyan Nexa Boys Residence', 'Boys', 'Knowledge Park Campus, Jaipur', 80, 'Demo hostel block for senior students.', 'yes'),
+            ('Gyan Nexa Girls Residence', 'Girls', 'Knowledge Park Campus, Jaipur', 80, 'Demo hostel block with supervised study area.', 'yes')");
     }
 
     if (institute_erp_table_count($erp, 'hostel_rooms') === 0) {
@@ -1610,9 +1610,9 @@ function institute_erp_seed_operational_demo_data(string $dbName): void
     if (institute_erp_table_count($erp, 'books') === 0) {
         $today = date('Y-m-d');
         $erp->query("INSERT INTO books (book_title, book_no, isbn_no, subject, rack_no, publish, author, qty, perunitcost, postdate, description, available, is_active) VALUES
-            ('Mathematics Practice Companion', 'GR-LIB-001', '9789350000011', 'Mathematics', 'R1-A', 'GyanRank Academic', 'R. K. Sharma', 15, 350.00, '{$today}', 'Class 10 practice reference.', 'yes', 'yes'),
-            ('Science Lab Manual', 'GR-LIB-002', '9789350000012', 'Science', 'R1-B', 'GyanRank Academic', 'Dr. Meera Nair', 12, 420.00, '{$today}', 'Practical science experiments.', 'yes', 'yes'),
-            ('English Grammar Workbook', 'GR-LIB-003', '9789350000013', 'English', 'R2-A', 'GyanRank Academic', 'Anita Joseph', 20, 280.00, '{$today}', 'Grammar and writing practice.', 'yes', 'yes')");
+            ('Mathematics Practice Companion', 'GR-LIB-001', '9789350000011', 'Mathematics', 'R1-A', 'Gyan Nexa Academic', 'R. K. Sharma', 15, 350.00, '{$today}', 'Class 10 practice reference.', 'yes', 'yes'),
+            ('Science Lab Manual', 'GR-LIB-002', '9789350000012', 'Science', 'R1-B', 'Gyan Nexa Academic', 'Dr. Meera Nair', 12, 420.00, '{$today}', 'Practical science experiments.', 'yes', 'yes'),
+            ('English Grammar Workbook', 'GR-LIB-003', '9789350000013', 'English', 'R2-A', 'Gyan Nexa Academic', 'Anita Joseph', 20, 280.00, '{$today}', 'Grammar and writing practice.', 'yes', 'yes')");
     }
 
     if (institute_erp_table_count($erp, 'onlineexam') === 0) {
@@ -1630,7 +1630,7 @@ function institute_erp_seed_operational_demo_data(string $dbName): void
         $auto = date('Y-m-d 19:00:00', strtotime('+2 days'));
         $erp->query("INSERT INTO onlineexam
             (exam, attempt, exam_from, exam_to, is_quiz, auto_publish_date, time_from, time_to, duration, passing_percentage, description, session_id, publish_result, is_active, is_marks_display, is_neg_marking, is_random_question, is_rank_generated, publish_exam_notification, publish_result_notification)
-            VALUES ('Class 10 Demo Assessment', 1, '{$from}', '{$to}', 0, '{$auto}', '09:00:00', '18:00:00', '01:00:00', 40, 'Demo online exam for GyanRank ERP presentation.', {$sessionId}, 1, '1', 1, 0, 0, 0, 1, 1)");
+            VALUES ('Class 10 Demo Assessment', 1, '{$from}', '{$to}', 0, '{$auto}', '09:00:00', '18:00:00', '01:00:00', 40, 'Demo online exam for Gyan Nexa ERP presentation.', {$sessionId}, 1, '1', 1, 0, 0, 0, 1, 1)");
     }
 
     $erp->close();
@@ -1641,16 +1641,16 @@ function institute_erp_seed_default_admin(string $dbName, string $institutionNam
     $erp = new mysqli(DB_HOST, DB_USER, DB_PASS, $dbName);
     $erp->set_charset('utf8');
 
-    $exists = $erp->query("SELECT id FROM staff WHERE email = 'admin@gyanrank.test' LIMIT 1");
+    $exists = $erp->query("SELECT id FROM staff WHERE email = 'admin@gyannexa.test' LIMIT 1");
     if ($exists && $exists->num_rows > 0) {
         $erp->close();
         return;
     }
 
     $passwordHash = password_hash('Admin@12345', PASSWORD_DEFAULT);
-    $name = trim($institutionName) !== '' ? substr($institutionName, 0, 190) : 'Gyan Rank Admin';
+    $name = trim($institutionName) !== '' ? substr($institutionName, 0, 190) : 'GYAN NEXA Admin';
     $surname = 'Admin';
-    $email = 'admin@gyanrank.test';
+    $email = 'admin@gyannexa.test';
     $employeeId = 'GRADMIN';
     $langId = 4;
     $isActive = 1;
@@ -1703,20 +1703,20 @@ function institute_erp_write_tenant_database_config(string $tenantPath, string $
 
 function institute_erp_write_tenant_parent_config(string $tenantPath, int $accountId, int $tenantId, string $templateType = 'school'): void
 {
-    $file = $tenantPath . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'gyanrank.php';
+    $file = $tenantPath . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'gyannexa.php';
     $content = "<?php\n\n";
     $content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
-    $content .= "\$config['gyanrank_parent_db'] = array(\n";
+    $content .= "\$config['gyannexa_parent_db'] = array(\n";
     $content .= "    'hostname' => '" . addslashes(DB_HOST) . "',\n";
     $content .= "    'username' => '" . addslashes(DB_USER) . "',\n";
     $content .= "    'password' => '" . addslashes(DB_PASS) . "',\n";
     $content .= "    'database' => '" . addslashes(DB_NAME) . "',\n";
     $content .= ");\n";
-    $content .= "\$config['gyanrank_institution_account_id'] = " . $accountId . ";\n";
-    $content .= "\$config['gyanrank_tenant_id'] = " . $tenantId . ";\n";
-    $content .= "\$config['gyanrank_erp_template_type'] = '" . addslashes($templateType) . "';\n";
+    $content .= "\$config['GYANRANK_INSTITUTION_ACCOUNT_ID'] = " . $accountId . ";\n";
+    $content .= "\$config['gyannexa_tenant_id'] = " . $tenantId . ";\n";
+    $content .= "\$config['GYANRANK_ERP_TEMPLATE_TYPE'] = '" . addslashes($templateType) . "';\n";
     if (file_put_contents($file, $content) === false) {
-        throw new RuntimeException('Unable to write Gyan Rank tenant config.');
+        throw new RuntimeException('Unable to write GYAN NEXA tenant config.');
     }
 }
 

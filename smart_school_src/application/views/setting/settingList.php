@@ -18,11 +18,11 @@
         border: 0;
         box-shadow: none;
     }
-    .uploadsticky .box-body img.gyanrank-print-logo {
+    .uploadsticky .box-body img.Gyan Nexa-print-logo {
         height: 130px;
         max-width: 220px;
     }
-    .uploadsticky .box-body img.gyanrank-small-logo {
+    .uploadsticky .box-body img.Gyan Nexa-small-logo {
         width: 76px;
         height: 76px;
         max-width: 76px;
@@ -45,11 +45,11 @@
                         <?php
                         if ($result->image == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail gyanrank-print-logo" alt="Cinque Terre" width="304" height="236">
+                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail Gyan Nexa-print-logo" alt="Cinque Terre" width="304" height="236">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/<?php echo $result->image; ?>" class="img-thumbnail gyanrank-print-logo" alt="Cinque Terre" width="304" height="236">
+                            <img src="<?php echo base_url() ?>uploads/school_content/logo/<?php echo $result->image; ?>" class="img-thumbnail Gyan Nexa-print-logo" alt="Cinque Terre" width="304" height="236">
                             <?php
                         }
                         ?>
@@ -64,11 +64,11 @@
                         <?php
                         if ($result->admin_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/images.png" class="img-thumbnail gyanrank-admin-logo" alt="Cinque Terre" width="204" height="60">
+                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/images.png" class="img-thumbnail Gyan Nexa-admin-logo" alt="Cinque Terre" width="204" height="60">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/<?php echo $result->admin_logo; ?>" class="img-thumbnail gyanrank-admin-logo" alt="" width="204" height="60">
+                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/<?php echo $result->admin_logo; ?>" class="img-thumbnail Gyan Nexa-admin-logo" alt="" width="204" height="60">
                             <?php
                         }
                         ?>
@@ -82,11 +82,11 @@
                         <?php
                         if ($result->admin_small_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail gyanrank-small-logo" alt="Cinque Terre" width="" height="">
+                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail Gyan Nexa-small-logo" alt="Cinque Terre" width="" height="">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_small_logo/<?php echo $result->admin_small_logo; ?>" class="gyanrank-small-logo" alt="Cinque Terre" width="" height="">
+                            <img src="<?php echo base_url() ?>uploads/school_content/admin_small_logo/<?php echo $result->admin_small_logo; ?>" class="Gyan Nexa-small-logo" alt="Cinque Terre" width="" height="">
                             <?php
                         }
                         ?>
@@ -101,11 +101,11 @@
                         <?php
                         if ($result->app_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail img-responsive gyanrank-app-logo" alt="" width="" height="">
+                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail img-responsive Gyan Nexa-app-logo" alt="" width="" height="">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/app_logo/<?php echo $result->app_logo; ?>" class="img-responsive gyanrank-app-logo" alt="" width="" height="">
+                            <img src="<?php echo base_url() ?>uploads/school_content/logo/app_logo/<?php echo $result->app_logo; ?>" class="img-responsive Gyan Nexa-app-logo" alt="" width="" height="">
                             <?php
                         }
                         ?>
@@ -879,7 +879,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Register your GyanRank Android App</h4>
+                <h4 class="modal-title">Register your Gyan Nexa Android App</h4>
             </div>
             <form action="<?php echo site_url('admin/admin/updateandappCode') ?>" method="POST" id="andapp_code">
                 <div class="modal-body andapp_modal-body">
@@ -887,13 +887,13 @@
 
                     </div>
                     <div class="form-group">
-                        <label class="ainline"><span>GyanRank Android App Activation Code</span></label>
+                        <label class="ainline"><span>Gyan Nexa Android App Activation Code</span></label>
                         <input type="text" class="form-control" id="input-app-envato_market_purchase_code" name="app-envato_market_purchase_code">
                         <div id="error" class="input-error text text-danger"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email registered with GyanRank</label>
+                        <label for="exampleInputEmail1">Email registered with Gyan Nexa</label>
                         <input type="text" class="form-control" id="input-app-email" name="app-email">
                         <div id="error" class="input-error text text-danger"></div>
                     </div>

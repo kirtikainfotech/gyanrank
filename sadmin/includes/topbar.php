@@ -15,7 +15,7 @@ $initials = strtoupper(substr(trim($userName), 0, 1) ?: 'S');
                 </a>
             </div>
             <div class="header-element gr-topbar-title">
-                <a href="<?= h(app_url('sadmin/dashboard')); ?>">GyanRank</a>
+                <a href="<?= h(app_url('sadmin/dashboard')); ?>">Gyan Nexa</a>
             </div>
         </div>
 

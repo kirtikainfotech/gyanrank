@@ -378,7 +378,7 @@ class Admin extends Admin_Controller
     public function updatePurchaseCode()
     {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
-        $this->form_validation->set_rules('envato_market_purchase_code', 'GyanRank Activation Code', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('envato_market_purchase_code', 'Gyan Nexa Activation Code', 'required|trim|xss_clean');
         if ($this->form_validation->run() == false) {
             $data = array(
                 'email'                       => form_error('email'),
@@ -776,7 +776,7 @@ class Admin extends Admin_Controller
     public function updateandappCode()
     {
         $this->form_validation->set_rules('app-email', 'Email', 'required|valid_email|trim|xss_clean');
-        $this->form_validation->set_rules('app-envato_market_purchase_code', 'GyanRank App Activation Code', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('app-envato_market_purchase_code', 'Gyan Nexa App Activation Code', 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $data = array(
@@ -868,7 +868,7 @@ class Admin extends Admin_Controller
       public function updateaddon()
     {
         $this->form_validation->set_rules('app-email', 'Email', 'required|valid_email|trim|xss_clean');
-        $this->form_validation->set_rules('app-envato_market_purchase_code', 'GyanRank App Activation Code', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('app-envato_market_purchase_code', 'Gyan Nexa App Activation Code', 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == false) {
 

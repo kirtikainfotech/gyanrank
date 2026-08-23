@@ -1276,7 +1276,7 @@ if ($this->module_lib->hasActive('system_settings')) {
 if ($this->rbac->hasPrivilege('general_setting', 'can_view')) {
             ?>
                                 <li class="<?php echo set_Submenu('schsettings/index'); ?>"><a href="<?php echo base_url(); ?>schsettings"><i class="fa fa-angle-double-right"></i> <?php echo $this->lang->line('general_settings'); ?></a></li>
-                                <li class="<?php echo set_Submenu('admin/gyanranksetup'); ?>"><a href="<?php echo base_url(); ?>admin/gyanranksetup"><i class="fa fa-angle-double-right"></i> GyanRank ERP Setup</a></li>
+                                <li class="<?php echo set_Submenu('admin/gyanranksetup'); ?>"><a href="<?php echo base_url(); ?>admin/gyanranksetup"><i class="fa fa-angle-double-right"></i> Gyan Nexa ERP Setup</a></li>
                                 <?php
 }
         if ($this->rbac->hasPrivilege('session_setting', 'can_view')) {

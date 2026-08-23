@@ -257,7 +257,7 @@ $pageHeading = $pageHeadings[$activeInstitutePage] ?? $pageHeadings['institute-d
 <body class="legal-page institution-app-page">
     <main class="institution-app-shell">
         <aside class="institution-app-sidebar">
-            <a class="institution-app-logo" href="<?= h(app_url('index')); ?>"><img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="GYAN RANK"></a>
+            <a class="institution-app-logo" href="<?= h(app_url('index')); ?>"><img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="GYAN NEXA"></a>
             <div class="institution-app-user">
                 <b><?= h(substr((string) ($account['institution_name'] ?? 'I'), 0, 1)); ?></b>
                 <span><?= h($account['institution_name'] ?? 'Institute'); ?></span>
@@ -474,7 +474,7 @@ $pageHeading = $pageHeadings[$activeInstitutePage] ?? $pageHeadings['institute-d
                 <div class="institution-domain-layout">
                     <div class="institution-domain-summary">
                         <b><?= h(!empty($tenant['custom_domain']) ? $tenant['custom_domain'] : 'No custom domain connected'); ?></b>
-                        <span>Submit a domain request such as erp.yourschool.com. The GyanRank team will verify DNS, configure the server, issue SSL, and map your ERP safely.</span>
+                        <span>Submit a domain request such as erp.yourschool.com. The Gyan Nexa team will verify DNS, configure the server, issue SSL, and map your ERP safely.</span>
                         <?php if ($latestDomain): ?>
                             <small>Latest request #<?= (int) $latestDomain['id']; ?>: <?= h(ucwords(str_replace('_', ' ', (string) $latestDomain['status']))); ?><?= !empty($latestDomain['dns_target']) ? ' / DNS: ' . h((string) $latestDomain['dns_target']) : ''; ?></small>
                         <?php endif; ?>

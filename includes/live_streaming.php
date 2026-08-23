@@ -113,8 +113,8 @@ function live_stream_secret(): string
 
 function live_base_url(): string
 {
-    $base = trim(app_setting('live_base_url', 'https://live.gyanrank.in'));
-    return rtrim($base !== '' ? $base : 'https://live.gyanrank.in', '/');
+    $base = trim(app_setting('live_base_url', 'https://live.gyannexa.com'));
+    return rtrim($base !== '' ? $base : 'https://live.gyannexa.com', '/');
 }
 
 function live_random_key(): string

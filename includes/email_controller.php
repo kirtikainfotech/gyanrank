@@ -43,7 +43,7 @@ if (!function_exists('email_render_template')) {
     function email_render_template(string $template, array $vars): string
     {
         $defaults = [
-            'site_name' => email_setting('site_name', defined('APP_NAME') ? APP_NAME : 'Gyan Rank'),
+            'site_name' => email_setting('site_name', defined('APP_NAME') ? APP_NAME : 'GYAN NEXA'),
             'site_url' => email_base_url(),
             'login_url' => email_base_url() . '/#/login',
             'signup_url' => email_base_url() . '/#/signup',
@@ -72,7 +72,7 @@ if (!function_exists('email_text_from_html')) {
 if (!function_exists('email_layout')) {
     function email_layout(string $subject, string $body, array $vars = []): string
     {
-        $siteName = htmlspecialchars(email_setting('site_name', 'Gyan Rank'), ENT_QUOTES, 'UTF-8');
+        $siteName = htmlspecialchars(email_setting('site_name', 'GYAN NEXA'), ENT_QUOTES, 'UTF-8');
         $header = email_render_template(email_setting('email_template_header', 'Welcome to {site_name}'), $vars);
         $footer = email_render_template(email_setting('email_template_footer', 'Regards, {site_name}'), $vars);
         $safeSubject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
@@ -238,7 +238,7 @@ if (!function_exists('email_send')) {
         if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
             throw new RuntimeException('From email is not configured.');
         }
-        $fromName = trim(email_setting('mail_from_name', email_setting('site_name', 'Gyan Rank')));
+        $fromName = trim(email_setting('mail_from_name', email_setting('site_name', 'GYAN NEXA')));
         $text = $text !== '' ? $text : email_text_from_html($html);
 
         if (strtolower(email_setting('mail_driver', 'smtp')) === 'smtp') {

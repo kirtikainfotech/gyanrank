@@ -66,7 +66,7 @@
 		http_response_code(503);
 		header('Retry-After: 600');
 		header('Content-Type: text/html; charset=UTF-8');
-		echo '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maintenance</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f7fb;color:#06345f;font-family:Arial,sans-serif}.box{max-width:560px;padding:32px;border-top:4px solid #f68a00;background:#fff;box-shadow:0 16px 40px rgba(6,52,95,.14);border-radius:8px}h1{margin:0 0 10px;font-size:28px}p{margin:0;color:#52677a;line-height:1.55}</style></head><body><main class="box"><h1>GyanRank ERP is under maintenance</h1><p>We are applying updates. Please try again shortly.</p></main></body></html>';
+		echo '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maintenance</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f7fb;color:#06345f;font-family:Arial,sans-serif}.box{max-width:560px;padding:32px;border-top:4px solid #f68a00;background:#fff;box-shadow:0 16px 40px rgba(6,52,95,.14);border-radius:8px}h1{margin:0 0 10px;font-size:28px}p{margin:0;color:#52677a;line-height:1.55}</style></head><body><main class="box"><h1>Gyan Nexa ERP is under maintenance</h1><p>We are applying updates. Please try again shortly.</p></main></body></html>';
 		exit;
 	}
 

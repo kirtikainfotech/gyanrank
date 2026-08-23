@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?php echo $this->customlib->getAppName() . " : GyanRank ERP" ?></title>
+        <title><?php echo $this->customlib->getAppName() . " : Gyan Nexa ERP" ?></title>
         <!--favican-->
         <link href="<?php echo base_url(); ?>backend/images/s-favican.png" rel="shortcut icon" type="image/x-icon">
         <!-- Bootstrap 3.3.5 -->

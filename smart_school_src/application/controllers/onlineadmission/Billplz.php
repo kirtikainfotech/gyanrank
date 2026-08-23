@@ -32,7 +32,7 @@ class Billplz extends Front_Controller
     	$this->session->set_userdata('payment_amount',$this->amount);
         $data['return_url']  = base_url() . 'onlineadmission/billplz/complete';
         $data['total']       = $this->amount;
-        $data['productinfo'] = "GyanRank ERP admission fee payment";
+        $data['productinfo'] = "Gyan Nexa ERP admission fee payment";
         $parameter           = array(
             'title'       => $this->lang->line('online_admission_form_fees'),
             'description' => $data['productinfo'],

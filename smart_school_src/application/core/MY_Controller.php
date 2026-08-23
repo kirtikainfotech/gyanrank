@@ -7,14 +7,14 @@ class MY_Controller extends CI_Controller
 {
 
     protected $langs = array();
-    protected $gyanrank_plan_features = null;
-    protected $gyanrank_erp_template_type = 'school';
+    protected $GYANNEXA_plan_features = null;
+    protected $GYANNEXA_erp_template_type = 'school';
 
     public function __construct()
     {
 
         parent::__construct();
-        $this->enforce_gyanrank_subscription_gate();
+        $this->enforce_GYANNEXA_subscription_gate();
         $this->config->load('license');
         $this->load->helper('language');
         $this->load->helper(array('directory', 'customfield', 'custom'));
@@ -24,7 +24,7 @@ class MY_Controller extends CI_Controller
         $this->load->library('module_lib');
         $this->load->library('pushnotification');
         $this->load->library('jsonlib');
-        $this->refresh_gyanrank_branding_session();
+        $this->refresh_GYANNEXA_branding_session();
 
         if ($this->session->has_userdata('admin')) {
 
@@ -49,7 +49,7 @@ class MY_Controller extends CI_Controller
         $this->load->language($lang_array, $language);
     }
 
-    private function refresh_gyanrank_branding_session()
+    private function refresh_GYANNEXA_branding_session()
     {
         if (!$this->session->has_userdata('admin') && !$this->session->has_userdata('student')) {
             return;
@@ -81,32 +81,32 @@ class MY_Controller extends CI_Controller
         }
     }
 
-    private function enforce_gyanrank_subscription_gate()
+    private function enforce_GYANNEXA_subscription_gate()
     {
-        $loaded = $this->config->load('gyanrank', true, true);
-        $account_id = $loaded ? (int) $this->config->item('gyanrank_institution_account_id', 'gyanrank') : 0;
-        $parent_db  = $loaded ? $this->config->item('gyanrank_parent_db', 'gyanrank') : array();
-        if ($account_id <= 0 && defined('GYANRANK_INSTITUTION_ACCOUNT_ID')) {
-            $account_id = (int) GYANRANK_INSTITUTION_ACCOUNT_ID;
+        $loaded = $this->config->load('GYANNEXA', true, true);
+        $account_id = $loaded ? (int) $this->config->item('GYANNEXA_institution_account_id', 'GYANNEXA') : 0;
+        $parent_db  = $loaded ? $this->config->item('GYANNEXA_parent_db', 'GYANNEXA') : array();
+        if ($account_id <= 0 && defined('GYANNEXA_INSTITUTION_ACCOUNT_ID')) {
+            $account_id = (int) GYANNEXA_INSTITUTION_ACCOUNT_ID;
         }
-        if ((!is_array($parent_db) || empty($parent_db)) && defined('GYANRANK_PARENT_DB_NAME')) {
+        if ((!is_array($parent_db) || empty($parent_db)) && defined('GYANNEXA_PARENT_DB_NAME')) {
             $parent_db = array(
-                'hostname' => defined('GYANRANK_PARENT_DB_HOST') ? GYANRANK_PARENT_DB_HOST : 'localhost',
-                'username' => defined('GYANRANK_PARENT_DB_USER') ? GYANRANK_PARENT_DB_USER : 'root',
-                'password' => defined('GYANRANK_PARENT_DB_PASS') ? GYANRANK_PARENT_DB_PASS : '',
-                'database' => GYANRANK_PARENT_DB_NAME,
+                'hostname' => defined('GYANNEXA_PARENT_DB_HOST') ? GYANNEXA_PARENT_DB_HOST : 'localhost',
+                'username' => defined('GYANNEXA_PARENT_DB_USER') ? GYANNEXA_PARENT_DB_USER : 'root',
+                'password' => defined('GYANNEXA_PARENT_DB_PASS') ? GYANNEXA_PARENT_DB_PASS : '',
+                'database' => GYANNEXA_PARENT_DB_NAME,
             );
         }
         if ($account_id <= 0 || !is_array($parent_db)) {
             return;
         }
 
-        if ($this->gyanrank_is_auth_route()) {
+        if ($this->GYANNEXA_is_auth_route()) {
             return;
         }
 
-        $hasActivePlan = $this->gyanrank_has_active_erp_plan($parent_db, $account_id);
-        if ($this->gyanrank_is_reporting_route()) {
+        $hasActivePlan = $this->GYANNEXA_has_active_erp_plan($parent_db, $account_id);
+        if ($this->GYANNEXA_is_reporting_route()) {
             return;
         }
 
@@ -132,10 +132,10 @@ class MY_Controller extends CI_Controller
             exit;
         }
 
-        show_error('ERP plan expired. New entries are locked; reporting remains available. Please renew your Gyan Rank ERP plan.', 403, 'ERP Locked');
+        show_error('ERP plan expired. New entries are locked; reporting remains available. Please renew your Gyan Nexa ERP plan.', 403, 'ERP Locked');
     }
 
-    private function gyanrank_is_reporting_route()
+    private function GYANNEXA_is_reporting_route()
     {
         $class  = strtolower((string) $this->router->fetch_class());
         $method = strtolower((string) $this->router->fetch_method());
@@ -151,7 +151,7 @@ class MY_Controller extends CI_Controller
         return false;
     }
 
-    private function gyanrank_is_auth_route()
+    private function GYANNEXA_is_auth_route()
     {
         $class  = strtolower((string) $this->router->fetch_class());
         $method = strtolower((string) $this->router->fetch_method());
@@ -160,7 +160,7 @@ class MY_Controller extends CI_Controller
         return $class === 'site' && in_array($method, $allowed, true);
     }
 
-    private function gyanrank_has_active_erp_plan($parent_db, $account_id)
+    private function GYANNEXA_has_active_erp_plan($parent_db, $account_id)
     {
         $mysqli = @new mysqli(
             (string) ($parent_db['hostname'] ?? ''),
@@ -196,27 +196,27 @@ class MY_Controller extends CI_Controller
             return false;
         }
 
-        $this->gyanrank_plan_features = $this->gyanrank_decode_plan_features((string) ($row['features_json'] ?? '[]'));
-        $this->gyanrank_erp_template_type = in_array((string) ($row['erp_template_type'] ?? ''), array('school', 'degree_college', 'coaching'), true)
+        $this->GYANNEXA_plan_features = $this->GYANNEXA_decode_plan_features((string) ($row['features_json'] ?? '[]'));
+        $this->GYANNEXA_erp_template_type = in_array((string) ($row['erp_template_type'] ?? ''), array('school', 'degree_college', 'coaching'), true)
             ? (string) $row['erp_template_type']
-            : (defined('GYANRANK_ERP_TEMPLATE_TYPE') ? (string) GYANRANK_ERP_TEMPLATE_TYPE : 'school');
+            : (defined('GYANNEXA_ERP_TEMPLATE_TYPE') ? (string) GYANNEXA_ERP_TEMPLATE_TYPE : 'school');
 
         return in_array((string) $row['status'], array('trial', 'active'), true)
             && strtotime((string) $row['expires_at']) >= strtotime(date('Y-m-d'))
             && (string) $row['erp_status'] === 'active';
     }
 
-    protected function gyanrank_erp_template_type()
+    protected function GYANNEXA_erp_template_type()
     {
-        if (defined('GYANRANK_ERP_TEMPLATE_TYPE') && in_array((string) GYANRANK_ERP_TEMPLATE_TYPE, array('school', 'degree_college', 'coaching'), true)) {
-            return (string) GYANRANK_ERP_TEMPLATE_TYPE;
+        if (defined('GYANNEXA_ERP_TEMPLATE_TYPE') && in_array((string) GYANNEXA_ERP_TEMPLATE_TYPE, array('school', 'degree_college', 'coaching'), true)) {
+            return (string) GYANNEXA_ERP_TEMPLATE_TYPE;
         }
-        return $this->gyanrank_erp_template_type ?: 'school';
+        return $this->GYANNEXA_erp_template_type ?: 'school';
     }
 
-    public function gyanrank_erp_label($key)
+    public function GYANNEXA_erp_label($key)
     {
-        $template = $this->gyanrank_erp_template_type();
+        $template = $this->GYANNEXA_erp_template_type();
         $labels = array(
             'school' => array(
                 'class' => $this->lang->line('class'),
@@ -247,15 +247,15 @@ class MY_Controller extends CI_Controller
         return $labels[$template][$key] ?? $labels['school'][$key] ?? (string) $key;
     }
 
-    public function gyanrank_has_plan_feature($feature)
+    public function GYANNEXA_has_plan_feature($feature)
     {
-        if ($this->gyanrank_plan_features === null) {
+        if ($this->GYANNEXA_plan_features === null) {
             return true;
         }
-        return in_array('all_modules', $this->gyanrank_plan_features, true) || in_array((string) $feature, $this->gyanrank_plan_features, true);
+        return in_array('all_modules', $this->GYANNEXA_plan_features, true) || in_array((string) $feature, $this->GYANNEXA_plan_features, true);
     }
 
-    private function gyanrank_decode_plan_features($features_json)
+    private function GYANNEXA_decode_plan_features($features_json)
     {
         $features = json_decode((string) $features_json, true);
         if (!is_array($features)) {
@@ -273,14 +273,14 @@ class MY_Controller extends CI_Controller
         return $clean;
     }
 
-    protected function enforce_gyanrank_feature_gate()
+    protected function enforce_GYANNEXA_feature_gate()
     {
-        if ($this->gyanrank_plan_features === null) {
+        if ($this->GYANNEXA_plan_features === null) {
             return;
         }
 
-        $feature = $this->gyanrank_route_feature();
-        if ($feature === '' || $this->gyanrank_has_plan_feature($feature)) {
+        $feature = $this->GYANNEXA_route_feature();
+        if ($feature === '' || $this->GYANNEXA_has_plan_feature($feature)) {
             return;
         }
 
@@ -291,20 +291,20 @@ class MY_Controller extends CI_Controller
                 ->set_output(json_encode(array(
                     'status' => 0,
                     'error' => 'feature_locked',
-                    'message' => 'This ERP module is not included in the active GyanRank plan.',
+                    'message' => 'This ERP module is not included in the active GYANNEXA plan.',
                 )));
             $this->output->_display();
             exit;
         }
 
-        show_error('This ERP module is not included in the active GyanRank plan. Please upgrade the GyanRank ERP plan to use it.', 403, 'Module Locked');
+        show_error('This ERP module is not included in the active GYANNEXA plan. Please upgrade the GYANNEXA ERP plan to use it.', 403, 'Module Locked');
     }
 
-    private function gyanrank_route_feature()
+    private function GYANNEXA_route_feature()
     {
         $class = strtolower((string) $this->router->fetch_class());
         $uri = strtolower((string) uri_string());
-        if ($class === '' || $class === 'admin' || $class === 'gyanranksetup' || strpos($uri, 'report') !== false) {
+        if ($class === '' || $class === 'admin' || $class === 'GYANNEXAsetup' || strpos($uri, 'report') !== false) {
             return '';
         }
 
@@ -385,7 +385,7 @@ class Admin_Controller extends MY_Controller
         $this->load->library('rbac');
         $this->config->load('app-config');
         $this->load->model(array('batchsubject_model', 'examgroup_model', 'examsubject_model', 'examgroupstudent_model', 'feereminder_model', 'filetype_model', 'rolepermission_model'));
-        $this->enforce_gyanrank_feature_gate();
+        $this->enforce_GYANNEXA_feature_gate();
 
         $this->config->load('ci-blog');
         $this->config->load('custom_filed-config');
@@ -612,7 +612,7 @@ class Front_Controller extends CI_Controller
             if ($this->config->item('installed') == false && $this->config->item('migration_enabled') == false) {
                 redirect(base_url() . 'install/start');
             } else {
-                if (!defined('GYANRANK_TENANT_CODE') && is_dir(APPPATH . 'controllers/install')) {
+                if (!defined('GYANNEXA_TENANT_CODE') && is_dir(APPPATH . 'controllers/install')) {
                     echo '<h3>Delete the install folder from application/controllers/install</h3>';
                     die;
                 }

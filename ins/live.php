@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $channel = live_channel_for_instructor($instructorId);
 $recordings = live_recent_recordings($instructorId);
 $rtmpServer = live_base_url();
-$rtmpServer = preg_replace('#^https?://#', 'rtmp://', $rtmpServer) ?: 'rtmp://live.gyanrank.in';
+$rtmpServer = preg_replace('#^https?://#', 'rtmp://', $rtmpServer) ?: 'rtmp://live.gyannexa.com';
 $rtmpServer .= '/live';
 $obsStreamKey = (string) $channel['playback_slug'] . '?key=' . (string) $channel['stream_key'];
 $playerUrl = live_base_url() . '/play/' . rawurlencode((string) $channel['playback_slug']);

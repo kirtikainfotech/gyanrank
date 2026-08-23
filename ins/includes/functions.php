@@ -770,9 +770,9 @@ function ensure_course_thumbnail(array $course): string
     }
 
     $title = trim((string) ($course['title'] ?? 'Course'));
-    $category = trim((string) (($course['category_name'] ?? '') ?: ($course['category'] ?? 'Gyan Rank')));
+    $category = trim((string) (($course['category_name'] ?? '') ?: ($course['category'] ?? 'GYAN NEXA')));
     $level = trim((string) ($course['course_level'] ?? 'all'));
-    $headline = preg_match('/\bO\s*Level\b/i', $title . ' ' . $category) ? 'O Level July 2026' : (preg_match('/\bCCC\b|Computer Concept/i', $title . ' ' . $category) ? 'CCC July 2026' : 'Gyan Rank Course');
+    $headline = preg_match('/\bO\s*Level\b/i', $title . ' ' . $category) ? 'O Level July 2026' : (preg_match('/\bCCC\b|Computer Concept/i', $title . ' ' . $category) ? 'CCC July 2026' : 'GYAN NEXA Course');
     $shortTitle = strlen($title) > 25 ? substr($title, 0, 22) . '...' : $title;
     $shortCategory = strlen($category) > 28 ? substr($category, 0, 25) . '...' : $category;
     $line1 = htmlspecialchars($headline, ENT_QUOTES, 'UTF-8');

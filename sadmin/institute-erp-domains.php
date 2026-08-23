@@ -197,7 +197,7 @@ $activePage = 'institute-erp-domains';
                                                 </label>
                                                 <label>
                                                     <span>DNS Target</span>
-                                                    <input name="dns_target" class="form-control" value="<?= h($request['dns_target'] ?? ''); ?>" placeholder="CNAME app.gyanrank.com or server IP">
+                                                    <input name="dns_target" class="form-control" value="<?= h($request['dns_target'] ?? ''); ?>" placeholder="CNAME app.gyannexa.com or server IP">
                                                 </label>
                                                 <label>
                                                     <span>Server DocRoot / Alias Note</span>

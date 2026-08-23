@@ -14,7 +14,7 @@ $publicNavItems = [
 <header class="site-header">
     <div class="site-header-inner">
         <a href="<?= h(app_url('index')); ?>" class="site-header-brand" aria-label="<?= h(app_name()); ?>">
-            <img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="Gyan Rank">
+            <img src="<?= h(app_url('assets/grlogo.png')); ?>" alt="GYAN NEXA">
         </a>
         <nav class="site-header-nav" aria-label="Main navigation">
             <?php foreach ($publicNavItems as $item): ?>

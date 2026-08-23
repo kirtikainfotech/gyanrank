@@ -270,7 +270,7 @@ function student_app_payment_redirect_url(string $txn): string
 
 function student_app_payment_deep_link(string $txn): string
 {
-    return 'gyanrank://payment-return?txn=' . rawurlencode($txn);
+    return 'gyannexa://payment-return?txn=' . rawurlencode($txn);
 }
 
 function phonepe_create_payment(string $txn, int $studentId, float $amount, string $purpose, bool $appReturn = false): array
@@ -292,7 +292,7 @@ function phonepe_create_payment(string $txn, int $studentId, float $amount, stri
             ],
             'paymentFlow' => [
                 'type' => 'PG_CHECKOUT',
-                'message' => 'Gyan Rank payment',
+                'message' => 'GYAN NEXA payment',
                 'merchantUrls' => [
                     'redirectUrl' => $redirectUrl,
                 ],
@@ -520,14 +520,14 @@ function api_absolute_url(string $path): string
         return $path;
     }
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'gyanrank.in';
+    $host = $_SERVER['HTTP_HOST'] ?? 'gyannexa.com';
     return $scheme . '://' . $host . app_url($path);
 }
 
 function api_absolute_hash_url(string $hashPath): string
 {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'gyanrank.in';
+    $host = $_SERVER['HTTP_HOST'] ?? 'gyannexa.com';
     $base = rtrim(APP_BASE, '/') . '/';
     return $scheme . '://' . $host . $base . '#/' . ltrim($hashPath, '#/');
 }
@@ -1014,7 +1014,7 @@ function learning_item_thumbnail_url(string $type, array $item): string
         return api_absolute_url($existing);
     }
 
-    $title = trim((string) ($item['title'] ?? 'Gyan Rank'));
+    $title = trim((string) ($item['title'] ?? 'GYAN NEXA'));
     $subtitle = trim((string) (
         $item['category_name']
         ?? $item['exam_category_name']
@@ -1043,7 +1043,7 @@ function learning_item_thumbnail_url(string $type, array $item): string
         $shortTitle = function_exists('mb_strimwidth')
             ? mb_strimwidth($title, 0, 42, '...', 'UTF-8')
             : (strlen($title) > 42 ? substr($title, 0, 39) . '...' : $title);
-        $displaySubtitle = $subtitle ?: 'Gyan Rank';
+        $displaySubtitle = $subtitle ?: 'GYAN NEXA';
         $shortSubtitle = function_exists('mb_strimwidth')
             ? mb_strimwidth($displaySubtitle, 0, 34, '...', 'UTF-8')
             : (strlen($displaySubtitle) > 34 ? substr($displaySubtitle, 0, 31) . '...' : $displaySubtitle);
@@ -1061,7 +1061,7 @@ function learning_item_thumbnail_url(string $type, array $item): string
             . '<text x="74" y="218" font-family="Georgia, serif" font-size="54" font-weight="800" fill="#ffffff">' . $safeTitle . '</text>'
             . '<text x="78" y="275" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="' . $palette[2] . '">' . $safeSubtitle . '</text>'
             . '<rect x="74" y="340" width="330" height="56" rx="14" fill="#ffffff" opacity=".94"/>'
-            . '<text x="102" y="376" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="' . $palette[0] . '">Gyan Rank Learning</text>'
+            . '<text x="102" y="376" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="' . $palette[0] . '">GYAN NEXA Learning</text>'
             . '<text x="610" y="410" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#ffffff" opacity=".18">GR</text>'
             . '</svg>';
         @file_put_contents($file, $svg);
@@ -1199,7 +1199,7 @@ function ensure_student_api_tables(): void
     db()->query("ALTER TABLE student_membership_plans ADD COLUMN IF NOT EXISTS limit_reset_period VARCHAR(20) NOT NULL DEFAULT 'one_time' AFTER live_class_limit");
 
     $plans = [
-        ['Gyan Rank All Access', 'basic', 99.00, 30, null, null, null, null, null, 'monthly', 1],
+        ['GYAN NEXA All Access', 'basic', 99.00, 30, null, null, null, null, null, 'monthly', 1],
     ];
     $stmt = db()->prepare("
         INSERT INTO student_membership_plans
@@ -1233,7 +1233,7 @@ function ensure_student_api_tables(): void
             monthly_price = 99.00,
             validity_days = 30,
             limit_reset_period = 'monthly',
-            plan_name = 'Gyan Rank All Access',
+            plan_name = 'GYAN NEXA All Access',
             sort_order = 1,
             is_active = 1
         WHERE plan_slug = 'basic'
@@ -2948,11 +2948,11 @@ try {
         header('Content-Type: text/html; charset=utf-8');
         echo '<!doctype html><html lang="en"><head><meta charset="utf-8">';
         echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-        echo '<title>Returning to Gyan Rank</title>';
+        echo '<title>Returning to GYAN NEXA</title>';
         echo '<style>body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#002b55;display:grid;place-items:center;min-height:100vh}.box{width:min(420px,90vw);background:#fff;border:1px solid #cfe0ef;border-top:3px solid #ff8a00;border-radius:6px;box-shadow:0 8px 24px rgba(0,43,85,.12);padding:24px}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#4a5d72}a{display:inline-block;margin-top:10px;background:#003b6f;color:#fff;text-decoration:none;padding:10px 16px;border-radius:4px;font-weight:700}</style>';
-        echo '</head><body><div class="box"><h1>Returning to Gyan Rank</h1>';
+        echo '</head><body><div class="box"><h1>Returning to GYAN NEXA</h1>';
         echo '<p>Your payment has been received by the gateway. The app will verify the final payment status automatically.</p>';
-        echo '<a href="' . h($deepLink) . '">Open Gyan Rank App</a>';
+        echo '<a href="' . h($deepLink) . '">Open GYAN NEXA App</a>';
         echo '<p><a style="background:transparent;color:#003b6f;padding:0" href="' . h($statusUrl) . '">Check payment status</a></p>';
         echo '</div><script>setTimeout(function(){window.location.href=' . json_encode($deepLink) . ';},500);</script></body></html>';
         exit;
@@ -3200,7 +3200,22 @@ try {
             'settings' => student_app_settings(),
         ]);
     }
-
+    if ($action === 'dashboard_home') {
+        $user = api_user();
+        $studentId = (int) $user['id'];
+        ensure_default_free_plan($studentId);
+        $courses = course_rows(null, $studentId);
+        $courses = array_values(array_filter($courses, fn($course) => (int) ($course['chapter_count'] ?? 0) > 0));
+        api_out([
+            'success' => true,
+            'settings' => student_app_settings(),
+            'plans' => membership_plans(),
+            'courses' => array_slice($courses, 0, 12),
+            'live_classes' => array_slice(live_class_rows(true, $studentId), 0, 8),
+            'my_courses' => my_course_rows($studentId),
+            'active_tests' => active_exam_sessions($studentId),
+        ]);
+    }
     if ($action === 'home') {
         $user = api_optional_user();
         $studentId = $user ? (int) $user['id'] : null;
@@ -3324,7 +3339,7 @@ try {
             api_out([
                 'success' => false,
                 'membership_required' => true,
-                'message' => 'Activate Gyan Rank All Access to unlock every PDF, course, exam and live class.',
+                'message' => 'Activate GYAN NEXA All Access to unlock every PDF, course, exam and live class.',
                 'plans' => membership_plans(),
             ], 402);
         }
@@ -4188,7 +4203,7 @@ try {
             api_out([
                 'success' => false,
                 'membership_required' => true,
-                'message' => 'Activate Gyan Rank All Access to unlock every course, PDF, exam and live class.',
+                'message' => 'Activate GYAN NEXA All Access to unlock every course, PDF, exam and live class.',
                 'plans' => membership_plans(),
             ], 402);
         }
@@ -5778,3 +5793,4 @@ function save_exam_attempt(int $studentId, array $exam, array $answers, ?array $
         'submitted_at' => $now,
     ];
 }
+

@@ -52,7 +52,7 @@ foreach ($coaching_courses as $course) {
 </style>
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>GyanRank ERP Setup</h1>
+        <h1>Gyan Nexa ERP Setup</h1>
     </section>
     <section class="content">
         <?php if ($this->session->flashdata('msg')) { ?>

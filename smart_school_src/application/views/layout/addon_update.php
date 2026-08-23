@@ -13,13 +13,13 @@
                     <input type="hidden" name="addon" class="addon_type" value="">
                     <input type="hidden" name="addon_version" class="addon_version" value="0">
                     <div class="form-group">
-                        <label class="ainline"><span>GyanRank Addon Activation Code</span></label>
+                        <label class="ainline"><span>Gyan Nexa Addon Activation Code</span></label>
                         <input type="text" class="form-control" id="input-app-envato_market_purchase_code" name="app-envato_market_purchase_code">
                         <div id="error" class="input-error text text-danger"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email registered with GyanRank</label>
+                        <label for="exampleInputEmail1">Email registered with Gyan Nexa</label>
                         <input type="text" class="form-control" id="input-app-email" name="app-email">
                         <div id="error" class="input-error text text-danger"></div>
                     </div>

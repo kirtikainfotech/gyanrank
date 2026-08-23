@@ -3,7 +3,20 @@ declare(strict_types=1);
 
 date_default_timezone_set('Asia/Kolkata');
 
-define('APP_NAME', 'eLearning');
+if (is_file(__DIR__ . '/.env')) {
+    foreach (file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim((string) $line);
+        if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) {
+            continue;
+        }
+        [$key, $value] = array_map('trim', explode('=', $line, 2));
+        if ($key !== '' && getenv($key) === false) {
+            putenv($key . '=' . trim($value, "\"'"));
+        }
+    }
+}
+
+define('APP_NAME', 'Gyan Nexa');
 define('APP_BASE', app_base_path());
 define('DB_HOST', db_config_value('DB_HOST', 'srv1878.hstgr.io', '127.0.0.1'));
 define('DB_USER', db_config_value('DB_USER', 'u436668434_vGRank55', 'root'));
@@ -145,7 +158,7 @@ function enforce_maintenance_mode(): void
     http_response_code(503);
     header('Retry-After: 600');
     header('Content-Type: text/html; charset=UTF-8');
-    echo '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maintenance</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f7fb;color:#06345f;font-family:Arial,sans-serif}.box{max-width:560px;padding:32px;border-top:4px solid #f68a00;background:#fff;box-shadow:0 16px 40px rgba(6,52,95,.14);border-radius:8px}h1{margin:0 0 10px;font-size:28px}p{margin:0;color:#52677a;line-height:1.55}</style></head><body><main class="box"><h1>GyanRank is under maintenance</h1><p>We are applying updates. Please try again shortly.</p></main></body></html>';
+    echo '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maintenance</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f7fb;color:#06345f;font-family:Arial,sans-serif}.box{max-width:560px;padding:32px;border-top:4px solid #f68a00;background:#fff;box-shadow:0 16px 40px rgba(6,52,95,.14);border-radius:8px}h1{margin:0 0 10px;font-size:28px}p{margin:0;color:#52677a;line-height:1.55}</style></head><body><main class="box"><h1>Gyan Nexa is under maintenance</h1><p>We are applying updates. Please try again shortly.</p></main></body></html>';
     exit;
 }
 
@@ -242,7 +255,7 @@ function default_settings(): array
         'google_redirect_uri' => '',
         'footer_title' => APP_NAME,
         'footer_line' => 'License based annual renewal system.',
-        'copyright_text' => '© 2026 Gyan Rank. All rights reserved.',
+        'copyright_text' => '© 2026 Gyan Nexa. All rights reserved.',
         'logo_path' => 'assets/grlogo.png',
         'app_logo_path' => 'assets/applogo.png',
         'app_icon_path' => 'assets/applogo.png',

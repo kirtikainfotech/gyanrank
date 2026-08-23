@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>GyanRank ERP - Installation</title>
+        <title>Gyan Nexa ERP - Installation</title>
         <link href="<?php echo base_url(); ?>backend/images/s-favican.png" rel="shortcut icon" type="image/x-icon">
         <link href="<?php echo site_url(); ?>backend/installer_template/assets/css/reset.css" rel="stylesheet">
         <link href="<?php echo site_url(); ?>backend/installer_template/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -128,7 +128,7 @@
                     <div class="col-md-12">
                         <div class="col-md-3">
                             <a href="<?php echo base_url(); ?>"><img src="../backend/images/s_logo.png"></a></div>
-                        <div class="col-md-9"><h3 class="header">GyanRank ERP : Institute ERP Installer</h3></div>
+                        <div class="col-md-9"><h3 class="header">Gyan Nexa ERP : Institute ERP Installer</h3></div>
                     </div><!--./col-md-12-->
                 </div><!--./row-->
             </div><!--./container-->
@@ -235,7 +235,7 @@
                                 <p>Due to security reasons you must delete the install directory.</p>
                                 <a href="<?php echo site_url('install/start/delete_install_dir'); ?>" class="btn btn-primary">Delete Install Directory and Login to Admin Panel</a>
                                 <br><br><br><br><br><br><br>
-                                <p><b>Please note that in GyanRank ERP there are two login panels -</b></p>
+                                <p><b>Please note that in Gyan Nexa ERP there are two login panels -</b></p>
                                 <ul style="list-style: disc; margin-left: 15px;">
                                     <li><span style="color: #0084B4; padding-right: 5px;"><?php echo base_url(); ?>site/login</span> Admin Panel : this panel is used for staff like superadmin, admin, teacher, accountant, librarian, receptionist login.</li>
                                     <li><span style="color: #0084B4; padding-right: 5px;"><?php echo base_url(); ?>site/userlogin</span> User Panel : this panel is used for student or parent login.</li>

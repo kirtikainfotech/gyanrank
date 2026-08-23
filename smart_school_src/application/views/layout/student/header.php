@@ -175,13 +175,13 @@
     </head>
     <body class="hold-transition skin-blue fixed sidebar-mini">
          <?php
-if ($this->config->item('SSLK') == "GyanRank") {
+if ($this->config->item('SSLK') == "GYANNEXA") {
     ?>
  <div class="topaleart">
     <div class="slidealert">
     <div class="alert alert-dismissible topaleart-inside">
 
-   <p class="palert"><strong>Alert!</strong> Your GyanRank ERP subscription is not active.</p>
+   <p class="palert"><strong>Alert!</strong> Your Gyan Nexa ERP subscription is not active.</p>
 </div></div>
 </div>
                     <?php

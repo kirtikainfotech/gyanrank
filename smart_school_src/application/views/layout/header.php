@@ -223,12 +223,12 @@
 
 
  <?php
-if ($this->config->item('SSLK') == "GyanRank") {
+if ($this->config->item('SSLK') == "GYANNEXA") {
     ?>
  <div class="topaleart">
     <div class="slidealert">
     <div class="alert alert-dismissible topaleart-inside"> 
-   <p class="palert"><strong>Alert!</strong> Your GyanRank ERP subscription is not active. Please contact GyanRank support to activate this tenant.</p>
+   <p class="palert"><strong>Alert!</strong> Your Gyan Nexa ERP subscription is not active. Please contact Gyan Nexa support to activate this tenant.</p>
 </div></div>
 </div>
                     <?php

@@ -1,13 +1,13 @@
 <?php
 $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 $student_name    = $this->customlib->getFullName($feeList->firstname, $feeList->middlename, $feeList->lastname, $sch_setting->middlename, $sch_setting->lastname);
-$school_name     = 'GyanRank International School';
+$school_name     = 'Gyan Nexa International School';
 $school_address  = 'Knowledge Park, Tonk Road, Jaipur, Rajasthan 302017';
 $school_contact  = '+91 98765 43210';
-$school_email    = 'accounts@gyanrank.in';
-$logo_url        = base_url() . 'uploads/admit_card/gyanrank-admit-logo.png';
-$small_logo_url  = base_url() . 'uploads/admit_card/gyanrank-admit-small-logo.png';
-$signature_url   = base_url() . 'uploads/admit_card/gyanrank-authorized-sign.svg';
+$school_email    = 'accounts@gyannexa.com';
+$logo_url        = base_url() . 'uploads/admit_card/gyannexa-admit-logo.png';
+$small_logo_url  = base_url() . 'uploads/admit_card/gyannexa-admit-small-logo.png';
+$signature_url   = base_url() . 'uploads/admit_card/gyannexa-authorized-sign.svg';
 
 $amount_detail = isJSON($feeList->amount_detail) ? json_decode($feeList->amount_detail) : null;
 $record        = ($amount_detail && isset($amount_detail->{$sub_invoice_id})) ? $amount_detail->{$sub_invoice_id} : null;
@@ -18,7 +18,7 @@ $fine          = $record && isset($record->amount_fine) ? (float) $record->amoun
 $net_received  = $paid_amount + $fine;
 $payment_mode  = $record && !empty($record->payment_mode) ? $record->payment_mode : 'Cash';
 $description   = $record && !empty($record->description) ? $record->description : 'Fee payment received successfully.';
-$collected_by  = $record && !empty($record->collected_by) ? $record->collected_by : 'GyanRank Accounts';
+$collected_by  = $record && !empty($record->collected_by) ? $record->collected_by : 'Gyan Nexa Accounts';
 $receipt_no    = 'GR-FEE-' . str_pad($feeList->id, 5, '0', STR_PAD_LEFT) . '-' . $sub_invoice_id;
 $copy_labels   = array('School Copy', 'Student Copy');
 
@@ -52,7 +52,7 @@ $render_receipt = function ($copy_label) use (
 
         <header class="gr-header">
             <div class="gr-brand">
-                <img src="<?php echo $logo_url; ?>" alt="GyanRank">
+                <img src="<?php echo $logo_url; ?>" alt="Gyan Nexa">
                 <div>
                     <h1><?php echo $school_name; ?></h1>
                     <p>Learn. Grow. Succeed.</p>
@@ -152,7 +152,7 @@ $render_receipt = function ($copy_label) use (
 
         <footer class="gr-footer">
             <div>
-                <span>Prepared by GyanRank ERP</span>
+                <span>Prepared by Gyan Nexa ERP</span>
                 <strong><?php echo date('d M Y, h:i A'); ?></strong>
             </div>
             <div class="gr-sign">
@@ -168,7 +168,7 @@ $render_receipt = function ($copy_label) use (
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>GyanRank Fee Receipt</title>
+        <title>Gyan Nexa Fee Receipt</title>
         <style>
             * { box-sizing: border-box; }
             body {

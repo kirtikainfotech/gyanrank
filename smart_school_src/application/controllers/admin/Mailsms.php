@@ -909,7 +909,7 @@ class Mailsms extends Admin_Controller
             $array = array('status' => 'fail', 'error' => $msg, 'message' => '');
         } else {
 
-            $this->smsgateway->sendSMS($this->input->post('mobile'), ('GyanRank SMS Test Successful.'));
+            $this->smsgateway->sendSMS($this->input->post('mobile'), ('Gyan Nexa SMS Test Successful.'));
 
             $array = array('status' => 'success', 'error' => '', 'message' => 'Test SMS Sent Successfully. Please check your mobile if you have received.');
         }

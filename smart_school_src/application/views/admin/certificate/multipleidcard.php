@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <link rel="icon" type="image/png" href="assets/img/s-favican.png">
         <meta http-equiv="X-UA-Compatible" content="" />
-        <title>GyanRank : School ERP System</title>
+        <title>Gyan Nexa : School ERP System</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="theme-color" content="#424242" />       
     </head>

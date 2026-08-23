@@ -5,9 +5,9 @@ $homeUrl = app_url('index');
     <div class="site-footer-inner">
         <div class="footer-grid">
             <div class="footer-brand-col">
-                <div class="footer-text-brand">Gyan Rank</div>
+                <div class="footer-text-brand">GYAN NEXA</div>
                 <h4>National education ranking infrastructure built for trust.</h4>
-                <p>GYAN RANK is a national education ranking infrastructure focused on transparency, verification, public visibility, and disciplined operational workflows.</p>
+                <p>GYAN NEXA is a national education ranking infrastructure focused on transparency, verification, public visibility, and disciplined operational workflows.</p>
                 <div class="footer-pill-row">
                     <span>Verified Records</span>
                     <span>Rule-Based Rankings</span>
@@ -36,7 +36,7 @@ $homeUrl = app_url('index');
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; <?= h(date('Y')); ?> GYAN RANK &bull; Government-Style Education Ranking Portal</span>
+            <span>&copy; <?= h(date('Y')); ?> GYAN NEXA &bull; Government-Style Education Ranking Portal</span>
             <span>Built for School/College, Degree College, and Institute/Coaching Center modules.</span>
         </div>
     </div>

@@ -513,6 +513,6 @@ $config['rewrite_short_tags'] = FALSE;
   | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['routine_session'] = 16;
-$config['routine_update'] = 1786838400;
+$config['routine_update'] = 1789516800;
 $config['proxy_ips'] = '';
 $config['installed'] = true;
