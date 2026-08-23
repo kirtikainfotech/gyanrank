@@ -4274,7 +4274,37 @@
             .mobile-bottom-nav a:nth-child(5) strong:before{width:8px!important;height:8px!important;border:2px solid currentColor!important;border-radius:50%!important;top:38%!important}
             .mobile-bottom-nav a:nth-child(5) strong:after{width:16px!important;height:8px!important;border:2px solid currentColor!important;border-radius:10px 10px 4px 4px!important;top:70%!important}
         }
-    </style>
+            .auth-modal-screen{
+            position:fixed!important;
+            inset:0!important;
+            z-index:120!important;
+            min-height:0!important;
+            margin:0!important;
+            padding:84px 16px 22px!important;
+            background:rgba(15,23,42,.38)!important;
+            backdrop-filter:blur(8px)!important;
+            overflow:auto!important;
+        }
+        .auth-modal{margin:auto!important;max-height:calc(100vh - 112px)!important;overflow:auto!important}
+        .auth-close{cursor:pointer!important;font-size:0!important}
+        .auth-close:before,.auth-close:after{content:"";position:absolute;width:14px;height:2px;background:#0f172a;border-radius:999px;left:50%;top:50%}
+        .auth-close:before{transform:translate(-50%,-50%) rotate(45deg)}
+        .auth-close:after{transform:translate(-50%,-50%) rotate(-45deg)}
+        @media(max-width:760px){
+            .mobile-logo-title{width:142px!important;min-width:0!important;flex:1 1 auto!important;justify-content:center!important}
+            .mobile-logo-title img{width:142px!important;max-width:42vw!important;height:auto!important;display:block!important;object-fit:contain!important}
+            .mobile-search-btn{font-size:0!important;display:flex!important;align-items:center!important;justify-content:center!important;color:#155dfc!important}
+            .mobile-search-btn svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+            .student-access-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;overflow:visible!important;padding-bottom:0!important}
+            .student-access-card{min-width:0!important;max-width:none!important;width:100%!important;min-height:94px!important;padding:10px 6px!important;border-radius:10px!important;grid-template-rows:42px auto!important;gap:7px!important}
+            .student-access-icon{width:42px!important;height:42px!important;border-radius:14px!important}
+            .student-access-icon svg{width:22px!important;height:22px!important}
+            .student-access-copy strong{font-size:11.5px!important;line-height:1.12!important}
+            .student-access-copy small{display:none!important}
+            .auth-modal-screen{padding:76px 10px 76px!important;background:rgba(15,23,42,.45)!important}
+            .auth-modal{width:100%!important;max-height:calc(100vh - 152px)!important;border-radius:20px!important}
+        }
+</style>
     <style>
         header .brand .website-text-brand,
         .topbar .brand .website-text-brand {
@@ -8682,7 +8712,7 @@ function InstructorsPage() {
     );
 }
 
-function AuthModalPage({ onLogin, onToast, initialMode = 'login' }) {
+function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null, onModeChange = null }) {
     const { settings } = React.useContext(AppContext);
     const appName = getBrandName(settings, 'GYAN NEXA');
     const [mode, setMode] = useState(initialMode === 'signup' ? 'signup' : 'login');
@@ -8741,13 +8771,17 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login' }) {
         setMode(nextMode);
         setErr('');
         setMsg('');
-        window.history.replaceState(null, '', `${window.location.pathname}#/${nextMode}`);
+        if (onModeChange) {
+            onModeChange(nextMode);
+        } else {
+            window.history.replaceState(null, '', `${window.location.pathname}#/${nextMode}`);
+        }
     };
 
     return (
         <section className="auth-modal-screen">
             <div className="auth-modal">
-                <a className="auth-close" href="#/" aria-label="Close">x</a>
+                <button className="auth-close" type="button" onClick={() => onClose ? onClose() : (window.location.hash = '#/')} aria-label="Close">x</button>
                 <aside className="auth-side">
                     <div>
                         <div className="auth-brand">{appName}</div>
@@ -11533,9 +11567,10 @@ function MobileAppBar({ user, settings, logout }) {
                 </div>
             </aside>
             <a className="mobile-title mobile-logo-title" href={user ? '#/dashboard' : '#/'} aria-label={appName}>
+                <img src={BRAND_LOGO_URL} alt={appName} />
                 <span>GYAN NEXA</span>
             </a>
-            <a className="mobile-icon-btn" href="#/courses" aria-label="Search courses">Search</a>
+            <a className="mobile-icon-btn mobile-search-btn" href="#/courses" aria-label="Search courses"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M16 16l4 4"></path></svg></a>
             <div className="mobile-profile-wrap">
                 <button className="mobile-profile-trigger" type="button" onClick={() => setOpen(!open)} aria-label="Account menu">
                     {photo ? <img src={photo} alt="Profile" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> : initial}
@@ -11568,6 +11603,7 @@ function App() {
     const [route, setRoute] = useHashRoute();
     const [toast, setToast] = useState('');
     const [toastKind, setToastKind] = useState('info');
+    const [authModalMode, setAuthModalMode] = useState(null);
 
     const setAuth = (nextUser, nextToken) => {
         auth.setAuth(nextUser, nextToken);
@@ -11585,6 +11621,17 @@ function App() {
         window.clearTimeout(window.__toastTimer);
         window.__toastTimer = window.setTimeout(() => setToast(''), 2500);
     };
+    useEffect(() => {
+        const openAuthModal = (event) => {
+            const target = event.target?.closest?.('a[href="#/login"],a[href="#/signup"]');
+            if (!target || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            setAuthModalMode(target.getAttribute('href') === '#/signup' ? 'signup' : 'login');
+        };
+        document.addEventListener('click', openAuthModal);
+        return () => document.removeEventListener('click', openAuthModal);
+    }, []);
+
     const currentPath = route?.path || '/';
     const goSearchCourses = (text) => {
         const qs = new URLSearchParams();
@@ -11592,13 +11639,12 @@ function App() {
         setRoute('/courses', qs);
     };
     const isPlayerRoute = currentPath.startsWith('/learn/');
-    const isAuthRoute = currentPath === '/login' || currentPath === '/signup';
     const isPaymentRoute = currentPath.startsWith('/payment-status/');
 
     const page = useMemo(() => {
         const loginRequired = () => <AuthModalPage onLogin={setAuth} onToast={showToast} initialMode="login" />;
-        if (currentPath === '/login') return <AuthModalPage onLogin={setAuth} onToast={showToast} initialMode="login" />;
-        if (currentPath === '/signup') return <AuthModalPage onLogin={setAuth} onToast={showToast} initialMode="signup" />;
+        if (currentPath === '/login') return <HomePage token={auth.token} />;
+        if (currentPath === '/signup') return <HomePage token={auth.token} />;
         if (currentPath.startsWith('/payment-status/')) return <PaymentStatusPage txn={pathLastSegment(currentPath)} />;
         if (currentPath === '/courses') return <CoursesPage query={route.query} />;
         if (currentPath === '/about') return <PublicInfoPage type="about" />;
@@ -11692,6 +11738,9 @@ function App() {
         return <NotFoundPage />;
     }, [currentPath, route, auth.token, auth.user]);
 
+    const routeAuthMode = currentPath === '/login' ? 'login' : (currentPath === '/signup' ? 'signup' : null);
+    const visibleAuthMode = authModalMode || routeAuthMode;
+
     return (
         <AppContext.Provider value={auth}>
             <div>
@@ -11706,11 +11755,23 @@ function App() {
                 ) : null}
                 {!isPlayerRoute && !isPaymentRoute ? <MobileAppBar user={auth.user} settings={auth.settings} logout={logout} /> : null}
                 <Toast text={toast} kind={toastKind} onClose={() => setToast('')} />
-                <main className={`app-shell ${isPlayerRoute ? 'player-shell' : ''} ${isAuthRoute ? 'auth-shell-mobile' : ''} ${isPaymentRoute ? 'payment-shell' : ''}`}>
+                <main className={`app-shell ${isPlayerRoute ? 'player-shell' : ''} ${isPaymentRoute ? 'payment-shell' : ''}`}>
                     {auth.loading ? <PageLoader label="Checking session" sub="Securing your learner account." /> : page}
                 </main>
+                {visibleAuthMode && !isPlayerRoute && !isPaymentRoute ? (
+                    <AuthModalPage
+                        onLogin={setAuth}
+                        onToast={showToast}
+                        initialMode={visibleAuthMode}
+                        onModeChange={setAuthModalMode}
+                        onClose={() => {
+                            setAuthModalMode(null);
+                            if (routeAuthMode) window.location.hash = '#/';
+                        }}
+                    />
+                ) : null}
                 {!isPlayerRoute && !isPaymentRoute ? <SiteFooter /> : null}
-                {!isPlayerRoute && !isAuthRoute && !isPaymentRoute ? <MobileBottomNav activePath={currentPath} user={auth.user} /> : null}
+                {!isPlayerRoute && !isPaymentRoute ? <MobileBottomNav activePath={currentPath} user={auth.user} /> : null}
             </div>
         </AppContext.Provider>
     );
