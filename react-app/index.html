@@ -3658,6 +3658,10 @@
         .gov-home-card.compact .gov-home-meta span{background:#f8fafc!important;border-color:#e2e8f0!important;color:#475569!important;font-weight:900!important}
         .gov-home-card.compact:hover{transform:translateY(-3px)!important;border-color:rgba(255,138,0,.7)!important;box-shadow:0 24px 48px rgba(2,6,23,.26)!important}
         @media(max-width:760px){.gov-home-band.compact{width:100%!important;margin:10px 0 18px!important;border-radius:0!important;padding:18px 12px!important}.gov-membership-head.compact{grid-template-columns:1fr!important;gap:12px!important}.gov-membership-head.compact h2{font-size:26px!important}.gov-membership-head.compact p{font-size:12.5px!important;line-height:1.45!important}.gov-membership-cta{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important}.gov-home-stats.compact{grid-template-columns:repeat(3,minmax(0,1fr))!important}.gov-home-stats.compact a{min-height:58px!important;padding:9px 6px!important}.gov-home-stats.compact b{font-size:18px!important}.gov-home-stats.compact span{font-size:9.5px!important}.gov-home-grid.compact{display:flex!important;overflow-x:auto!important;gap:10px!important;margin-right:-12px!important;padding-right:12px!important;scroll-snap-type:x mandatory!important}.gov-home-card.compact{min-width:238px!important;max-width:238px!important;flex:0 0 238px!important;scroll-snap-align:start!important}.gov-category-pills.compact{margin-right:-12px!important}}
+        .gov-home-band.compact{outline:1px solid rgba(255,255,255,.10)!important;outline-offset:-1px!important}
+        .gov-membership-head.compact{border-bottom:1px solid rgba(255,255,255,.12)!important;padding-bottom:14px!important}
+        .gov-category-pills.compact button{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 18px rgba(2,6,23,.12)!important;max-width:190px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+        @media(max-width:760px){.gov-category-pills.compact{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important;margin:8px 0 14px!important;padding:0!important;overflow:visible!important}.gov-category-pills.compact button{width:100%!important;min-width:0!important;max-width:none!important;min-height:34px!important;padding:0 5px!important;font-size:10px!important;justify-content:center!important}.gov-category-pills.compact button:first-child{grid-column:auto!important}.gov-membership-head.compact{padding-bottom:12px!important}}
         .gov-category-browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;border:1px solid #dbe5f4;border-radius:18px;background:#f6f8fb;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.06)}
         .gov-category-sidebar{background:#fff;padding:10px;max-height:560px;overflow:auto;border-right:1px solid #dbe5f4}
         .gov-category-tab{width:100%;min-height:58px;border:0;background:#fff;color:#0f172a;border-radius:12px;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;text-align:left;font-weight:850;cursor:pointer}
@@ -7983,7 +7987,7 @@ function HomePage({ token }) {
         if (!acc[name]) acc[name] = { name, count: 0 };
         acc[name].count += 1;
         return acc;
-    }, {})).slice(0, 8);
+    }, {})).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)).slice(0, 16);
     const govFilteredItems = (activeGovCategory === 'All' ? govAllItems : govAllItems.filter((item) => (item.category_name || item.exam_category_name || item.course_title || 'Govt Prep') === activeGovCategory)).slice(0, 6);
     const govVisibleItems = (govFilteredItems.length ? govFilteredItems : govItems).slice(0, 6);
     const govMockTotal = (state.govPrep.mocks || []).reduce((sum, item) => sum + Number(item.total_questions || item.question_count || 0), 0);
@@ -8088,7 +8092,7 @@ function HomePage({ token }) {
                 </div>
                 <div className="gov-category-pills compact">
                     <button type="button" className={activeGovCategory === 'All' ? 'active' : ''} onClick={() => setActiveGovCategory('All')}>All</button>
-                    {govCategories.map((cat) => <button type="button" className={activeGovCategory === cat.name ? 'active' : ''} key={cat.name} onClick={() => setActiveGovCategory(cat.name)}>{cat.name} - {cat.count}</button>)}
+                    {govCategories.map((cat) => <button type="button" className={activeGovCategory === cat.name ? 'active' : ''} key={cat.name} onClick={() => setActiveGovCategory(cat.name)}>{cat.name}</button>)}
                 </div>
                 <div className="gov-home-grid compact">
                     {govVisibleItems.map((item) => (
