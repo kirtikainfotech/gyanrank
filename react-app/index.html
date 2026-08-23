@@ -6667,8 +6667,8 @@
             .category-about-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;width:100%!important}
             .category-mini-stat{min-width:0!important;border-radius:12px!important;padding:9px 4px!important;background:#f8fafc!important;border-color:#dbe5f4!important;font-size:16px!important;font-weight:950!important;color:#0f172a!important}
             .category-mini-stat span{font-size:9px!important;letter-spacing:.02em!important;text-transform:uppercase!important;color:#64748b!important}
-            .category-scroll{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;overflow:visible!important;margin:0!important;padding:0!important;scroll-snap-type:none!important}
-            .category-card{min-width:0!important;max-width:none!important;width:100%!important;min-height:72px!important;border-radius:15px!important;background:#fff!important;border-color:#dbe5f4!important;box-shadow:0 10px 24px rgba(15,23,42,.055)!important}
+            .category-scroll{display:flex!important;gap:9px!important;overflow-x:auto!important;overflow-y:hidden!important;margin:0 -10px 0 0!important;padding:0 10px 4px 0!important;scroll-snap-type:x mandatory!important;-webkit-overflow-scrolling:touch!important}
+            .category-card{min-width:168px!important;max-width:168px!important;width:168px!important;min-height:72px!important;border-radius:15px!important;background:#fff!important;border-color:#dbe5f4!important;box-shadow:0 10px 24px rgba(15,23,42,.055)!important;scroll-snap-align:start!important;flex:0 0 168px!important}
             .category-art{width:54px!important;min-width:54px!important}
             .category-icon{width:30px!important;height:30px!important;border-radius:10px!important;font-size:10.5px!important}
             .category-info{padding:9px 8px!important}
