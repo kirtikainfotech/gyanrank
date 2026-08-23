@@ -7830,7 +7830,6 @@ function HomePage({ token }) {
         return () => { cancelled = true; };
     }, [token]);
 
-    if (state.loading) return <PageLoader label="Loading home" />;
 
     const openCourse = (course) => window.location.hash = `#/course/${course.id}`;
     const categories = Object.values((state.courses || []).reduce((acc, course) => {
