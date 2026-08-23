@@ -4290,6 +4290,36 @@
         .auth-close:before,.auth-close:after{content:"";position:absolute;width:14px;height:2px;background:#0f172a;border-radius:999px;left:50%;top:50%}
         .auth-close:before{transform:translate(-50%,-50%) rotate(45deg)}
         .auth-close:after{transform:translate(-50%,-50%) rotate(-45deg)}
+        .auth-modal-screen{background:rgba(2,6,23,.46)!important;backdrop-filter:blur(12px)!important}
+        .auth-modal{width:min(960px,94vw)!important;min-height:560px!important;border:1px solid rgba(226,232,240,.86)!important;border-radius:28px!important;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(248,251,255,.94))!important;box-shadow:0 34px 90px rgba(2,6,23,.28), inset 0 1px 0 rgba(255,255,255,.95)!important;overflow:hidden!important}
+        .auth-side{background:linear-gradient(155deg,#050b16 0%,#0b1220 52%,#172554 100%)!important;padding:34px!important}
+        .auth-side:before{opacity:.16!important;filter:saturate(.9) contrast(1.08)!important}
+        .auth-side:after{right:-64px!important;bottom:-76px!important;width:210px!important;height:210px!important;border-radius:64px!important;background:linear-gradient(135deg,rgba(255,133,0,.26),rgba(96,165,250,.16))!important}
+        .auth-brand{font-size:20px!important;font-weight:850!important;letter-spacing:.2px!important}
+        .auth-side h2{font-size:34px!important;font-weight:860!important;line-height:1.05!important;letter-spacing:0!important;margin-top:42px!important}
+        .auth-side p{color:#cbd5e1!important;font-size:14.5px!important}
+        .auth-mini-list span{color:#f8fafc!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:14px!important;padding:10px 11px!important}
+        .auth-mini-list span:before{background:#ff8500!important;box-shadow:0 0 0 4px rgba(255,133,0,.14)!important}
+        .auth-panel{padding:34px 38px!important;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%)!important}
+        .auth-tabs{height:48px!important;margin-bottom:24px!important;border:1px solid #dbe5f4!important;border-radius:16px!important;background:#eef4ff!important;padding:5px!important;gap:5px!important}
+        .auth-tab{height:36px!important;border-radius:12px!important;font-weight:850!important;color:#475569!important}
+        .auth-tab.active{background:#050b16!important;color:#fff!important;box-shadow:0 10px 22px rgba(2,6,23,.18)!important}
+        .auth-tab.active:after{display:none!important}
+        .auth-heading h2{font-size:29px!important;font-weight:900!important;color:#0f172a!important;letter-spacing:0!important}
+        .auth-heading p{font-size:13.5px!important;color:#64748b!important}
+        .auth-form{gap:13px!important}
+        .auth-field{display:grid!important;gap:7px!important;color:#334155!important;font-size:12.5px!important;font-weight:850!important;letter-spacing:0!important}
+        .auth-label-text{display:block!important}
+        .auth-input-wrap{position:relative!important;display:block!important}
+        .auth-input-icon{position:absolute!important;left:14px!important;top:50%!important;transform:translateY(-50%)!important;width:34px!important;height:34px!important;border-radius:12px!important;background:#eef4ff!important;color:#155dfc!important;display:flex!important;align-items:center!important;justify-content:center!important;pointer-events:none!important}
+        .auth-input-icon svg{width:18px!important;height:18px!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+        .auth-input{height:52px!important;border-radius:16px!important;border:1px solid #d9e4f3!important;background:#fff!important;padding:0 15px 0 58px!important;font-size:14px!important;font-weight:680!important;box-shadow:0 10px 24px rgba(15,23,42,.045)!important;transition:border-color .18s ease, box-shadow .18s ease, background .18s ease!important}
+        .auth-input:focus{border-color:#155dfc!important;box-shadow:0 0 0 4px rgba(21,93,252,.12),0 14px 30px rgba(15,23,42,.08)!important;background:#fff!important}
+        .auth-input-wrap:focus-within .auth-input-icon{background:#155dfc!important;color:#fff!important;box-shadow:0 10px 20px rgba(21,93,252,.22)!important}
+        .auth-primary{height:52px!important;border-radius:16px!important;background:linear-gradient(135deg,#155dfc 0%,#0f46c8 100%)!important;border:0!important;font-weight:900!important;letter-spacing:.1px!important;box-shadow:0 18px 34px rgba(21,93,252,.25)!important}
+        .auth-foot a,.auth-foot button{color:#155dfc!important;font-weight:850!important;text-decoration:none!important}
+        .auth-close{background:rgba(255,255,255,.92)!important;border-color:#dbe5f4!important;box-shadow:0 12px 26px rgba(15,23,42,.12)!important}
+        @media(max-width:760px){.auth-modal{border-radius:24px!important;min-height:0!important}.auth-panel{padding:22px 16px 18px!important}.auth-heading h2{font-size:24px!important}.auth-input{height:50px!important}.auth-tabs{margin-bottom:18px!important}.auth-form{gap:11px!important}}
         @media(max-width:760px){
             .mobile-logo-title{width:142px!important;min-width:0!important;flex:1 1 auto!important;justify-content:center!important}
             .mobile-logo-title img{width:142px!important;max-width:42vw!important;height:auto!important;display:block!important;object-fit:contain!important}
@@ -8697,6 +8727,20 @@ function InstructorsPage() {
     );
 }
 
+function AuthInputIcon({ type }) {
+    const icons = {
+        user: <><circle cx="12" cy="8" r="4"></circle><path d="M4 20c1.6-4 4.2-6 8-6s6.4 2 8 6"></path></>,
+        lock: <><rect x="5" y="10" width="14" height="10" rx="3"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path><path d="M12 14v3"></path></>,
+        mail: <><rect x="4" y="6" width="16" height="12" rx="3"></rect><path d="m5 8 7 5 7-5"></path></>,
+        phone: <><path d="M8 4h8l1 4-3 1c1 2 2 3 4 4l1-3 4 1v8c0 .6-.4 1-1 1C11.5 20 4 12.5 4 5c0-.6.4-1 1-1h3z"></path></>,
+        gift: <><rect x="4" y="9" width="16" height="11" rx="2"></rect><path d="M4 13h16M12 9v11"></path><path d="M12 9c-3 0-5-1-5-3 0-1.1.9-2 2-2 2 0 3 2 3 5z"></path><path d="M12 9c3 0 5-1 5-3 0-1.1-.9-2-2-2-2 0-3 2-3 5z"></path></>
+    };
+    return <span className="auth-input-icon" aria-hidden="true"><svg viewBox="0 0 24 24">{icons[type] || icons.user}</svg></span>;
+}
+
+function AuthField({ label, icon, children }) {
+    return <label className="auth-field"><span className="auth-label-text">{label}</span><span className="auth-input-wrap"><AuthInputIcon type={icon} />{children}</span></label>;
+}
 function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null, onModeChange = null }) {
     const { settings } = React.useContext(AppContext);
     const appName = getBrandName(settings, 'GYAN NEXA');
@@ -8793,19 +8837,19 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null
                     {err ? <Message text={err} kind="error" /> : null}
                     {mode === 'login' ? (
                         <form className="auth-form" onSubmit={submitLogin}>
-                            <label>Email / Mobile / Username<input className="input" value={identity} onChange={(e) => setIdentity(e.target.value)} autoComplete="off" required /></label>
-                            <label>Password<input className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /></label>
+                            <AuthField label="Email / Mobile / Username" icon="user"><input className="input auth-input" value={identity} onChange={(e) => setIdentity(e.target.value)} autoComplete="off" required /></AuthField>
+                            <AuthField label="Password" icon="lock"><input className="input auth-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /></AuthField>
                             <div className="auth-foot auth-forgot"><a href="forgot-password">Forgot password?</a></div>
                             <button className="auth-primary" disabled={busy}>{busy ? 'Signing in...' : 'Login'}</button>
                             <div className="auth-foot">New here? <button type="button" onClick={() => switchMode('signup')}>Create account</button></div>
                         </form>
                     ) : (
                         <form className="auth-form" onSubmit={submitSignup}>
-                            <label>Full Name<input className="input" required value={form.name} onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))} autoComplete="off" /></label>
-                            <label>Email<input className="input" type="email" required value={form.email} onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))} autoComplete="off" /></label>
-                            <label>Phone<input className="input" maxLength="10" required value={form.phone} onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value.replace(/[^0-9]/g, '').slice(0, 10) }))} autoComplete="off" /></label>
-                            <label>Password<input className="input" type="password" required value={form.password} onChange={(e) => setForm((v) => ({ ...v, password: e.target.value }))} autoComplete="new-password" /></label>
-                            <label>Referral Code<input className="input" value={form.referral_code} onChange={(e) => setForm((v) => ({ ...v, referral_code: e.target.value.toUpperCase().replace(/\s+/g, '') }))} placeholder="Optional" autoComplete="off" /></label>
+                            <AuthField label="Full Name" icon="user"><input className="input auth-input" required value={form.name} onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))} autoComplete="off" /></AuthField>
+                            <AuthField label="Email" icon="mail"><input className="input auth-input" type="email" required value={form.email} onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))} autoComplete="off" /></AuthField>
+                            <AuthField label="Phone" icon="phone"><input className="input auth-input" maxLength="10" required value={form.phone} onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value.replace(/[^0-9]/g, '').slice(0, 10) }))} autoComplete="off" /></AuthField>
+                            <AuthField label="Password" icon="lock"><input className="input auth-input" type="password" required value={form.password} onChange={(e) => setForm((v) => ({ ...v, password: e.target.value }))} autoComplete="new-password" /></AuthField>
+                            <AuthField label="Referral Code" icon="gift"><input className="input auth-input" value={form.referral_code} onChange={(e) => setForm((v) => ({ ...v, referral_code: e.target.value.toUpperCase().replace(/\s+/g, '') }))} placeholder="Optional" autoComplete="off" /></AuthField>
                             <button className="auth-primary" disabled={busy}>{busy ? 'Creating account...' : 'Create account'}</button>
                             <div className="auth-foot">Already registered? <button type="button" onClick={() => switchMode('login')}>Login now</button></div>
                         </form>
