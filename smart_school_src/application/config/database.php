@@ -74,12 +74,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+if (!function_exists('gyanrank_load_root_env')) {
+    function gyanrank_load_root_env(): void
+    {
+        static $loaded = false;
+        if ($loaded) {
+            return;
+        }
+        $loaded = true;
+
+        $envPath = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . '.env';
+        if (!is_file($envPath)) {
+            return;
+        }
+
+        foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+            $line = trim((string) $line);
+            if ($line === '' || strpos($line, '#') === 0 || strpos($line, '=') === false) {
+                continue;
+            }
+            [$key, $value] = array_map('trim', explode('=', $line, 2));
+            if ($key !== '' && getenv($key) === false) {
+                putenv($key . '=' . trim($value, "\"'"));
+            }
+        }
+    }
+}
+
+if (!function_exists('gyanrank_db_config')) {
+    function gyanrank_db_config(string $constant, string $envKey, string $default): string
+    {
+        if (defined($constant)) {
+            return (string) constant($constant);
+        }
+
+        gyanrank_load_root_env();
+        $value = getenv($envKey);
+        return is_string($value) && $value !== '' ? $value : $default;
+    }
+}
+
 $db['default'] = array(
     'dsn' => '',
-    'hostname' => defined('GYANRANK_TENANT_DB_HOST') ? GYANRANK_TENANT_DB_HOST : 'localhost',
-    'username' => defined('GYANRANK_TENANT_DB_USER') ? GYANRANK_TENANT_DB_USER : 'root',
-    'password' => defined('GYANRANK_TENANT_DB_PASS') ? GYANRANK_TENANT_DB_PASS : '',
-    'database' => defined('GYANRANK_TENANT_DB_NAME') ? GYANRANK_TENANT_DB_NAME : 'ssnodb',
+    'hostname' => gyanrank_db_config('GYANRANK_TENANT_DB_HOST', 'SMART_SCHOOL_DB_HOST', 'localhost'),
+    'username' => gyanrank_db_config('GYANRANK_TENANT_DB_USER', 'SMART_SCHOOL_DB_USER', 'root'),
+    'password' => gyanrank_db_config('GYANRANK_TENANT_DB_PASS', 'SMART_SCHOOL_DB_PASS', ''),
+    'database' => gyanrank_db_config('GYANRANK_TENANT_DB_NAME', 'SMART_SCHOOL_DB_NAME', 'ssnodb'),
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
