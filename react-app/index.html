@@ -6525,43 +6525,21 @@
         .saas-actions{gap:10px!important}
         .saas-btn{height:48px!important;border-radius:8px!important;padding:0 18px!important;font-size:15px!important;font-weight:760!important;white-space:nowrap!important}
         .student-access-band{
-            margin-top:22px!important;
-            margin-bottom:28px!important;
-            border:1px solid #dce5f2;
-            border-radius:8px;
-            background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
-            box-shadow:0 16px 42px rgba(15,23,42,.07);
-            padding:16px!important;
+            width:100%!important;
+            max-width:none!important;
+            margin:14px auto 28px!important;
+            border:1px solid #d9e4f3;
+            border-radius:0;
+            background:linear-gradient(135deg,#f8fbff 0%,#ffffff 46%,#edf6ff 100%);
+            box-shadow:0 18px 46px rgba(15,23,42,.08), inset 0 1px 0 rgba(255,255,255,.96);
+            padding:20px 24px!important;
         }
-        .student-access-head{
-            display:flex;
-            align-items:flex-end;
-            justify-content:space-between;
-            gap:14px;
-            margin-bottom:14px;
-        }
-        .student-access-head > span{
-            display:inline-flex;
-            align-items:center;
-            min-height:30px;
-            border:1px solid #cfdaf0;
-            background:#eef4ff;
-            color:#1d4ed8;
-            border-radius:999px;
-            padding:6px 10px;
-            font-size:11px;
-            font-weight:850;
-            text-transform:uppercase;
-            white-space:nowrap;
-        }
-        .student-access-head h2{margin:0;color:#0f172a;font-size:24px;line-height:1.1;font-weight:850;letter-spacing:0}
-        .student-access-head p{margin:4px 0 0;color:#64748b;font-size:13px;line-height:1.45}
-        .student-access-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+        .student-access-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;width:100%}
         .student-access-card{
-            min-height:126px;
+            min-height:132px;
             border:1px solid #dde5f0;
             border-radius:10px;
-            background:linear-gradient(180deg,#fff 0%,#f9fbff 100%);
+            background:rgba(255,255,255,.88);
             padding:16px 12px 14px;
             display:grid;
             grid-template-rows:62px auto;
@@ -6589,9 +6567,8 @@
         .student-access-copy{display:block;min-width:0}.student-access-copy strong{display:block;color:#111827;font-size:14.5px;line-height:1.16;font-weight:850}.student-access-copy small{display:block;margin-top:5px;color:#64748b;font-size:11.5px;line-height:1.32}
         .student-access-card.tone-blue{--shortcut-color:#2563eb;--shortcut-soft:#eff6ff;--shortcut-border:#bfdbfe}.student-access-card.tone-green{--shortcut-color:#059669;--shortcut-soft:#ecfdf5;--shortcut-border:#bbf7d0}.student-access-card.tone-violet{--shortcut-color:#7c3aed;--shortcut-soft:#f5f3ff;--shortcut-border:#ddd6fe}.student-access-card.tone-orange{--shortcut-color:#f97316;--shortcut-soft:#fff7ed;--shortcut-border:#fed7aa}.student-access-card.tone-slate{--shortcut-color:#334155;--shortcut-soft:#f8fafc;--shortcut-border:#cbd5e1}.student-access-card.tone-teal{--shortcut-color:#0f766e;--shortcut-soft:#f0fdfa;--shortcut-border:#99f6e4}
         @media(max-width:980px){
-            .student-access-grid{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-            .student-access-grid::-webkit-scrollbar{display:none}
-            .student-access-card{min-width:210px;max-width:210px;scroll-snap-align:start}
+            .student-access-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+            .student-access-card{min-width:0;max-width:none}
             .saas-hero-inner{padding:38px 0 24px!important}
             .saas-hero h1{font-size:40px!important;letter-spacing:0!important}
         }
@@ -6602,9 +6579,8 @@
             .saas-actions{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
             .saas-actions .saas-btn:first-child{grid-column:1 / -1}
             .saas-btn{width:100%!important;height:44px!important;font-size:13px!important;padding:0 10px!important}
-            .student-access-band{width:94%!important;margin-top:14px!important;margin-bottom:20px!important;padding:12px!important;border-left:0;border-right:0;border-radius:0}
-            .student-access-head{display:block;margin-bottom:12px}.student-access-head > span{margin-bottom:9px}.student-access-head h2{font-size:21px}.student-access-head p{font-size:12.5px}
-            .student-access-card{min-width:180px;max-width:180px;min-height:118px;padding:14px 11px}.student-access-icon{width:56px;height:56px;border-radius:18px}.student-access-icon svg{width:28px;height:28px}.student-access-copy strong{font-size:13.5px}.student-access-copy small{font-size:11px}
+            .student-access-band{width:100%!important;margin-top:10px!important;margin-bottom:18px!important;padding:10px!important;border-left:0;border-right:0;border-radius:0}
+            .student-access-card{min-width:0;max-width:none;min-height:96px;padding:10px 6px}.student-access-icon{width:56px;height:56px;border-radius:18px}.student-access-icon svg{width:28px;height:28px}.student-access-copy strong{font-size:13.5px}.student-access-copy small{font-size:11px}
         }
         .topbar > .inline:last-child{gap:10px!important}
         .topbar > .inline:last-child .btn{
@@ -7913,13 +7889,6 @@ function HomePage({ token }) {
             <HomeMarquee courses={state.courses} live={state.live} exams={state.exams} plans={state.plans} />
 
             <section className="home-band student-access-band" aria-label="Student quick access">
-                <div className="student-access-head">
-                    <span>Student shortcuts</span>
-                    <div>
-                        <h2>Open what you need in one tap</h2>
-                        <p>Pick courses, live classes, tests, PDFs or your dashboard from a cleaner home screen.</p>
-                    </div>
-                </div>
                 <div className="student-access-grid">
                     {quickAccess.map((item) => (
                         <a className={`student-access-card tone-${item.tone}`} href={item.href} key={item.label}>
