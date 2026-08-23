@@ -3622,6 +3622,42 @@
         .gov-home-card.compact .gov-home-meta span{font-size:10.5px;padding:4px 7px;font-weight:650}
         @media(max-width:980px){.gov-home-grid.compact{grid-template-columns:repeat(2,minmax(0,1fr))}.gov-home-stats.compact{grid-template-columns:repeat(3,minmax(0,1fr))}}
         @media(max-width:640px){.gov-membership-head.compact h2{font-size:23px!important}.gov-home-grid.compact,.gov-home-stats.compact{grid-template-columns:1fr}.gov-category-pills.compact{max-height:116px}}
+        .gov-home-band.compact{
+            border:0!important;
+            border-radius:22px!important;
+            background:
+                radial-gradient(circle at 92% 0%,rgba(255,138,0,.28),transparent 28%),
+                linear-gradient(135deg,#020617 0%,#0f172a 48%,#172554 100%)!important;
+            box-shadow:0 26px 70px rgba(2,6,23,.28)!important;
+            color:#fff!important;
+            padding:24px!important;
+        }
+        .gov-home-band.compact:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:34px 34px;opacity:.18;pointer-events:none}
+        .gov-home-band.compact:after{right:-80px!important;top:-92px!important;width:240px!important;height:240px!important;background:radial-gradient(circle,rgba(255,138,0,.24),rgba(37,99,235,.13) 48%,transparent 72%)!important;opacity:1!important}
+        .gov-home-band.compact > *{position:relative;z-index:1}
+        .gov-membership-head.compact h2{color:#fff!important;font-size:34px!important;font-weight:950!important;letter-spacing:0!important;line-height:1.02!important;text-transform:none!important}
+        .gov-membership-head.compact p{color:#cbd5e1!important;font-size:14.5px!important;max-width:780px!important}
+        .gov-membership-badge{background:rgba(255,138,0,.14)!important;border-color:rgba(255,138,0,.42)!important;color:#fed7aa!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important}
+        .gov-membership-cta .btn{min-height:42px!important;border-radius:12px!important;font-weight:950!important;box-shadow:none!important}
+        .gov-membership-cta .btn.secondary{background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important}
+        .gov-membership-cta .btn:not(.secondary){background:#ff8a00!important;border-color:#ff8a00!important;color:#fff!important}
+        .gov-home-stats.compact{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;margin-bottom:12px!important;max-width:760px!important}
+        .gov-home-stats.compact a{background:rgba(255,255,255,.09)!important;border-color:rgba(255,255,255,.16)!important;border-radius:15px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important}
+        .gov-home-stats.compact b{color:#fff!important;font-size:22px!important;font-weight:950!important}
+        .gov-home-stats.compact span{color:#cbd5e1!important;font-weight:900!important;letter-spacing:.02em!important}
+        .gov-category-pills.compact{gap:8px!important;margin:4px 0 14px!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;padding-bottom:3px!important;flex-wrap:nowrap!important;scrollbar-width:none!important}
+        .gov-category-pills.compact::-webkit-scrollbar{display:none!important}
+        .gov-category-pills.compact button{flex:0 0 auto!important;background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.16)!important;color:#e2e8f0!important;border-radius:999px!important;min-height:34px!important;font-weight:900!important}
+        .gov-category-pills.compact button.active,.gov-category-pills.compact button:hover{background:#fff!important;border-color:#fff!important;color:#0f172a!important}
+        .gov-home-grid.compact{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+        .gov-home-card.compact{min-height:132px!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:16px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 18px 38px rgba(2,6,23,.20)!important;padding:14px!important;position:relative!important;overflow:hidden!important}
+        .gov-home-card.compact:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#ff8a00}
+        .gov-home-card.compact h3{color:#0f172a!important;font-size:16px!important;font-weight:950!important;line-height:1.2!important}
+        .gov-home-card.compact .gov-card-kind{background:#0f172a!important;color:#fff!important;border-radius:999px!important;font-weight:950!important}
+        .gov-home-card.compact .gov-card-lock{background:#fff7ed!important;color:#c2410c!important;border:1px solid #fed7aa!important;border-radius:999px!important;font-weight:950!important}
+        .gov-home-card.compact .gov-home-meta span{background:#f8fafc!important;border-color:#e2e8f0!important;color:#475569!important;font-weight:900!important}
+        .gov-home-card.compact:hover{transform:translateY(-3px)!important;border-color:rgba(255,138,0,.7)!important;box-shadow:0 24px 48px rgba(2,6,23,.26)!important}
+        @media(max-width:760px){.gov-home-band.compact{width:100%!important;margin:10px 0 18px!important;border-radius:0!important;padding:18px 12px!important}.gov-membership-head.compact{grid-template-columns:1fr!important;gap:12px!important}.gov-membership-head.compact h2{font-size:26px!important}.gov-membership-head.compact p{font-size:12.5px!important;line-height:1.45!important}.gov-membership-cta{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important}.gov-home-stats.compact{grid-template-columns:repeat(3,minmax(0,1fr))!important}.gov-home-stats.compact a{min-height:58px!important;padding:9px 6px!important}.gov-home-stats.compact b{font-size:18px!important}.gov-home-stats.compact span{font-size:9.5px!important}.gov-home-grid.compact{display:flex!important;overflow-x:auto!important;gap:10px!important;margin-right:-12px!important;padding-right:12px!important;scroll-snap-type:x mandatory!important}.gov-home-card.compact{min-width:238px!important;max-width:238px!important;flex:0 0 238px!important;scroll-snap-align:start!important}.gov-category-pills.compact{margin-right:-12px!important}}
         .gov-category-browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;border:1px solid #dbe5f4;border-radius:18px;background:#f6f8fb;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.06)}
         .gov-category-sidebar{background:#fff;padding:10px;max-height:560px;overflow:auto;border-right:1px solid #dbe5f4}
         .gov-category-tab{width:100%;min-height:58px;border:0;background:#fff;color:#0f172a;border-radius:12px;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;text-align:left;font-weight:850;cursor:pointer}
