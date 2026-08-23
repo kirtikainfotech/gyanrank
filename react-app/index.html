@@ -8014,13 +8014,14 @@ function HomePage({ token }) {
         ...(state.govPrep.live || []).map((item) => ({ ...item, kind: item.status === 'live' ? 'LIVE' : 'LIVE CLASS' })),
         ...(state.govPrep.mocks || []).map((item) => ({ ...item, kind: 'MOCK' })),
     ];
+    const govCategoryName = (item) => item.subcategory_name || item.category_name || item.exam_category_name || item.course_title || 'Govt Prep';
     const govCategories = Object.values(govAllItems.reduce((acc, item) => {
-        const name = item.category_name || item.exam_category_name || item.course_title || 'Govt Prep';
+        const name = govCategoryName(item);
         if (!acc[name]) acc[name] = { name, count: 0 };
         acc[name].count += 1;
         return acc;
     }, {})).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)).slice(0, 16);
-    const govFilteredItems = (activeGovCategory === 'All' ? govAllItems : govAllItems.filter((item) => (item.category_name || item.exam_category_name || item.course_title || 'Govt Prep') === activeGovCategory)).slice(0, 6);
+    const govFilteredItems = (activeGovCategory === 'All' ? govAllItems : govAllItems.filter((item) => govCategoryName(item) === activeGovCategory)).slice(0, 6);
     const govVisibleItems = (govFilteredItems.length ? govFilteredItems : govItems).slice(0, 6);
     const govMockTotal = (state.govPrep.mocks || []).reduce((sum, item) => sum + Number(item.total_questions || item.question_count || 0), 0);
     const govItemLink = (item) => {
@@ -8135,7 +8136,7 @@ function HomePage({ token }) {
                             </div>
                             <h3>{item.title}</h3>
                             <div className="gov-home-meta">
-                                <span>{item.category_name || item.exam_category_name || 'Exam prep'}</span>
+                                <span>{govCategoryName(item)}</span>
                                 <span>{item.kind === 'MOCK' ? `${item.total_questions || item.question_count || 0} Q` : 'Details'}</span>
                             </div>
                         </a>
