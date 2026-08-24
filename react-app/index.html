@@ -8045,22 +8045,24 @@ function HomePage({ token }) {
     const govCategoryLogo = (name = 'All Exams') => {
         const value = String(name || '').toLowerCase();
         const logoMap = [
-            [/jee|nta|engineering/, 'NTA', 'nta.ac.in'],
-            [/ctet|cbse/, 'CTET', 'ctet.nic.in'],
-            [/utet|uttarakhand tet/, 'UTET', 'ubse.uk.gov.in'],
-            [/rpsc|rajasthan/, 'RPSC', 'rpsc.rajasthan.gov.in'],
-            [/ukpsc/, 'UKPSC', 'psc.uk.gov.in'],
-            [/uksssc/, 'UKSSSC', 'sssc.uk.gov.in'],
-            [/hppsc|himachal/, 'HPPSC', 'hppsc.hp.gov.in'],
-            [/mppsc|madhya/, 'MPPSC', 'mppsc.mp.gov.in'],
-            [/police/, 'POL', 'mha.gov.in'],
-            [/railway|rrb/, 'RRB', 'indianrailways.gov.in'],
-            [/ssc/, 'SSC', 'ssc.gov.in'],
-            [/bank/, 'BANK', 'rbi.org.in'],
+            [/^all|all exams/, 'ALL', 'https://www.mha.gov.in/themes/custom/mhanew/images/emblem-dark.png'],
+            [/jee|engineering/, 'JEE', 'https://nta.ac.in/img/logo/jee_logo.png'],
+            [/nta/, 'NTA', 'https://nta.ac.in/img/NTA_logo.png'],
+            [/ctet|cbse/, 'CTET', 'https://parikshasangam.cbse.gov.in/ps/assets/images/cbse-logo.png'],
+            [/utet|uttarakhand tet/, 'UTET', 'https://cdnbbsr.s3waas.gov.in/s32dbf21633f03afcf882eaf10e4b5caca/uploads/2025/06/202506161706829322.png'],
+            [/rpsc|rajasthan/, 'RPSC', 'https://rpsc.rajasthan.gov.in/Images/RPSC_Logo.png'],
+            [/ukpsc/, 'UKPSC', 'https://psc.uk.gov.in/public/uploads/1662015859.jpeg'],
+            [/uksssc/, 'UKSSSC', 'https://cdnbbsr.s3waas.gov.in/s34ffd0e19d2069412274bd3025b0e176c/uploads/2025/06/20250617110558760.png'],
+            [/hppsc|himachal/, 'HPPSC', 'https://hppsc.hp.gov.in/CommonControls/CMSFileView?qs=oeMK915q2HmOm8CDEgkyjhj77eUvHQnIr7n9XgZE0XogKI6Q61IBts5k1W6yC8GjhbPFOEU8%2Bw7UrKeMhPcvTA%3D%3D'],
+            [/mppsc|madhya/, 'MPPSC', 'https://mppsc.mp.gov.in/assets/img/logo.png'],
+            [/police/, 'POL', 'https://www.mha.gov.in/themes/custom/mhanew/images/emblem-dark.png'],
+            [/railway|rrb/, 'RRB', 'https://indianrailways.gov.in/images/logo.png'],
+            [/ssc/, 'SSC', 'https://ssc.gov.in/assets/sscLogo.webp'],
+            [/bank|rbi/, 'BANK', 'https://www.rbi.org.in/images/rbi-company-logo.jpg'],
         ];
         const match = logoMap.find(([pattern]) => pattern.test(value));
         const label = match ? match[1] : String(name || 'All').split(/\s+/).map((part) => part.charAt(0)).join('').slice(0, 4).toUpperCase();
-        return { label: label || 'ALL', src: match ? `https://www.google.com/s2/favicons?domain=${match[2]}&sz=64` : '' };
+        return { label: label || 'ALL', src: match ? match[2] : '' };
     };
     const membershipPlan = (state.plans || []).find((plan) => Number(plan.monthly_price || 0) > 0) || (state.plans || [])[0] || null;
     const membershipLabel = membershipPlan ? `${membershipPlan.plan_name} membership` : 'Membership access';
