@@ -11999,7 +11999,13 @@ function GovtMockPage({ token, mockId }) {
         let stop = false;
         (async () => {
             try {
-                const data = await apiGet('gov_mock_detail', { id: mockId }, token);
+                let data;
+                try {
+                    data = await apiGet('gov_mock_detail', { id: mockId }, token, { timeoutMs: 45000 });
+                } catch (firstError) {
+                    if (!/timed out|abort/i.test(firstError.message || '')) throw firstError;
+                    data = await apiGet('gov_mock_detail', { id: mockId }, token, { timeoutMs: 45000 });
+                }
                 if (!stop) setState({ loading: false, mock: data.mock, questions: data.questions || [], result: null });
             } catch (e) {
                 if (!stop) { setErr(e.message || 'Mock test load failed.'); setState((s) => ({ ...s, loading: false })); }

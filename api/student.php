@@ -2457,7 +2457,7 @@ function gov_mock_detail_row(int $mockId): ?array
 
 function gov_mock_questions(int $mockId, bool $withCorrect = false): array
 {
-    $stmt = db()->prepare('SELECT * FROM gov_exam_mock_questions WHERE mock_test_id=? AND status="active" ORDER BY sort_order ASC, id ASC');
+    $stmt = db()->prepare('SELECT id, question_en, question_hi, option_a_en, option_a_hi, option_b_en, option_b_hi, option_c_en, option_c_hi, option_d_en, option_d_hi, option_e_en, option_e_hi, marks, negative_marks, explanation_en, explanation_hi, correct_answer FROM gov_exam_mock_questions WHERE mock_test_id=? AND status="active" ORDER BY sort_order ASC, id ASC');
     $stmt->bind_param('i', $mockId);
     $stmt->execute();
     $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
