@@ -2453,14 +2453,11 @@ function gov_mocks_fast_payload(?int $categoryId = null, ?int $parentId = null, 
         $where .= ' AND m.category_id=' . $parentId;
     }
     $sql = "SELECT m.id, m.category_id, m.subcategory_id, m.title, m.description, m.duration_minutes, m.thumbnail_path,
-            c.name AS category_name, s.name AS subcategory_name,
-            COUNT(q.id) AS question_count
+            c.name AS category_name, s.name AS subcategory_name
         FROM gov_exam_mock_tests m
         LEFT JOIN gov_exam_categories c ON c.id=m.category_id
         LEFT JOIN gov_exam_categories s ON s.id=m.subcategory_id
-        LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id=m.id AND q.status='active'
         WHERE $where
-        GROUP BY m.id, m.category_id, m.subcategory_id, m.title, m.description, m.duration_minutes, m.thumbnail_path, c.name, s.name
         ORDER BY m.id DESC
         LIMIT $limit";
     $rows = db()->query($sql)->fetch_all(MYSQLI_ASSOC);
@@ -2469,8 +2466,12 @@ function gov_mocks_fast_payload(?int $categoryId = null, ?int $parentId = null, 
         $row['category_id'] = (int) ($row['category_id'] ?? 0);
         $row['subcategory_id'] = (int) ($row['subcategory_id'] ?? 0);
         $row['duration_minutes'] = (int) ($row['duration_minutes'] ?? 0);
-        $row['question_count'] = (int) ($row['question_count'] ?? 0);
-        $row['total_questions'] = $row['question_count'];
+        $titleQuestionCount = 0;
+        if (preg_match('/(\\d+)\\s*Questions?/i', (string) ($row['title'] ?? ''), $matches)) {
+            $titleQuestionCount = (int) $matches[1];
+        }
+        $row['question_count'] = $titleQuestionCount;
+        $row['total_questions'] = $titleQuestionCount;
         $row['thumbnail_url'] = api_absolute_url((string) ($row['thumbnail_path'] ?? ''));
         $row['locked'] = true;
         $row['last_attempt'] = null;

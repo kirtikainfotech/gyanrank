@@ -11615,7 +11615,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
             const params = { lite: 1 };
             if (requestedCategoryId) params.cat = requestedCategoryId;
             if (requestedParentId) params.parent = requestedParentId;
-            const data = await apiGet('gov_prep', params, token || '', { timeoutMs: token ? 18000 : 12000 });
+            const data = await apiGet('gov_prep', params, token || '', { timeoutMs: 30000 });
             setState({
                 loading: false,
                 documents: data.documents || [],
@@ -11631,7 +11631,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
                     const params = { lite: 1 };
                     if (requestedCategoryId) params.cat = requestedCategoryId;
                     if (requestedParentId) params.parent = requestedParentId;
-                    const data = await apiGet('gov_prep', params, '', { timeoutMs: 12000 });
+                    const data = await apiGet('gov_prep', params, '', { timeoutMs: 30000 });
                     setState({
                         loading: false,
                         documents: data.documents || [],
