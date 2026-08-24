@@ -2335,12 +2335,55 @@ function register_gov_mock_access(int $studentId, int $mockId): void
     $stmt->execute();
 }
 
+function gov_category_smart_description(string $name, ?string $parentName = null): string
+{
+    $name = trim($name) !== '' ? trim($name) : 'Government Exam';
+    $parent = trim((string) $parentName);
+    $lower = strtolower($name . ' ' . $parent);
+    if (preg_match('/sbi|bank|rbi/', $lower)) {
+        return "$name preparation covers banking awareness, reasoning, quantitative aptitude, English and previous-year style mock practice for bank exam aspirants.";
+    }
+    if (preg_match('/jee|iit|engineering/', $lower)) {
+        return "$name preparation focuses on Physics, Chemistry and Mathematics practice with exam-style papers, timed mocks and subject-wise performance review.";
+    }
+    if (preg_match('/ctet|utet|teacher|pedagogy|child development|hindi|sanskrit|environmental|mathematics/', $lower)) {
+        return "$name preparation includes pedagogy, language, EVS, mathematics and teaching-method questions designed for teacher eligibility exam practice.";
+    }
+    if (preg_match('/police|rpf|constable|sub inspector/', $lower)) {
+        return "$name preparation includes reasoning, general awareness, law-and-order aptitude, previous paper practice and timed mock tests for uniformed services.";
+    }
+    if (preg_match('/rpsc|rajasthan|ukpsc|uksssc|hppsc|mppsc|lekhpal|state/', $lower)) {
+        return "$name preparation brings state-level GK, reasoning, subject knowledge and previous-year style mock tests into one focused practice track.";
+    }
+    if (preg_match('/ssc|gd|cgl|chsl/', $lower)) {
+        return "$name preparation covers reasoning, general awareness, quantitative aptitude and English through structured mock tests and previous paper practice.";
+    }
+    if (preg_match('/railway|rrb/', $lower)) {
+        return "$name preparation includes railway-focused reasoning, mathematics, general science and current affairs practice with timed exam sets.";
+    }
+    if (preg_match('/full paper|memory based|previous/', $lower)) {
+        return "$name contains full-length previous-year or memory-based practice sets so learners can revise the real exam pattern under timed conditions.";
+    }
+    $context = $parent !== '' ? " under $parent" : '';
+    return "$name$context includes curated mock tests, important practice questions, exam-style sets and progress tracking for focused preparation.";
+}
 function gov_categories_payload(): array
 {
     $rows = db()->query("SELECT id, parent_id, name, description FROM gov_exam_categories WHERE status='active' ORDER BY COALESCE(parent_id, id), parent_id IS NOT NULL, sort_order, name")->fetch_all(MYSQLI_ASSOC);
+    $namesById = [];
+    foreach ($rows as $raw) {
+        $namesById[(int) $raw['id']] = (string) $raw['name'];
+    }
     foreach ($rows as &$row) {
         $row['id'] = (int) $row['id'];
         $row['parent_id'] = $row['parent_id'] !== null ? (int) $row['parent_id'] : null;
+        $parentName = $row['parent_id'] ? ($namesById[$row['parent_id']] ?? '') : '';
+        $smart = gov_category_smart_description((string) $row['name'], $parentName);
+        $current = trim((string) ($row['description'] ?? ''));
+        $generic = $current === '' || preg_match('/preparation,\s*PDFs,\s*live classes and mock tests|original practice sets/i', $current);
+        $row['description'] = (!$generic && strlen($current) >= 70) ? $current : $smart;
+        $row['summary'] = $smart;
+        $row['exam_focus'] = $parentName !== '' ? "$parentName > {$row['name']}" : (string) $row['name'];
     }
     unset($row);
     return $rows;
