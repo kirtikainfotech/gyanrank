@@ -11612,7 +11612,10 @@ function GovtPrepPage({ token, routeQuery = null }) {
     const load = useCallback(async () => {
         setErr('');
         try {
-            const data = await apiGet('gov_prep', {}, token || '', { timeoutMs: token ? 25000 : 12000 });
+            const params = { lite: 1 };
+            if (requestedCategoryId) params.cat = requestedCategoryId;
+            if (requestedParentId) params.parent = requestedParentId;
+            const data = await apiGet('gov_prep', params, token || '', { timeoutMs: token ? 18000 : 12000 });
             setState({
                 loading: false,
                 documents: data.documents || [],
@@ -11625,7 +11628,10 @@ function GovtPrepPage({ token, routeQuery = null }) {
         } catch (e) {
             if (token && /timed out|abort/i.test(e.message || '')) {
                 try {
-                    const data = await apiGet('gov_prep', {}, '', { timeoutMs: 16000 });
+                    const params = { lite: 1 };
+                    if (requestedCategoryId) params.cat = requestedCategoryId;
+                    if (requestedParentId) params.parent = requestedParentId;
+                    const data = await apiGet('gov_prep', params, '', { timeoutMs: 12000 });
                     setState({
                         loading: false,
                         documents: data.documents || [],
@@ -11640,9 +11646,9 @@ function GovtPrepPage({ token, routeQuery = null }) {
                 } catch (_) {}
             }
             setErr(e.message || 'Government exam prep load failed.');
-            setState((s) => ({ ...s, loading: false }));
+            setState((s) => ({ ...s, loading: false, categories: s.categories || [], mocks: s.mocks || [] }));
         }
-    }, [token]);
+    }, [token, requestedCategoryId, requestedParentId]);
     useEffect(() => { load(); }, [load]);
     useEffect(() => {
         if (requestedParentId) setActiveParentId(requestedParentId);

@@ -2440,6 +2440,44 @@ function gov_mocks_payload(?int $studentId = null): array
     return $rows;
 }
 
+
+function gov_mocks_fast_payload(?int $categoryId = null, ?int $parentId = null, int $limit = 320): array
+{
+    $categoryId = max(0, (int) $categoryId);
+    $parentId = max(0, (int) $parentId);
+    $limit = max(1, min(600, (int) $limit));
+    $where = "m.status='published'";
+    if ($categoryId > 0) {
+        $where .= ' AND (m.subcategory_id=' . $categoryId . ' OR m.category_id=' . $categoryId . ')';
+    } elseif ($parentId > 0) {
+        $where .= ' AND m.category_id=' . $parentId;
+    }
+    $sql = "SELECT m.id, m.category_id, m.subcategory_id, m.title, m.description, m.duration_minutes, m.thumbnail_path,
+            c.name AS category_name, s.name AS subcategory_name,
+            COUNT(q.id) AS question_count
+        FROM gov_exam_mock_tests m
+        LEFT JOIN gov_exam_categories c ON c.id=m.category_id
+        LEFT JOIN gov_exam_categories s ON s.id=m.subcategory_id
+        LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id=m.id AND q.status='active'
+        WHERE $where
+        GROUP BY m.id, m.category_id, m.subcategory_id, m.title, m.description, m.duration_minutes, m.thumbnail_path, c.name, s.name
+        ORDER BY m.id DESC
+        LIMIT $limit";
+    $rows = db()->query($sql)->fetch_all(MYSQLI_ASSOC);
+    foreach ($rows as &$row) {
+        $row['id'] = (int) $row['id'];
+        $row['category_id'] = (int) ($row['category_id'] ?? 0);
+        $row['subcategory_id'] = (int) ($row['subcategory_id'] ?? 0);
+        $row['duration_minutes'] = (int) ($row['duration_minutes'] ?? 0);
+        $row['question_count'] = (int) ($row['question_count'] ?? 0);
+        $row['total_questions'] = $row['question_count'];
+        $row['thumbnail_url'] = api_absolute_url((string) ($row['thumbnail_path'] ?? ''));
+        $row['locked'] = true;
+        $row['last_attempt'] = null;
+    }
+    unset($row);
+    return $rows;
+}
 function gov_mock_detail_row(int $mockId): ?array
 {
     $stmt = db()->prepare("SELECT m.*, c.name AS category_name, s.name AS subcategory_name FROM gov_exam_mock_tests m LEFT JOIN gov_exam_categories c ON c.id=m.category_id LEFT JOIN gov_exam_categories s ON s.id=m.subcategory_id WHERE m.id=? AND m.status='published' LIMIT 1");
@@ -4125,15 +4163,18 @@ try {
         gov_exam_ensure_tables();
         $user = api_optional_user();
         $studentId = $user ? (int) $user['id'] : null;
-        if ($studentId) {
+        $categoryId = max(0, (int) ($_GET['cat'] ?? 0));
+        $parentId = max(0, (int) ($_GET['parent'] ?? 0));
+        $lite = isset($_GET['lite']) || $categoryId > 0 || $parentId > 0;
+        if ($studentId && !$lite) {
             ensure_default_free_plan($studentId);
         }
         api_out([
             'success' => true,
             'categories' => gov_categories_payload(),
-            'documents' => gov_documents_payload($studentId),
-            'live' => gov_live_payload($studentId),
-            'mocks' => gov_mocks_payload($studentId),
+            'documents' => $lite ? [] : gov_documents_payload($studentId),
+            'live' => $lite ? [] : gov_live_payload($studentId),
+            'mocks' => $lite ? gov_mocks_fast_payload($categoryId ?: null, $parentId ?: null) : gov_mocks_payload($studentId),
             'subscription' => $studentId ? active_plan_subscription($studentId) : null,
             'plans' => membership_plans(),
         ]);
@@ -5844,4 +5885,3 @@ function save_exam_attempt(int $studentId, array $exam, array $answers, ?array $
         'submitted_at' => $now,
     ];
 }
-
