@@ -7071,6 +7071,13 @@ function parseHashState(rawHash = '') {
     return { path: path || '/', query };
 }
 
+function rememberLoginReturn() {
+    const hash = window.location.hash || '#/';
+    if (!/^#\/(login|signup)\b/.test(hash)) {
+        localStorage.setItem('edu_login_return_hash', hash);
+    }
+    window.location.hash = '#/login';
+}
 function buildHash(path, query = null) {
     const parts = [path.replace(/\/+$/,'') || '/'];
     if (query && query instanceof URLSearchParams) {
@@ -9049,7 +9056,6 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null
                 return;
             }
             onLogin(data.user, data.token, data.settings || null);
-            window.location.hash = '#/';
             onToast?.('Welcome back', 'info');
         } catch (e2) {
             setErr(e2.message || 'Login failed');
@@ -9067,7 +9073,6 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null
             setMsg(body.message || 'Account created');
             if (body.token) {
                 onLogin(body.user, body.token, body.settings || null);
-                window.location.hash = '#/';
                 return;
             }
             setMode('login');
@@ -11539,7 +11544,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
     const load = useCallback(async () => {
         setErr('');
         try {
-            const data = await apiGet('gov_prep', {}, token || '');
+            const data = await apiGet('gov_prep', {}, token || '', { timeoutMs: token ? 25000 : 12000 });
             setState({
                 loading: false,
                 documents: data.documents || [],
@@ -11550,6 +11555,22 @@ function GovtPrepPage({ token, routeQuery = null }) {
                 plans: data.plans || []
             });
         } catch (e) {
+            if (token && /timed out|abort/i.test(e.message || '')) {
+                try {
+                    const data = await apiGet('gov_prep', {}, '', { timeoutMs: 16000 });
+                    setState({
+                        loading: false,
+                        documents: data.documents || [],
+                        live: data.live || [],
+                        mocks: data.mocks || [],
+                        categories: data.categories || [],
+                        subscription: null,
+                        plans: data.plans || []
+                    });
+                    setErr('');
+                    return;
+                } catch (_) {}
+            }
             setErr(e.message || 'Government exam prep load failed.');
             setState((s) => ({ ...s, loading: false }));
         }
@@ -11564,7 +11585,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
     }, [requestedParentId, requestedCategoryId]);
     const requireLogin = () => {
         if (!token) {
-            window.location.hash = '#/login';
+            rememberLoginReturn();
             return false;
         }
         return true;
@@ -11917,7 +11938,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
                         <div className="gov-card-stats"><span>{mock.question_count || mock.total_questions || 0} Questions</span><span>{mock.duration_minutes || 0} Min</span></div>
                         {mock.last_attempt ? <div className="small">Last score: {safeNumber(mock.last_attempt.score, 2)} / {safeNumber(mock.last_attempt.total_marks, 2)}</div> : null}
                         <span className="gov-access-tag">Included in membership</span>
-                        <button className={`btn ${mock.locked ? 'ghost' : ''}`} onClick={() => token ? window.location.hash = `#/govt-mock/${mock.id}` : window.location.hash = '#/login'}>{mock.locked ? 'Activate Plan' : 'Start Test'}</button>
+                        <button className={`btn ${mock.locked ? 'ghost' : ''}`} onClick={() => token ? window.location.hash = `#/govt-mock/${mock.id}` : rememberLoginReturn()}>{mock.locked ? 'Activate Plan' : 'Start Test'}</button>
                     </article>
                     );
                 })}
@@ -12136,7 +12157,11 @@ function App() {
     const setAuth = (nextUser, nextToken) => {
         auth.setAuth(nextUser, nextToken);
         setAuthModalMode(null);
-        window.location.hash = '#/';
+        const savedReturn = localStorage.getItem('edu_login_return_hash') || '';
+        localStorage.removeItem('edu_login_return_hash');
+        const authPath = currentPath === '/login' || currentPath === '/signup';
+        if (savedReturn && !/^#\/(login|signup)\b/.test(savedReturn)) window.location.hash = savedReturn;
+        else if (authPath) window.location.hash = '#/';
     };
 
     const logout = () => {
