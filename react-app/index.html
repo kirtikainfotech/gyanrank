@@ -7245,6 +7245,81 @@
             .student-account-shell{display:block!important;width:100%!important;padding:10px 12px 100px!important}.student-account-sidebar{display:none!important}.student-account-content{display:block!important}.student-account-mobile-tabs{position:sticky!important;top:56px!important;z-index:20!important;margin:0 -12px 12px!important;border-radius:0!important;border-left:0!important;border-right:0!important;padding:8px 12px!important;background:rgba(255,255,255,.96)!important;backdrop-filter:blur(12px)!important}.student-dashboard-v2{gap:12px!important}.student-dash-copy{min-height:178px!important;padding:18px!important;border-radius:18px!important}.student-dash-copy h1{font-size:25px!important}.student-dash-copy p{font-size:12.5px!important}.dash-actions{overflow-x:auto!important;flex-wrap:nowrap!important;padding-bottom:2px!important}.dash-actions .btn{flex:0 0 auto!important}.dash-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dash-course-list{grid-template-columns:1fr!important}.dash-panel{padding:14px!important;border-radius:16px!important}.dash-panel-head h3{font-size:18px!important}
         }
     </style>
+    <style id="gyannexa-account-template-all">
+        .student-account-content .mycourses-v2,
+        .student-account-content .profile-page-v2,
+        .student-account-content .gcoin-page,
+        .student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page){
+            width:100%!important;
+            max-width:none!important;
+            margin:0!important;
+            padding:0!important;
+            font-family:Arial,Helvetica,sans-serif!important;
+        }
+        .student-account-content .mycourses-hero,
+        .student-account-content .profile-dashboard-card,
+        .student-account-content .gcoin-hero,
+        .student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page) > .section-title:first-child{
+            border:1px solid #dbe7f8!important;
+            border-radius:18px!important;
+            background:radial-gradient(circle at 92% 0%,rgba(37,99,235,.11),transparent 28%),linear-gradient(135deg,#fff,#f7fbff)!important;
+            box-shadow:0 14px 38px rgba(15,23,42,.06)!important;
+            padding:20px!important;
+            margin:0 0 14px!important;
+        }
+        .student-account-content .mycourses-hero h2,
+        .student-account-content .profile-dashboard-card h2,
+        .student-account-content > section > .section-title:first-child h2{
+            font-size:28px!important;
+            line-height:1.08!important;
+            font-weight:850!important;
+            letter-spacing:0!important;
+            color:#07111f!important;
+            margin:6px 0 6px!important;
+        }
+        .student-account-content .mycourses-hero p,
+        .student-account-content .profile-dashboard-card p{
+            color:#526173!important;
+            font-size:13.5px!important;
+            line-height:1.45!important;
+            margin:0!important;
+        }
+        .student-account-content .mycourses-summary,
+        .student-account-content .profile-stat-row,
+        .student-account-content .gcoin-rule-grid{
+            gap:10px!important;
+        }
+        .student-account-content .mycourses-summary span,
+        .student-account-content .profile-stat-row div,
+        .student-account-content .gcoin-rule{
+            border:1px solid #dbe7f8!important;
+            border-radius:14px!important;
+            background:#fff!important;
+            box-shadow:0 8px 22px rgba(15,23,42,.045)!important;
+            padding:12px!important;
+        }
+        .student-account-content .mycourse-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+        .student-account-content .mycourse-card,
+        .student-account-content .pdf-mini-card,
+        .student-account-content .profile-insight-card,
+        .student-account-content .profile-form-card,
+        .student-account-content .gcoin-card,
+        .student-account-content .card{
+            border:1px solid #dbe7f8!important;
+            border-radius:16px!important;
+            background:#fff!important;
+            box-shadow:0 12px 32px rgba(15,23,42,.055)!important;
+        }
+        .student-account-content .gcoin-hero{display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr)!important;gap:12px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+        .student-account-content .gcoin-card{padding:18px!important}.student-account-content .gcoin-balance{font-size:34px!important;color:#07111f!important}
+        .student-account-content .workspace-grid,
+        .student-account-content .profile-report-grid,
+        .student-account-content .profile-grid-v2{gap:14px!important;margin:0 0 14px!important}
+        .student-account-content .list{display:grid!important;gap:10px!important}.student-account-content .list-item{border-radius:14px!important;border:1px solid #dbe7f8!important;background:#fff!important}
+        .student-account-content .section-title{align-items:center!important;margin:0 0 12px!important}.student-account-content .section-title h2,.student-account-content .section-title h3{font-size:20px!important;font-weight:850!important;color:#07111f!important;letter-spacing:0!important}
+        @media(max-width:1180px){.student-account-content .mycourse-grid,.student-account-content .gcoin-hero,.student-account-content .workspace-grid,.student-account-content .profile-report-grid,.student-account-content .profile-grid-v2{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card,.student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page) > .section-title:first-child{padding:16px!important;border-radius:16px!important}.student-account-content .mycourses-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .profile-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .mycourse-grid{grid-template-columns:1fr!important}}
+    </style>
 </head>
 <body>
 <div id="root"></div>
@@ -8740,6 +8815,8 @@ function HomePage({ token }) {
 function StudentAccountLayout({ active, children }) {
     const items = [
         ['dashboard', 'Dashboard', '#/dashboard', 'Home'],
+        ['my-courses', 'My Courses', '#/my-courses', 'Learn'],
+        ['progress', 'Progress', '#/progress', 'Track'],
         ['active-plan', 'Active Plan', '#/active-plan', 'Plan'],
         ['transactions', 'Transactions', '#/transactions', 'Pay'],
         ['invoices', 'Invoices', '#/invoices', 'PDF'],
@@ -12726,15 +12803,15 @@ function App() {
         if (currentPath === '/instructors') return <InstructorsPage />;
         if (currentPath === '/my-courses') {
             if (!auth.token) return loginRequired();
-            return <MyCoursesPage token={auth.token} />;
+            return <StudentAccountLayout active="my-courses"><MyCoursesPage token={auth.token} /></StudentAccountLayout>;
         }
         if (currentPath === '/progress') {
             if (!auth.token) return loginRequired();
-            return <ProgressReportPage token={auth.token} />;
+            return <StudentAccountLayout active="progress"><ProgressReportPage token={auth.token} /></StudentAccountLayout>;
         }
         if (currentPath === '/gcoin') {
             if (!auth.token) return loginRequired();
-            return <GcoinPage token={auth.token} />;
+            return <StudentAccountLayout active="gcoin"><GcoinPage token={auth.token} /></StudentAccountLayout>;
         }
         if (currentPath === '/active-plan') {
             if (!auth.token) return loginRequired();
@@ -12797,7 +12874,7 @@ function App() {
         }
         if (currentPath === '/profile') {
             if (!auth.token) return loginRequired();
-            return <ProfilePage token={auth.token} user={auth.user} onUpdated={(u)=>auth.setAuth(u, auth.token)} />;
+            return <StudentAccountLayout active="profile"><ProfilePage token={auth.token} user={auth.user} onUpdated={(u)=>auth.setAuth(u, auth.token)} /></StudentAccountLayout>;
         }
         if (currentPath === '/' || currentPath === '') return <HomePage token={auth.token} />;
         return <NotFoundPage />;
