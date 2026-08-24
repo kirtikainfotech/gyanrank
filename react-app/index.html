@@ -3712,6 +3712,9 @@
         @media(max-width:760px){.gov-home-band.compact{padding:14px 10px!important}.gov-membership-head.compact h2{font-size:22px!important;font-weight:800!important}.gov-category-pills.compact{gap:7px!important}.gov-category-pills.compact button{min-height:76px!important;font-size:10px!important;font-weight:500!important}.gov-category-logo{width:34px!important;height:34px!important;border-radius:10px!important}.gov-category-logo img{padding:5px!important}.gov-category-logo b{font-size:7px!important}}
         /* Mobile category grid: 3 per row with trimmed names */
         @media(max-width:760px){.gov-category-pills.compact{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}.gov-category-pills.compact button{min-height:82px!important;padding:7px 4px!important;overflow:hidden!important}.gov-category-pills.compact button > span:last-child{display:block!important;width:100%!important;max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:10px!important;line-height:1.15!important;font-weight:500!important}.gov-category-logo{width:36px!important;height:36px!important}.gov-category-logo img{padding:5px!important}}
+        /* Compact membership strip + modal */
+        .plan-modal-strip{margin:28px 0!important;padding:0!important;background:transparent!important;border:0!important}.plan-modal-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;border:1px solid #dbe5f4;border-radius:20px;background:linear-gradient(135deg,#ffffff,#eef6ff);padding:24px 28px;box-shadow:0 14px 36px rgba(15,23,42,.07)}.plan-modal-strip h2{margin:6px 0 4px;color:#07111f;font-size:28px;line-height:1.1;font-weight:850}.plan-modal-strip p{margin:0;color:#526173;font-size:14px}.plan-strip-badge{display:inline-flex;align-items:center;border:1px solid #bfdbfe;background:#eff6ff;color:#155dfc;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:850;text-transform:uppercase}.plan-modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.52);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px}.plan-modal-panel{width:min(720px,96vw);max-height:92vh;overflow:auto;border-radius:22px;background:#f8fbff;border:1px solid rgba(255,255,255,.8);box-shadow:0 34px 90px rgba(2,6,23,.34);padding:18px}.plan-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:8px 8px 14px}.plan-modal-head h2{margin:7px 0 4px;color:#07111f;font-size:28px;line-height:1.1}.plan-modal-head p{margin:0;color:#64748b;font-size:13px}.plan-modal-close{width:38px;height:38px;border:1px solid #dbe5f4;border-radius:50%;background:#fff;color:#0f172a;font-size:18px;font-weight:800;cursor:pointer}.plan-modal-actions{display:flex;justify-content:flex-end;padding:0 8px 12px}.plan-modal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.plan-modal-grid.single-plan{max-width:520px;margin:0 auto}.plan-modal-grid .plan-card{margin:0!important}.plan-modal-grid.single-plan .plan-card{min-width:0!important}
+        @media(max-width:760px){.plan-modal-strip-inner{display:block;padding:20px 15px;border-radius:16px}.plan-modal-strip h2{font-size:23px}.plan-modal-strip .btn{width:100%;margin-top:14px}.plan-modal-backdrop{padding:10px}.plan-modal-panel{max-height:90vh;border-radius:18px;padding:12px}.plan-modal-head h2{font-size:23px}.plan-modal-actions{justify-content:stretch}.plan-modal-actions .billing-toggle{width:100%}.plan-modal-grid{grid-template-columns:1fr}.plan-modal-grid.single-plan{max-width:none}}
         .gov-category-browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;border:1px solid #dbe5f4;border-radius:18px;background:#f6f8fb;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.06)}
         .gov-category-sidebar{background:#fff;padding:10px;max-height:560px;overflow:auto;border-right:1px solid #dbe5f4}
         .gov-category-tab{width:100%;min-height:58px;border:0;background:#fff;color:#0f172a;border-radius:12px;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;text-align:left;font-weight:850;cursor:pointer}
@@ -7978,6 +7981,7 @@ function HomePage({ token }) {
     const [state, setState] = useState({ loading: true, courses: [], plans: [], live: [], exams: [], documents: [], combos: [], myCourses: [], govPrep: { documents: [], live: [], mocks: [] } });
     const [billingCycle, setBillingCycle] = useState('monthly');
     const [activeGovCategory, setActiveGovCategory] = useState('All');
+    const [showPlanModal, setShowPlanModal] = useState(false);
     useEffect(() => {
         let cancelled = false;
         (async () => {
@@ -8222,23 +8226,38 @@ function HomePage({ token }) {
                 {featuredCombos.length === 0 ? <div className="small">No combo package available.</div> : null}
             </section>
 
-            <section className="plans-band" id="membership-plans">
-                <div className="plans-inner">
-                    <div className="home-section-head">
-                        <div><h2>Membership Plans</h2><p>Choose access based on videos, PDFs, live classes and mock tests</p></div>
-                        <div className="plan-head-actions">
-                            <div className="billing-toggle" role="tablist" aria-label="Billing cycle">
-                                <button type="button" className={billingCycle === 'monthly' ? 'active' : ''} onClick={() => setBillingCycle('monthly')}>Monthly</button>
-                                <button type="button" className={billingCycle === 'yearly' ? 'active' : ''} onClick={() => setBillingCycle('yearly')}>Yearly</button>
-                            </div>
-                            <a className="btn secondary" href="#/signup">Get Started</a>
+            <section className="plans-band plan-modal-strip" id="membership-plans">
+                <div className="plans-inner plan-modal-strip-inner">
+                    <div>
+                        <span className="plan-strip-badge">Membership access</span>
+                        <h2>One plan. Full learning access.</h2>
+                        <p>{displayPlans.length ? `${membershipLabel} me courses, PDFs, live classes aur mock tests included hain.` : 'Membership plan publish hote hi yahan access milega.'}</p>
+                    </div>
+                    <button className="btn" type="button" onClick={() => setShowPlanModal(true)} disabled={displayPlans.length === 0}>View Membership Plan</button>
+                </div>
+            </section>
+
+            {showPlanModal ? <div className="plan-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="membership-plan-title" onClick={() => setShowPlanModal(false)}>
+                <div className="plan-modal-panel" onClick={(event) => event.stopPropagation()}>
+                    <div className="plan-modal-head">
+                        <div>
+                            <span className="plan-strip-badge">Membership</span>
+                            <h2 id="membership-plan-title">Membership Plan</h2>
+                            <p>Billing cycle choose karke plan activate karein.</p>
+                        </div>
+                        <button className="plan-modal-close" type="button" onClick={() => setShowPlanModal(false)} aria-label="Close membership plan">x</button>
+                    </div>
+                    <div className="plan-modal-actions">
+                        <div className="billing-toggle" role="tablist" aria-label="Billing cycle">
+                            <button type="button" className={billingCycle === 'monthly' ? 'active' : ''} onClick={() => setBillingCycle('monthly')}>Monthly</button>
+                            <button type="button" className={billingCycle === 'yearly' ? 'active' : ''} onClick={() => setBillingCycle('yearly')}>Yearly</button>
                         </div>
                     </div>
-                    <div className="plan-grid">
+                    <div className={`plan-modal-grid ${displayPlans.length === 1 ? 'single-plan' : ''}`}>
                         {displayPlans.map((plan, index) => <PlanCard key={plan.id} plan={plan} index={index} billingCycle={billingCycle} />)}
                     </div>
                 </div>
-            </section>
+            </div> : null}
 
             <section className="live-batch-section">
                 <div className="live-batch-card">
