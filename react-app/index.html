@@ -6958,6 +6958,13 @@
         .gov-limit-plan-head{border-radius:18px;background:linear-gradient(135deg,#0b1220,#172554 70%,#155dfc);color:#fff;padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden}.gov-limit-plan-head:after{content:"";position:absolute;right:-48px;top:-58px;width:160px;height:160px;border-radius:50%;background:rgba(255,138,0,.18)}.gov-limit-plan-head > *{position:relative;z-index:1}.gov-limit-plan-head h2{margin:7px 0 4px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:1.05;font-weight:900}.gov-limit-plan-head p{margin:0;color:#cbd5e1;font-size:13px}.gov-limit-plan-head .dash-kicker{background:rgba(255,255,255,.10)!important;color:#bfdbfe!important;border-color:rgba(255,255,255,.18)!important}
         .gov-limit-plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.gov-limit-plan-grid .plan-card{min-height:0!important;border-radius:18px!important;padding:16px!important;box-shadow:0 16px 42px rgba(15,23,42,.08)!important}.gov-limit-plan-grid .plan-title-row h3{font-size:20px!important}.gov-limit-plan-grid .plan-price{font-size:28px!important}.gov-limit-plan-grid .plan-features{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}.gov-limit-plan-grid .plan-features span{font-size:11px!important;padding:8px!important}.gov-limit-plan-grid .btn{min-height:40px!important;border-radius:12px!important;font-size:13px!important}
         @media(max-width:980px){.gov-limit-upgrade-page{grid-template-columns:1fr!important;margin-top:18px!important}.gov-limit-upgrade-card{min-height:280px!important}.gov-limit-plan-grid{grid-template-columns:1fr!important}}
+    </style>    <style>
+        /* Compact premium pass screen */
+        .gov-limit-pass-page{width:min(1180px,94%);margin:30px auto 54px;display:grid;grid-template-columns:minmax(300px,.9fr) minmax(360px,1.1fr);gap:28px;align-items:start;font-family:Arial,Helvetica,sans-serif!important}
+        .gov-pass-benefits,.gov-pass-checkout{background:#fff;border:1px solid #dbe7f8;border-radius:18px;box-shadow:0 18px 48px rgba(15,23,42,.08)}
+        .gov-pass-benefits{padding:26px 30px;background:linear-gradient(180deg,#f7fbff,#eef6ff)}.gov-pass-title span{display:inline-flex;color:#0f172a;font-size:26px;letter-spacing:0}.gov-pass-title h1{margin:6px 0 8px;font-size:32px;line-height:1.05;color:#07111f}.gov-pass-title p{margin:0 0 22px;color:#526173;font-size:14px;line-height:1.5}.gov-pass-benefit-list{display:grid;gap:14px}.gov-pass-benefit{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:14px;font-size:15px;font-weight:750;color:#07111f}.gov-pass-benefit i{width:48px;height:48px;border-radius:10px;border:1px solid #9cc2ff;background:#eef6ff;color:#155dfc;display:grid;place-items:center;font-style:normal;font-weight:900}
+        .gov-pass-checkout{padding:22px 24px}.gov-offer-strip,.gov-coupon-row{border:1px dashed #9cc2ff;border-radius:12px;background:#f2f8ff;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#0f172a}.gov-offer-strip a,.gov-coupon-row a,.gov-back-link{color:#0284c7;font-weight:800;text-decoration:none}.gov-pass-checkout h2{margin:20px 0 14px;font-size:24px;color:#07111f}.gov-selected-plan-card{position:relative;display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:center;border:2px solid #2f6bff;border-radius:14px;padding:20px;background:#fff;box-shadow:0 14px 32px rgba(47,107,255,.08)}.gov-selected-plan-card:after{content:"Recommended";position:absolute;right:16px;top:-12px;background:#16b86f;color:#fff;border-radius:5px;padding:6px 12px;font-size:12px;font-weight:850}.gov-radio-dot{width:24px;height:24px;border-radius:50%;border:6px solid #2f6bff;background:#fff}.gov-selected-plan-card strong{display:block;font-size:21px;color:#07111f}.gov-selected-plan-card span{display:block;margin-top:4px;color:#7a8799;font-size:13px}.gov-plan-price{text-align:right}.gov-plan-price em{display:block;color:#7a8799;font-size:12px;font-style:normal}.gov-plan-price b{font-size:26px;color:#07111f}.gov-coupon-row{margin:18px 0;border-color:#ffb37a;background:#fff8f1}.gov-pay-row{display:flex;align-items:center;justify-content:space-between;margin:18px 0 14px;font-size:20px;font-weight:900;color:#07111f}.gov-buy-pass-btn{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:10px;background:#14b874;color:#fff!important;font-size:17px;font-weight:900;text-decoration:none}.gov-back-link{display:block;text-align:center;margin-top:13px;font-size:13px}
+        @media(max-width:900px){.gov-limit-pass-page{grid-template-columns:1fr;gap:16px;margin-top:16px}.gov-pass-benefits,.gov-pass-checkout{border-radius:16px;padding:18px}.gov-pass-title h1{font-size:26px}.gov-selected-plan-card{grid-template-columns:24px 1fr;align-items:start}.gov-plan-price{grid-column:1 / -1;text-align:left}.gov-buy-pass-btn{min-height:48px}}
     </style></head>
 <body>
 <div id="root"></div>
@@ -12090,29 +12097,37 @@ function GovtMockPage({ token, mockId }) {
         const limitReached = /limit reached|upgrade your plan|membership/i.test(err);
         if (limitReached) {
             const upgradePlans = (state.plans || []).filter((plan) => Number(plan.monthly_price || 0) > 0 || Number(plan.mock_test_limit || 0) > 0);
+            const selectedPlan = upgradePlans[0] || null;
+            const planPrice = selectedPlan ? toRupee(selectedPlan.monthly_price || 0) : 'Open plans';
+            const mockLimit = selectedPlan?.mock_test_limit || 'Unlimited';
+            const benefits = [
+                `${mockLimit} mock tests access`,
+                `${selectedPlan?.pdf_limit || 'Unlimited'} PDF resources`,
+                `${selectedPlan?.exam_limit || 'Unlimited'} exam practice`,
+                `${selectedPlan?.live_class_limit || 'Unlimited'} live class joins`,
+                'Progress and attempt tracking',
+                'Govt prep library access'
+            ];
             return (
-                <section className="gov-limit-page gov-limit-upgrade-page">
-                    <div className="gov-limit-card gov-limit-upgrade-card">
-                        <span className="gov-limit-icon">!</span>
-                        <small>Membership limit</small>
-                        <h1>Mock test limit reached</h1>
-                        <p>Aapke current plan ka mock test quota complete ho gaya hai. Neeche plan choose karke practice instantly continue karein.</p>
-                        <div className="gov-limit-actions">
-                            <a className="btn" href="#/upgrade-plan">View All Plans</a>
-                            <a className="btn secondary" href="#/govt-prep">Back to Prep</a>
+                <section className="gov-limit-pass-page">
+                    <div className="gov-pass-benefits">
+                        <div className="gov-pass-title"><span>GYAN NEXA</span><h1>Unlock Govt Exam Prep</h1><p>Mock limit complete ho gaya hai. Plan activate karke practice continue karein.</p></div>
+                        <div className="gov-pass-benefit-list">
+                            {benefits.map((item, index) => <div className="gov-pass-benefit" key={item}><i>{index + 1}</i><span>{item}</span></div>)}
                         </div>
                     </div>
-                    <div className="gov-limit-plan-panel">
-                        <div className="gov-limit-plan-head">
-                            <div>
-                                <span className="dash-kicker">Recommended upgrade</span>
-                                <h2>Continue with membership</h2>
-                                <p>Mock tests, govt prep aur study access ek membership se unlock karein.</p>
-                            </div>
+                    <div className="gov-pass-checkout">
+                        <div className="gov-offer-strip"><b>Special offer available</b><a href="#/upgrade-plan">View coupon</a></div>
+                        <h2>Pick your plan</h2>
+                        <div className="gov-selected-plan-card">
+                            <div className="gov-radio-dot"></div>
+                            <div><strong>{selectedPlan?.plan_name || 'Membership Plan'}</strong><span>{selectedPlan ? 'Valid for 30 days with monthly quota' : 'Choose a membership plan to continue'}</span></div>
+                            <div className="gov-plan-price"><em>Membership fee</em><b>{planPrice}</b></div>
                         </div>
-                        <div className="gov-limit-plan-grid">
-                            {upgradePlans.length ? upgradePlans.slice(0, 3).map((plan, index) => <PlanCard key={plan.id} plan={plan} index={index} />) : <div className="billing-empty">Plans load nahi ho paye. Upgrade page open karein.</div>}
-                        </div>
+                        <div className="gov-coupon-row"><span>Get exciting offers inside</span><a href="#/upgrade-plan">Apply Coupon</a></div>
+                        <div className="gov-pay-row"><span>To Pay</span><b>{planPrice}</b></div>
+                        <a className="gov-buy-pass-btn" href="#/upgrade-plan">Buy Membership Now</a>
+                        <a className="gov-back-link" href="#/govt-prep">Back to exam prep</a>
                     </div>
                 </section>
             );
