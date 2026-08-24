@@ -6901,7 +6901,24 @@
         .gov-practice-layout .gov-public-grid{grid-area:cards!important;order:0!important;width:100%!important;margin:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
         .gov-related-exams{grid-area:sidebar!important;order:1!important;width:280px!important;max-width:280px!important;justify-self:end!important}
         @media(max-width:1000px){.gov-practice-layout{grid-template-columns:1fr!important;grid-template-areas:"cards" "sidebar"!important}.gov-related-exams{width:100%!important;max-width:none!important;justify-self:stretch!important}.gov-practice-layout .gov-public-grid{grid-template-columns:1fr!important}}
-    </style></head>
+    </style>
+    <style id="gov-prep-pro-compact-final">
+        .gov-practice-layout{width:min(1280px,94%)!important;grid-template-columns:minmax(0,1fr) 238px!important;gap:18px!important;margin-top:12px!important}
+        .gov-practice-layout .gov-public-grid{grid-template-columns:repeat(auto-fit,minmax(238px,1fr))!important;gap:12px!important;align-items:stretch!important}
+        .gov-related-exams{width:238px!important;max-width:238px!important;padding-left:14px!important;top:84px!important}
+        .gov-related-exams h3{font-size:16px!important;margin-bottom:8px!important}.gov-related-exams a{min-height:58px!important;grid-template-columns:38px minmax(0,1fr)!important;gap:10px!important}.gov-related-exams i{width:34px!important;height:34px!important;font-size:9px!important}.gov-related-exams b{font-size:13px!important}.gov-related-exams em{font-size:11.5px!important;margin-top:2px!important}
+        .gov-prep-public .gov-public-tabs{width:min(1280px,94%)!important;margin-top:18px!important;justify-content:flex-start!important}.gov-prep-public .gov-public-tabs button{height:34px!important;padding:0 16px!important;font-size:13px!important;box-shadow:none!important}
+        .gov-prep-public .gov-public-card{min-height:164px!important;border-radius:12px!important;padding:14px 14px 13px 16px!important;border-color:#dce8f8!important;box-shadow:0 10px 26px rgba(15,23,42,.06)!important;background:linear-gradient(180deg,#fff,#fcfdff)!important}
+        .gov-prep-public .gov-public-card:before{width:4px!important}.gov-prep-public .gov-public-card:hover{box-shadow:0 16px 34px rgba(15,23,42,.10)!important;transform:translateY(-1px)!important}
+        .gov-prep-public .gov-type{padding:4px 9px!important;font-size:10px!important;line-height:1!important;border-radius:999px!important}
+        .gov-prep-public .gov-public-card h3{font-size:16px!important;font-weight:800!important;line-height:1.22!important;min-height:39px!important;margin:10px 0 7px!important;letter-spacing:0!important}
+        .gov-prep-public .gov-public-card p{font-size:12px!important;line-height:1.38!important;min-height:33px!important;margin:0 0 10px!important;color:#667085!important;-webkit-line-clamp:2!important}
+        .gov-prep-public .gov-card-stats{gap:6px!important;margin:0 0 11px!important}.gov-prep-public .gov-card-stats span{min-height:24px!important;padding:0 8px!important;font-size:11px!important;font-weight:700!important;background:#f8fbff!important}.gov-prep-public .gov-card-stats span:first-child:before,.gov-prep-public .gov-card-stats span:last-child:before{width:15px!important;height:15px!important;margin-right:5px!important;font-size:8.5px!important}
+        .gov-prep-public .gov-public-card .btn{min-height:34px!important;border-radius:8px!important;font-size:13px!important;font-weight:800!important}
+        @media(max-width:1000px){.gov-practice-layout{width:calc(100% - 24px)!important;grid-template-columns:1fr!important}.gov-related-exams{width:100%!important;max-width:none!important}.gov-practice-layout .gov-public-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+        @media(max-width:620px){.gov-practice-layout .gov-public-grid{grid-template-columns:1fr!important}.gov-prep-public .gov-public-card{min-height:154px!important}.gov-prep-public .gov-public-card h3{min-height:auto!important}.gov-related-exams{display:none!important}}
+    </style>
+</head>
 <body>
 <div id="root"></div>
 
