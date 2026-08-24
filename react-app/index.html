@@ -3723,6 +3723,9 @@
         /* Premium govt prep detail polish */
         .gov-prep-public.gov-prep-public{background:linear-gradient(180deg,#f8fbff 0%,#ffffff 36%)!important;border-radius:0!important}.gov-prep-public .gov-exam-search{border:1px solid #dbe5f4!important;background:#fff!important}.gov-prep-public .gov-public-hero{background:linear-gradient(135deg,#07111f 0%,#12284a 52%,#155dfc 100%)!important;color:#fff!important;border:1px solid rgba(255,255,255,.14)!important}.gov-prep-public .gov-public-hero h1{font-weight:900!important}.gov-selected-detail-panel{border-color:#cfe0f2!important;background:linear-gradient(135deg,#ffffff 0%,#eef6ff 100%)!important;box-shadow:0 16px 40px rgba(15,23,42,.08)!important}.gov-prep-public .gov-public-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.gov-prep-public .gov-public-card:hover{transform:translateY(-2px);border-color:#bfdbfe!important;box-shadow:0 18px 42px rgba(15,23,42,.10)!important}
         @media(max-width:760px){.gov-prep-line-loader{width:100%;margin:12px 0 70px;padding:0 10px}.gov-loader-card{border-radius:16px;padding:18px}.gov-loader-topline{font-size:13px}.gov-prep-public.gov-prep-public{padding-top:10px!important}}
+        /* Exam selector workbench */
+        .gov-exam-workbench{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:stretch;border-radius:24px;background:linear-gradient(135deg,#1689df 0%,#57aeea 62%,#dff3ff 100%);padding:28px;position:relative;overflow:hidden;color:#fff;box-shadow:0 22px 58px rgba(15,23,42,.14)}.gov-exam-workbench:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 28%,rgba(255,255,255,.28),transparent 28%),linear-gradient(135deg,rgba(2,6,23,.14),transparent 55%);pointer-events:none}.gov-exam-workbench-main,.gov-exam-select-card{position:relative;z-index:1}.gov-exam-workbench-main h1{margin:12px 0 12px;max-width:780px;font-size:34px;line-height:1.14;font-weight:850;letter-spacing:0;color:#fff}.gov-exam-workbench-main p{max-width:820px;margin:0;color:rgba(255,255,255,.92);font-size:16px;line-height:1.55;font-weight:500}.gov-workbench-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.gov-workbench-tabs button{height:42px;border:0;border-radius:999px;background:rgba(255,255,255,.18);color:#fff;padding:0 18px;font-weight:750;cursor:pointer}.gov-workbench-tabs button.active{background:#fff;color:#075aa8;box-shadow:0 10px 24px rgba(15,23,42,.12)}.gov-exam-select-card{background:#fff;color:#0f172a;border-radius:18px;padding:22px;box-shadow:0 24px 60px rgba(15,23,42,.16)}.gov-exam-select-card label{display:block;margin-bottom:9px;color:#0f172a;font-size:14px;font-weight:800}.gov-exam-select-card select{width:100%;height:50px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#07111f;padding:0 12px;font-size:15px;font-weight:600}.gov-exam-plan-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.gov-exam-plan-facts span{border:1px solid #e2e8f0;border-radius:12px;background:#f8fbff;padding:12px;text-align:center}.gov-exam-plan-facts b{display:block;color:#155dfc;font-size:22px;line-height:1}.gov-exam-plan-facts small{display:block;margin-top:6px;color:#64748b;font-size:11px;text-transform:uppercase;font-weight:800}.gov-exam-select-card .btn{width:100%;min-height:46px;border-radius:10px}
+        @media(max-width:860px){.gov-exam-workbench{grid-template-columns:1fr;padding:20px;border-radius:18px}.gov-exam-workbench-main h1{font-size:27px}.gov-exam-workbench-main p{font-size:13.5px}.gov-exam-select-card{padding:16px}.gov-workbench-tabs button{height:38px;padding:0 13px;font-size:12px}}
         .gov-category-browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;border:1px solid #dbe5f4;border-radius:18px;background:#f6f8fb;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.06)}
         .gov-category-sidebar{background:#fff;padding:10px;max-height:560px;overflow:auto;border-right:1px solid #dbe5f4}
         .gov-category-tab{width:100%;min-height:58px;border:0;background:#fff;color:#0f172a;border-radius:12px;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;text-align:left;font-weight:850;cursor:pointer}
@@ -11517,7 +11520,11 @@ function GovtPrepPage({ token, routeQuery = null }) {
     };
     if (state.loading) return <GovPrepLineLoader />;
     const sourceList = state.mocks;
-    const activeList = activeCategoryId ? sourceList.filter((item) => Number(item.subcategory_id || item.category_id || 0) === Number(activeCategoryId)) : sourceList;
+    const activeList = activeCategoryId
+        ? sourceList.filter((item) => Number(item.subcategory_id || item.category_id || 0) === Number(activeCategoryId))
+        : activeParentId
+            ? sourceList.filter((item) => Number(item.category_id || 0) === Number(activeParentId))
+            : sourceList;
     const parents = state.categories.filter((cat) => !cat.parent_id);
     const selectedParent = parents.find((cat) => Number(cat.id) === Number(activeParentId)) || parents[0] || null;
     const selectedChildren = selectedParent ? state.categories.filter((cat) => Number(cat.parent_id || 0) === Number(selectedParent.id)) : [];
@@ -11532,11 +11539,68 @@ function GovtPrepPage({ token, routeQuery = null }) {
         : selectedChildren;
     const initials = (name) => String(name || 'EX').split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase();
     const currentPlanName = state.subscription?.plan_name || (token ? 'Free membership' : 'Login required');
+    const examSelectValue = activeCategoryId ? `c:${activeCategoryId}` : activeParentId ? `p:${activeParentId}` : 'all';
+    const selectedExamTitle = selectedCategory?.name || (activeParentId ? selectedParent?.name : '') || 'All exam preparation';
+    const selectedExamDescription = selectedCategory?.description || selectedParent?.description || `${selectedExamTitle} ke latest mock tests, practice papers aur exam preparation resources.`;
+    const continueMock = activeList[0] || sourceList[0] || null;
+    const selectedQuestionCount = activeList.reduce((sum, item) => sum + Number(item.total_questions || item.question_count || 0), 0);
+    const chooseExamTrack = (value) => {
+        if (value === 'all') {
+            setActiveParentId(0);
+            setActiveCategoryId(0);
+            window.location.hash = '#/govt-prep';
+            return;
+        }
+        const [type, rawId] = String(value).split(':');
+        const id = Number(rawId || 0);
+        if (!id) return;
+        if (type === 'p') {
+            setActiveParentId(id);
+            setActiveCategoryId(0);
+            window.location.hash = `#/govt-prep?parent=${id}`;
+            return;
+        }
+        const child = allChildren.find((item) => Number(item.id) === id);
+        const parentId = Number(child?.parent_id || 0);
+        setActiveParentId(parentId);
+        setActiveCategoryId(id);
+        setTab('mocks');
+        window.location.hash = `#/govt-prep?cat=${id}&parent=${parentId}`;
+    };
     return (
         <section className="gov-prep-public">
             <div className="gov-exam-search">
                 <input value={examSearch} onChange={(e) => setExamSearch(e.target.value)} placeholder="Search exam category, SSC, Railway, JEE..." />
                 <span></span>
+            </div>
+            <div className="gov-exam-workbench">
+                <div className="gov-exam-workbench-main">
+                    <span className="gov-selected-kicker">Continue exam preparation</span>
+                    <h1>{selectedExamTitle}</h1>
+                    <p>{selectedExamDescription}</p>
+                    <div className="gov-workbench-tabs" aria-label="Preparation sections">
+                        <button className="active" type="button" onClick={() => setTab('mocks')}>Exam Info</button>
+                        <button type="button" onClick={() => setTab('mocks')}>Mock Tests</button>
+                        <button type="button" onClick={() => setTab('mocks')}>Practice</button>
+                    </div>
+                </div>
+                <aside className="gov-exam-select-card">
+                    <label htmlFor="gov-exam-track-select">Select Exam</label>
+                    <select id="gov-exam-track-select" value={examSelectValue} onChange={(event) => chooseExamTrack(event.target.value)}>
+                        <option value="all">All Exams</option>
+                        <optgroup label="Main categories">
+                            {parents.map((parent) => <option key={`parent-${parent.id}`} value={`p:${parent.id}`}>{parent.name}</option>)}
+                        </optgroup>
+                        <optgroup label="Exam tracks">
+                            {allChildren.map((child) => <option key={`child-${child.id}`} value={`c:${child.id}`}>{child.name}</option>)}
+                        </optgroup>
+                    </select>
+                    <div className="gov-exam-plan-facts">
+                        <span><b>{activeList.length}</b><small>Mock Tests</small></span>
+                        <span><b>{selectedQuestionCount}</b><small>Questions</small></span>
+                    </div>
+                    <a className={`btn ${continueMock ? '' : 'secondary'}`} href={continueMock ? `#/govt-mock/${continueMock.id}` : '#/govt-prep'}>{continueMock ? 'Continue Prep' : 'Content Coming'}</a>
+                </aside>
             </div>
             <div className="gov-popular-block gov-exam-directory">
                 <div className="gov-section-title">
