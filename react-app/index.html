@@ -6967,6 +6967,143 @@
         .gov-pass-checkout{padding:14px 16px}.gov-offer-strip,.gov-coupon-row{border:1px dashed #9cc2ff;border-radius:10px;background:#f2f8ff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;color:#0f172a;font-size:12.5px}.gov-offer-strip a,.gov-coupon-row a,.gov-back-link{color:#0284c7;font-weight:800;text-decoration:none}.gov-pass-plan-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:11px 0 9px}.gov-pass-plan-top h2{margin:0;font-size:20px;color:#07111f}.gov-cycle-switch{display:inline-flex;background:#eef4ff;border:1px solid #cfe0ff;border-radius:999px;padding:3px}.gov-cycle-switch button{border:0;background:transparent;color:#526173;border-radius:999px;padding:6px 11px;font-size:12px;font-weight:800;cursor:pointer}.gov-cycle-switch button.active{background:#155dfc;color:#fff;box-shadow:0 6px 16px rgba(21,93,252,.18)}.gov-selected-plan-card{position:relative;display:grid;grid-template-columns:22px 1fr auto;gap:11px;align-items:center;border:2px solid #2f6bff;border-radius:12px;padding:12px;background:#fff;box-shadow:0 10px 24px rgba(47,107,255,.075)}.gov-selected-plan-card:after{content:"Recommended";position:absolute;right:11px;top:-11px;background:#16b86f;color:#fff;border-radius:5px;padding:4px 9px;font-size:10.5px;font-weight:800}.gov-radio-dot{width:20px;height:20px;border-radius:50%;border:6px solid #2f6bff;background:#fff}.gov-selected-plan-card strong{display:block;font-size:17px;color:#07111f}.gov-selected-plan-card span{display:block;margin-top:3px;color:#7a8799;font-size:12px}.gov-plan-price{text-align:right}.gov-plan-price em{display:block;color:#7a8799;font-size:10.5px;font-style:normal;text-transform:uppercase}.gov-plan-price b{display:block;font-size:22px;color:#07111f;line-height:1}.gov-plan-price small{display:block;margin-top:3px;color:#7a8799;text-decoration:line-through;font-weight:750}.gov-coupon-row{margin:10px 0;border-color:#ffb37a;background:#fff8f1}.gov-coupon-row.applied{border-style:solid;background:#ecfdf5;border-color:#86efac}.gov-coupon-row.applied b{color:#059669;font-size:12.5px}.gov-pay-row{display:flex;align-items:center;justify-content:space-between;margin:10px 0 9px;font-size:17px;font-weight:850;color:#07111f}.gov-tax-breakup{border:1px solid #e3edf9;background:#f8fbff;border-radius:11px;padding:9px 11px;margin:10px 0 6px}.gov-tax-breakup div{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;color:#526173}.gov-tax-breakup div+div{margin-top:5px}.gov-tax-breakup b{color:#07111f}.gov-tax-breakup small{display:block;margin-top:7px;color:#7a8799;font-size:11.5px}.gov-buy-pass-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:46px;border:0;border-radius:12px;background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 14px 28px rgba(22,163,74,.22);color:#fff!important;font-size:15px;font-weight:850;text-decoration:none;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}.gov-buy-pass-btn:hover{transform:translateY(-1px);box-shadow:0 18px 34px rgba(22,163,74,.28)}.gov-buy-pass-btn:disabled{opacity:.65;cursor:not-allowed}.gov-back-link{display:block;text-align:center;margin-top:9px;font-size:12.5px}
         @media(max-width:900px){.gov-limit-pass-page{grid-template-columns:1fr;gap:14px;margin-top:20px}.gov-pass-benefits,.gov-pass-checkout{border-radius:15px;padding:16px}.gov-pass-title h1{font-size:24px}.gov-pass-plan-top{align-items:flex-start;flex-direction:column}.gov-selected-plan-card{grid-template-columns:22px 1fr;align-items:start}.gov-plan-price{grid-column:1 / -1;text-align:left}.gov-buy-pass-btn{min-height:47px}}
     </style>
+    <style id="gyannexa-classic-topmenu">
+        html body #root > header,
+        html body header:has(.topbar),
+        body > header,
+        .site-header{
+            background:#07111f!important;
+            border-bottom:1px solid rgba(148,163,184,.14)!important;
+            box-shadow:0 8px 22px rgba(7,17,31,.12)!important;
+        }
+        .topbar{
+            width:92%!important;
+            max-width:1500px!important;
+            min-height:60px!important;
+            height:60px!important;
+            padding:0!important;
+            display:grid!important;
+            grid-template-columns:auto 1fr auto!important;
+            gap:18px!important;
+            align-items:center!important;
+        }
+        header .brand,
+        .topbar .brand{
+            height:60px!important;
+            min-width:150px!important;
+            display:flex!important;
+            align-items:center!important;
+        }
+        header .brand .website-brand-logo,
+        .topbar .brand .website-brand-logo{
+            width:174px!important;
+            max-width:20vw!important;
+            height:44px!important;
+            object-fit:contain!important;
+            object-position:left center!important;
+            filter:none!important;
+        }
+        .topbar nav{
+            justify-content:center!important;
+            gap:2px!important;
+            min-width:0!important;
+            overflow:hidden!important;
+        }
+        .topbar .nav-link,
+        .topbar a.nav-link{
+            min-height:34px!important;
+            padding:9px 10px!important;
+            border:0!important;
+            border-radius:7px!important;
+            background:transparent!important;
+            color:#d8e0ec!important;
+            font-family:Arial,Helvetica,sans-serif!important;
+            font-size:14.5px!important;
+            line-height:1!important;
+            font-weight:650!important;
+            letter-spacing:0!important;
+            white-space:nowrap!important;
+            transform:none!important;
+        }
+        .topbar .nav-link::after,
+        .topbar a.nav-link::after{
+            left:10px!important;
+            right:10px!important;
+            bottom:5px!important;
+            height:2px!important;
+            background:#ff8a00!important;
+            opacity:0!important;
+        }
+        .topbar .nav-link:hover,
+        .topbar a.nav-link:hover,
+        .topbar .nav-link.active,
+        .topbar a.nav-link.active{
+            color:#fff!important;
+            background:rgba(255,255,255,.055)!important;
+            border-color:transparent!important;
+            transform:none!important;
+        }
+        .topbar .nav-link:hover::after,
+        .topbar a.nav-link:hover::after,
+        .topbar .nav-link.active::after,
+        .topbar a.nav-link.active::after{
+            opacity:1!important;
+            transform:scaleX(1)!important;
+        }
+        .topbar > .inline:has(.search-input){display:none!important}
+        .topbar > .inline:last-child{
+            justify-self:end!important;
+            gap:8px!important;
+            min-width:auto!important;
+            flex-wrap:nowrap!important;
+        }
+        .topbar > .inline:last-child .btn{
+            height:38px!important;
+            min-height:38px!important;
+            border-radius:8px!important;
+            padding:0 15px!important;
+            border-width:1px!important;
+            font-family:Arial,Helvetica,sans-serif!important;
+            font-size:14px!important;
+            font-weight:750!important;
+            box-shadow:none!important;
+        }
+        .topbar > .inline:last-child .btn.secondary{
+            background:transparent!important;
+            color:#f8fafc!important;
+            border-color:rgba(226,232,240,.56)!important;
+        }
+        .topbar > .inline:last-child .btn:not(.secondary){
+            background:#ff8a00!important;
+            border-color:#ff8a00!important;
+            color:#fff!important;
+        }
+        .topbar > .inline:last-child .btn::after,
+        .topbar > .inline:last-child .btn.secondary::after{display:none!important;content:""!important}
+        .topbar .menu-trigger{
+            height:42px!important;
+            border-radius:999px!important;
+            background:transparent!important;
+            border:1px solid rgba(226,232,240,.18)!important;
+            color:#e5edf8!important;
+            padding:4px 8px 4px 4px!important;
+            box-shadow:none!important;
+        }
+        .topbar .avatar{width:34px!important;height:34px!important;font-size:13px!important;box-shadow:none!important}
+        .topbar .small{color:#e5edf8!important;font-size:12.5px!important}.topbar .role{color:#94a3b8!important;font-size:11px!important}
+        @media(max-width:980px){
+            html body #root > header,
+            html body header:has(.topbar){display:none!important}
+            .mobile-appbar{height:56px!important;min-height:56px!important;background:#07111f!important;border-bottom:1px solid rgba(255,255,255,.10)!important;box-shadow:0 8px 20px rgba(7,17,31,.16)!important}
+            .mobile-menu-btn,.mobile-icon-btn,.mobile-profile-trigger{width:36px!important;height:36px!important;border-radius:12px!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:none!important;color:#fff!important}
+            .mobile-menu-btn span{width:15px!important;height:2px!important;background:#fff!important}
+            .mobile-logo-title img{height:34px!important;max-width:132px!important;object-fit:contain!important}.mobile-logo-title span{display:none!important}
+            .mobile-side-drawer{width:min(80vw,286px)!important;border-radius:0 16px 16px 0!important;padding:14px 12px!important;background:#07111f!important;box-shadow:18px 0 44px rgba(0,0,0,.36)!important}
+            .mobile-drawer-head{padding:2px 2px 12px!important;margin-bottom:8px!important}.mobile-drawer-head strong{font-size:16px!important;font-weight:800!important}.mobile-drawer-close{width:32px!important;height:32px!important;border-radius:10px!important}
+            .mobile-drawer-links{gap:3px!important}.mobile-drawer-links a{padding:11px 10px!important;border-radius:10px!important;font-size:13.5px!important;font-weight:650!important;background:transparent!important;border:1px solid transparent!important}.mobile-drawer-links a.active,.mobile-drawer-links a:hover{background:rgba(255,138,0,.14)!important;border-color:rgba(255,138,0,.30)!important;color:#fff!important}
+            .mobile-drawer-actions{gap:7px!important}.mobile-drawer-actions a,.mobile-drawer-actions button{min-height:38px!important;border-radius:10px!important;font-size:13px!important}.mobile-drawer-actions .primary{background:#ff8a00!important;border-color:#ff8a00!important}
+        }
+    </style>
 </head>
 <body>
 <div id="root"></div>
