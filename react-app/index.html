@@ -6873,7 +6873,12 @@
         @media(max-width:900px){.gov-exam-workbench{grid-template-columns:1fr!important;min-height:0!important;padding:22px 12px!important}.gov-exam-workbench-main h1{font-size:27px!important}.gov-exam-workbench-main p{font-size:13.5px!important}.gov-workbench-tabs{gap:18px!important}.gov-exam-select-card{padding:15px!important}.gov-exam-detail-layout{width:calc(100% - 24px)!important;margin-top:22px!important}.gov-prep-public .gov-public-tabs,.gov-prep-public .gov-public-grid{width:calc(100% - 24px)!important}.gov-prep-public .gov-public-grid{grid-template-columns:1fr!important}.gov-exam-article p{font-size:14px!important}}
         @media(max-width:520px){.gov-exam-workbench-main .gov-selected-kicker{width:42px!important;height:42px!important}.gov-exam-workbench-main h1{font-size:24px!important}.gov-workbench-tabs button{font-size:13px!important}.gov-pattern-meta span{font-size:12px!important}.gov-pattern-table th,.gov-pattern-table td{font-size:12px!important;padding:8px!important}}
     </style>
-</head>
+
+    <style id="gov-prep-card-premium-final">
+        .gov-prep-public .gov-public-tabs{border-bottom:0!important;margin-top:26px!important;display:flex!important;justify-content:center!important}.gov-prep-public .gov-public-tabs button{height:42px!important;border:1px solid #dbeafe!important;border-radius:999px!important;background:#f8fbff!important;color:#0f172a!important;padding:0 22px!important;font-size:15px!important;font-weight:800!important;box-shadow:0 10px 24px rgba(15,23,42,.05)!important}.gov-prep-public .gov-public-tabs button.active{background:#0f172a!important;color:#fff!important;border-color:#0f172a!important;box-shadow:0 14px 32px rgba(15,23,42,.16)!important}.gov-prep-public .gov-public-tabs b{display:none!important}
+        .gov-prep-public .gov-public-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}.gov-prep-public .gov-public-card{min-height:150px!important;border:1px solid #dfe8f6!important;border-radius:14px!important;background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)!important;padding:18px!important;box-shadow:0 16px 38px rgba(15,23,42,.07)!important;overflow:hidden!important}.gov-prep-public .gov-public-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#155dfc,#38bdf8);opacity:.9}.gov-prep-public .gov-public-card:hover{transform:translateY(-2px)!important;border-color:#bfdbfe!important;box-shadow:0 22px 48px rgba(15,23,42,.12)!important}.gov-prep-public .gov-type{position:static!important;width:max-content!important;background:#eef6ff!important;color:#155dfc!important;border:1px solid #dbeafe!important;border-radius:999px!important;padding:5px 12px!important;font-size:11px!important;font-weight:900!important;letter-spacing:.02em!important}.gov-prep-public .gov-public-card h3{margin:10px 0 18px!important;color:#0f172a!important;font-size:18px!important;font-weight:750!important;line-height:1.28!important;min-height:46px!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important}.gov-prep-public .gov-public-card p,.gov-prep-public .gov-card-stats,.gov-prep-public .small,.gov-prep-public .gov-access-tag{display:none!important}.gov-prep-public .gov-public-card .btn{margin-top:auto!important;width:100%!important;min-height:42px!important;border-radius:10px!important;background:linear-gradient(135deg,#eff6ff,#eaf1ff)!important;border:1px solid #bfdbfe!important;color:#0b2d52!important;font-size:14px!important;font-weight:850!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important}.gov-prep-public .gov-public-card .btn:hover{background:#155dfc!important;border-color:#155dfc!important;color:#fff!important}
+        @media(max-width:900px){.gov-prep-public .gov-public-tabs{justify-content:flex-start!important}.gov-prep-public .gov-public-grid{grid-template-columns:1fr!important;gap:12px!important}.gov-prep-public .gov-public-card{min-height:136px!important;padding:16px!important}.gov-prep-public .gov-public-card h3{font-size:16px!important;min-height:auto!important}}
+    </style></head>
 <body>
 <div id="root"></div>
 
@@ -11574,6 +11579,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
         ? allChildren.filter((child) => child.name.toLowerCase().includes(query)).slice(0, 48)
         : selectedChildren;
     const initials = (name) => String(name || 'EX').split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase();
+    const cleanMockTitle = (title) => String(title || 'Practice Test').replace(/\s*-\s*\d+\s*Questions?/i, '').trim();
     const currentPlanName = state.subscription?.plan_name || (token ? 'Free membership' : 'Login required');
     const examSelectValue = activeCategoryId ? `c:${activeCategoryId}` : selectedParent ? `p:${selectedParent.id}` : 'all';
     const selectedExamTitle = selectedCategory?.name || (activeParentId ? selectedParent?.name : '') || 'All exam preparation';
@@ -11883,7 +11889,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
                 </>
             ) : null}
             <div className="gov-public-tabs">
-                <button className={tab === 'mocks' ? 'active' : ''} onClick={() => setTab('mocks')}>Exam Practice <b>{state.mocks.length}</b></button>
+                <button className={tab === 'mocks' ? 'active' : ''} onClick={() => setTab('mocks')}>Exam Practice</button>
                 {selectedCategory ? <button onClick={() => setActiveCategoryId(0)}>{selectedCategory.name} <b>Clear</b></button> : null}
             </div>
             <div className="gov-public-grid">
@@ -11896,7 +11902,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
                             <span className="exam-cover-badge">{mock.question_count || mock.total_questions || 0} Questions</span>
                         </div>
                         <span className="gov-type">MOCK</span>
-                        <h3>{mock.title}</h3>
+                        <h3>{cleanMockTitle(mock.title)}</h3>
                         <p>{mock.description || mock.category_name || 'Practice test'}</p>
                         <div className="gov-card-stats"><span>{mock.question_count || mock.total_questions || 0} Questions</span><span>{mock.duration_minutes || 0} Min</span></div>
                         {mock.last_attempt ? <div className="small">Last score: {safeNumber(mock.last_attempt.score, 2)} / {safeNumber(mock.last_attempt.total_marks, 2)}</div> : null}
