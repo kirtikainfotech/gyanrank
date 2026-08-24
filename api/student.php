@@ -1729,7 +1729,7 @@ function plan_cycle_details(array $plan, string $cycle = 'monthly'): array
     $basePrice = max(0, (float) ($plan['monthly_price'] ?? 0));
     $isFree = $basePrice <= 0 || $slug === 'free';
     $cycle = strtolower(trim($cycle));
-    $cycle = 'monthly';
+    $cycle = $cycle === 'yearly' ? 'yearly' : 'monthly';
     if ($isFree) {
         return [
             'billing_cycle' => 'free',
@@ -1738,11 +1738,15 @@ function plan_cycle_details(array $plan, string $cycle = 'monthly'): array
             'limit_reset_period' => 'one_time',
         ];
     }
+    $regularAmount = $cycle === 'yearly' ? ($basePrice * 12) : $basePrice;
+    $offerAmount = round($regularAmount * 0.5, 2);
     return [
-        'billing_cycle' => 'monthly',
-        'amount' => $basePrice,
-        'validity_days' => 30,
-        'limit_reset_period' => 'monthly',
+        'billing_cycle' => $cycle,
+        'amount' => $offerAmount,
+        'regular_amount' => $regularAmount,
+        'offer_percent' => 50,
+        'validity_days' => $cycle === 'yearly' ? 365 : 30,
+        'limit_reset_period' => $cycle === 'yearly' ? 'yearly' : 'monthly',
     ];
 }
 
@@ -1799,7 +1803,7 @@ function plan_limit_allows(?array $subscription, string $column, int $used, bool
 function plan_limit_window(array $subscription): array
 {
     $period = strtolower((string) ($subscription['limit_reset_period'] ?? 'one_time'));
-    $validPeriods = ['one_time', 'daily', 'weekly', 'monthly'];
+    $validPeriods = ['one_time', 'daily', 'weekly', 'monthly', 'yearly'];
     if (!in_array($period, $validPeriods, true)) {
         $period = 'one_time';
     }
