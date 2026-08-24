@@ -6950,7 +6950,15 @@
         .membership-plan-grid .btn.secondary{box-shadow:none!important;background:#fff!important}
         @media(max-width:900px){.student-billing-page .billing-hero{padding:16px!important;border-radius:18px!important}.student-billing-page .billing-hero h1{font-size:25px!important}.membership-upgrade-head{padding:18px!important;border-radius:18px!important;display:block!important}.membership-upgrade-head h3{font-size:25px!important}.membership-upgrade-head a{margin-top:14px!important;display:inline-flex!important}.membership-plan-grid{grid-template-columns:1fr!important;gap:12px!important}.membership-plan-grid .plan-card{padding:15px!important}.membership-plan-grid .plan-features{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
     </style>
-</head>
+    <style>
+        /* Premium mock limit upgrade page */
+        .gov-limit-upgrade-page{max-width:1180px!important;display:grid!important;grid-template-columns:minmax(320px,.78fr) minmax(0,1.22fr)!important;gap:18px!important;align-items:start!important;place-items:stretch!important;margin-top:28px!important}
+        .gov-limit-upgrade-card{width:100%!important;min-height:360px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:radial-gradient(circle at 92% 0%,rgba(255,138,0,.16),transparent 32%),linear-gradient(145deg,#ffffff,#f7fbff)!important;border-radius:24px!important;box-shadow:0 26px 72px rgba(15,23,42,.12)!important}
+        .gov-limit-plan-panel{border:1px solid #dbe7f8;border-radius:24px;background:linear-gradient(180deg,#fff,#f8fbff);box-shadow:0 24px 64px rgba(15,23,42,.10);padding:18px;overflow:hidden}
+        .gov-limit-plan-head{border-radius:18px;background:linear-gradient(135deg,#0b1220,#172554 70%,#155dfc);color:#fff;padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden}.gov-limit-plan-head:after{content:"";position:absolute;right:-48px;top:-58px;width:160px;height:160px;border-radius:50%;background:rgba(255,138,0,.18)}.gov-limit-plan-head > *{position:relative;z-index:1}.gov-limit-plan-head h2{margin:7px 0 4px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:1.05;font-weight:900}.gov-limit-plan-head p{margin:0;color:#cbd5e1;font-size:13px}.gov-limit-plan-head .dash-kicker{background:rgba(255,255,255,.10)!important;color:#bfdbfe!important;border-color:rgba(255,255,255,.18)!important}
+        .gov-limit-plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.gov-limit-plan-grid .plan-card{min-height:0!important;border-radius:18px!important;padding:16px!important;box-shadow:0 16px 42px rgba(15,23,42,.08)!important}.gov-limit-plan-grid .plan-title-row h3{font-size:20px!important}.gov-limit-plan-grid .plan-price{font-size:28px!important}.gov-limit-plan-grid .plan-features{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}.gov-limit-plan-grid .plan-features span{font-size:11px!important;padding:8px!important}.gov-limit-plan-grid .btn{min-height:40px!important;border-radius:12px!important;font-size:13px!important}
+        @media(max-width:980px){.gov-limit-upgrade-page{grid-template-columns:1fr!important;margin-top:18px!important}.gov-limit-upgrade-card{min-height:280px!important}.gov-limit-plan-grid{grid-template-columns:1fr!important}}
+    </style></head>
 <body>
 <div id="root"></div>
 
@@ -12036,7 +12044,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
 }
 
 function GovtMockPage({ token, mockId }) {
-    const [state, setState] = useState({ loading: true, mock: null, questions: [], result: null });
+    const [state, setState] = useState({ loading: true, mock: null, questions: [], result: null, plans: [] });
     const [answers, setAnswers] = useState({});
     const [err, setErr] = useState('');
     useEffect(() => {
@@ -12052,7 +12060,18 @@ function GovtMockPage({ token, mockId }) {
                 }
                 if (!stop) setState({ loading: false, mock: data.mock, questions: data.questions || [], result: null });
             } catch (e) {
-                if (!stop) { setErr(e.message || 'Mock test load failed.'); setState((s) => ({ ...s, loading: false })); }
+                if (!stop) {
+                    const message = e.message || 'Mock test load failed.';
+                    let plans = [];
+                    if (/limit reached|upgrade your plan|membership/i.test(message)) {
+                        try {
+                            const planData = await apiGet('membership_plans', {}, token, { timeoutMs: 12000 });
+                            plans = planData.plans || [];
+                        } catch (_) { plans = []; }
+                    }
+                    setErr(message);
+                    setState((s) => ({ ...s, loading: false, plans }));
+                }
             }
         })();
         return () => { stop = true; };
@@ -12070,16 +12089,29 @@ function GovtMockPage({ token, mockId }) {
         if (err) {
         const limitReached = /limit reached|upgrade your plan|membership/i.test(err);
         if (limitReached) {
+            const upgradePlans = (state.plans || []).filter((plan) => Number(plan.monthly_price || 0) > 0 || Number(plan.mock_test_limit || 0) > 0);
             return (
-                <section className="gov-limit-page">
-                    <div className="gov-limit-card">
+                <section className="gov-limit-page gov-limit-upgrade-page">
+                    <div className="gov-limit-card gov-limit-upgrade-card">
                         <span className="gov-limit-icon">!</span>
                         <small>Membership limit</small>
                         <h1>Mock test limit reached</h1>
-                        <p>Aapke current plan ka mock test quota complete ho gaya hai. Practice continue karne ke liye membership upgrade karein.</p>
+                        <p>Aapke current plan ka mock test quota complete ho gaya hai. Neeche plan choose karke practice instantly continue karein.</p>
                         <div className="gov-limit-actions">
-                            <a className="btn" href="#/upgrade-plan">Upgrade Plan</a>
+                            <a className="btn" href="#/upgrade-plan">View All Plans</a>
                             <a className="btn secondary" href="#/govt-prep">Back to Prep</a>
+                        </div>
+                    </div>
+                    <div className="gov-limit-plan-panel">
+                        <div className="gov-limit-plan-head">
+                            <div>
+                                <span className="dash-kicker">Recommended upgrade</span>
+                                <h2>Continue with membership</h2>
+                                <p>Mock tests, govt prep aur study access ek membership se unlock karein.</p>
+                            </div>
+                        </div>
+                        <div className="gov-limit-plan-grid">
+                            {upgradePlans.length ? upgradePlans.slice(0, 3).map((plan, index) => <PlanCard key={plan.id} plan={plan} index={index} />) : <div className="billing-empty">Plans load nahi ho paye. Upgrade page open karein.</div>}
                         </div>
                     </div>
                 </section>
