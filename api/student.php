@@ -3243,6 +3243,14 @@ try {
             'settings' => student_app_settings(),
         ]);
     }
+    if ($action === 'membership_plans') {
+        api_optional_user();
+        api_out([
+            'success' => true,
+            'settings' => student_app_settings(),
+            'plans' => membership_plans(),
+        ]);
+    }
     if ($action === 'dashboard_home') {
         $user = api_user();
         $studentId = (int) $user['id'];
