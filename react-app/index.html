@@ -3718,6 +3718,11 @@
         /* Govt prep selected category detail */
         .gov-selected-detail-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:18px 0;border:1px solid #dbe5f4;border-radius:18px;background:linear-gradient(135deg,#fff,#f4f8ff);padding:20px;box-shadow:0 12px 30px rgba(15,23,42,.06)}.gov-selected-kicker{display:inline-flex;border:1px solid #bfdbfe;background:#eff6ff;color:#155dfc;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:850;text-transform:uppercase}.gov-selected-detail-panel h2{margin:8px 0 5px;color:#07111f;font-size:28px;line-height:1.1}.gov-selected-detail-panel p{margin:0;color:#64748b;font-size:14px;line-height:1.5}.gov-selected-facts{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.gov-selected-facts span{min-width:110px;border:1px solid #e2e8f0;background:#fff;border-radius:14px;padding:10px 12px;text-align:center}.gov-selected-facts b{display:block;color:#0f172a;font-size:18px;line-height:1.1}.gov-selected-facts small{display:block;color:#64748b;font-size:11px;margin-top:4px;text-transform:uppercase;font-weight:800}
         @media(max-width:760px){.gov-selected-detail-panel{display:block;padding:16px;border-radius:14px}.gov-selected-detail-panel h2{font-size:23px}.gov-selected-detail-panel p{font-size:12.5px}.gov-selected-facts{justify-content:stretch;margin-top:12px}.gov-selected-facts span,.gov-selected-facts .btn{flex:1 1 100%;width:100%}}
+        /* Govt prep smooth line loader */
+        .gov-prep-line-loader{width:min(1180px,94%);margin:26px auto 80px;padding:0}.gov-loader-card{border:1px solid #dbe5f4;border-radius:20px;background:linear-gradient(135deg,#ffffff,#f3f8ff);box-shadow:0 16px 42px rgba(15,23,42,.08);padding:22px;overflow:hidden;position:relative}.gov-loader-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#155dfc,#38bdf8,#ff8a00);opacity:.85}.gov-loader-topline{display:flex;align-items:center;gap:10px;color:#0f172a;font-size:14px;font-weight:800}.gov-loader-topline span{width:12px;height:12px;border-radius:50%;background:#155dfc;box-shadow:0 0 0 6px rgba(21,93,252,.10)}.gov-loader-bar{height:6px;border-radius:999px;background:#e8eef7;margin:18px 0 16px;overflow:hidden}.gov-loader-bar i{display:block;width:36%;height:100%;border-radius:999px;background:linear-gradient(90deg,#155dfc,#38bdf8);animation:govLineLoad 1.25s ease-in-out infinite}.gov-loader-lines{display:grid;gap:9px}.gov-loader-lines span{height:10px;border-radius:999px;background:linear-gradient(90deg,#eef4ff,#dfe9f7,#eef4ff);background-size:220% 100%;animation:govLinePulse 1.4s ease-in-out infinite}.gov-loader-lines span:nth-child(1){width:72%}.gov-loader-lines span:nth-child(2){width:48%;animation-delay:.12s}.gov-loader-lines span:nth-child(3){width:62%;animation-delay:.24s}@keyframes govLineLoad{0%{transform:translateX(-110%)}55%{transform:translateX(80%)}100%{transform:translateX(230%)}}@keyframes govLinePulse{0%,100%{background-position:0 0;opacity:.72}50%{background-position:100% 0;opacity:1}}
+        /* Premium govt prep detail polish */
+        .gov-prep-public.gov-prep-public{background:linear-gradient(180deg,#f8fbff 0%,#ffffff 36%)!important;border-radius:0!important}.gov-prep-public .gov-exam-search{border:1px solid #dbe5f4!important;background:#fff!important}.gov-prep-public .gov-public-hero{background:linear-gradient(135deg,#07111f 0%,#12284a 52%,#155dfc 100%)!important;color:#fff!important;border:1px solid rgba(255,255,255,.14)!important}.gov-prep-public .gov-public-hero h1{font-weight:900!important}.gov-selected-detail-panel{border-color:#cfe0f2!important;background:linear-gradient(135deg,#ffffff 0%,#eef6ff 100%)!important;box-shadow:0 16px 40px rgba(15,23,42,.08)!important}.gov-prep-public .gov-public-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.gov-prep-public .gov-public-card:hover{transform:translateY(-2px);border-color:#bfdbfe!important;box-shadow:0 18px 42px rgba(15,23,42,.10)!important}
+        @media(max-width:760px){.gov-prep-line-loader{width:100%;margin:12px 0 70px;padding:0 10px}.gov-loader-card{border-radius:16px;padding:18px}.gov-loader-topline{font-size:13px}.gov-prep-public.gov-prep-public{padding-top:10px!important}}
         .gov-category-browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;border:1px solid #dbe5f4;border-radius:18px;background:#f6f8fb;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.06)}
         .gov-category-sidebar{background:#fff;padding:10px;max-height:560px;overflow:auto;border-right:1px solid #dbe5f4}
         .gov-category-tab{width:100%;min-height:58px;border:0;background:#fff;color:#0f172a;border-radius:12px;display:grid;grid-template-columns:42px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;text-align:left;font-weight:850;cursor:pointer}
@@ -7197,6 +7202,25 @@ function Message({ text, kind = 'info' }) {
 
 function PageLoader() {
     return null;
+}
+
+function GovPrepLineLoader() {
+    return (
+        <section className="gov-prep-line-loader" aria-busy="true" aria-live="polite">
+            <div className="gov-loader-card">
+                <div className="gov-loader-topline">
+                    <span></span>
+                    <b>Loading exam preparation</b>
+                </div>
+                <div className="gov-loader-bar"><i></i></div>
+                <div className="gov-loader-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+    );
 }
 
 function CourseCard({ course, onClick, showButton = true }) {
@@ -11491,7 +11515,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
         }
         return true;
     };
-    if (state.loading) return <PageLoader label="Loading exam preparation" />;
+    if (state.loading) return <GovPrepLineLoader />;
     const sourceList = state.mocks;
     const activeList = activeCategoryId ? sourceList.filter((item) => Number(item.subcategory_id || item.category_id || 0) === Number(activeCategoryId)) : sourceList;
     const parents = state.categories.filter((cat) => !cat.parent_id);
