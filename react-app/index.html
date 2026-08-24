@@ -6888,7 +6888,14 @@
         .gov-prep-public .gov-card-stats span:last-child:before{content:"T";width:18px;height:18px;border-radius:50%;background:#fff7ed;color:#c2410c;display:inline-flex;align-items:center;justify-content:center;margin-right:6px;font-size:10px;font-weight:900}
         .gov-prep-public .gov-public-card .btn{margin-top:auto!important}
         @media(max-width:900px){.gov-prep-public .gov-public-card{min-height:148px!important}.gov-prep-public .gov-card-stats span{font-size:11.5px!important;min-height:26px!important;padding:0 9px!important}.gov-prep-public .gov-public-card h3{min-height:auto!important}}
-    </style></head>
+    </style>
+    <style id="gov-prep-related-premium-final">
+        .gov-practice-layout{width:min(1180px,88%)!important;margin:14px auto 0!important;display:grid!important;grid-template-columns:minmax(0,1fr) 280px!important;gap:26px!important;align-items:start!important}.gov-practice-layout .gov-public-grid{width:100%!important;margin:0!important}.gov-related-exams{border-left:1px solid #e5e7eb!important;padding-left:18px!important;position:sticky!important;top:92px!important}.gov-related-exams h3{margin:0 0 12px!important;color:#07111f!important;font-family:Arial,Helvetica,sans-serif!important;font-size:18px!important;font-weight:850!important}.gov-related-exams a{display:grid!important;grid-template-columns:50px minmax(0,1fr)!important;gap:12px!important;align-items:center!important;min-height:74px!important;border-top:1px solid #e5e7eb!important;text-decoration:none!important}.gov-related-exams i{width:44px!important;height:44px!important;border-radius:50%!important;background:linear-gradient(135deg,#155dfc,#38bdf8)!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;font-style:normal!important;font-size:11px!important;font-weight:900!important;box-shadow:0 10px 22px rgba(21,93,252,.18)!important}.gov-related-exams b{display:block!important;color:#0b2d52!important;font-size:15px!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.gov-related-exams em{display:block!important;margin-top:4px!important;color:#1176d7!important;font-style:normal!important;font-size:13px!important;font-weight:650!important}
+        .gov-prep-public .gov-public-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}.gov-prep-public .gov-public-card{min-height:228px!important;border-radius:16px!important;padding:22px!important;background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)!important;border:1px solid #dbe7f8!important;box-shadow:0 22px 58px rgba(15,23,42,.08)!important}.gov-prep-public .gov-public-card:before{width:5px!important;background:linear-gradient(180deg,#155dfc,#38bdf8)!important}.gov-prep-public .gov-public-card h3{font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:800!important;letter-spacing:0!important;line-height:1.25!important;min-height:54px!important;margin:18px 0 10px!important;color:#0f172a!important}.gov-prep-public .gov-public-card p{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;color:#64748b!important;font-size:13.5px!important;line-height:1.5!important;margin:0 0 18px!important;min-height:40px!important}.gov-prep-public .gov-card-stats{margin-top:auto!important;margin-bottom:16px!important}.gov-prep-public .gov-public-card .btn{min-height:44px!important;border-radius:12px!important;font-size:15px!important}.gov-prep-public .gov-type{background:#eef6ff!important;color:#155dfc!important}
+        @media(max-width:1000px){.gov-practice-layout{width:calc(100% - 24px)!important;grid-template-columns:1fr!important}.gov-related-exams{position:static!important;border-left:0!important;border-top:1px solid #e5e7eb!important;padding:16px 0 0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 14px!important}.gov-related-exams h3{grid-column:1/-1!important}.gov-prep-public .gov-public-grid{grid-template-columns:1fr!important}.gov-prep-public .gov-public-card{min-height:210px!important}.gov-prep-public .gov-public-card h3{font-size:18px!important;min-height:auto!important}}
+        @media(max-width:520px){.gov-related-exams{grid-template-columns:1fr!important}.gov-prep-public .gov-public-card{padding:18px!important}.gov-prep-public .gov-public-card p{font-size:13px!important}}
+    </style>
+</head>
 <body>
 <div id="root"></div>
 
@@ -11689,6 +11696,8 @@ function GovtPrepPage({ token, routeQuery = null }) {
         `Student exam select karke same page par summary, pattern, mocks aur progress follow kar sakta hai.`,
         examDetail.note
     ];
+    const cardDescription = `${selectedExamTitle} ke exam-pattern questions ke saath timed practice set. Attempt ke baad score aur weak areas review karein.`;
+    const relatedExamParents = parents.filter((parent) => Number(parent.id) !== Number(selectedParent?.id || 0)).slice(0, 8);
     const chooseExamTrack = (value) => {
         if (value === 'all') {
             setActiveParentId(0);
@@ -11923,7 +11932,8 @@ function GovtPrepPage({ token, routeQuery = null }) {
                 <button className={tab === 'mocks' ? 'active' : ''} onClick={() => setTab('mocks')}>Exam Practice</button>
                 {selectedCategory ? <button onClick={() => setActiveCategoryId(0)}>{selectedCategory.name} <b>Clear</b></button> : null}
             </div>
-            <div className="gov-public-grid">
+            <div className="gov-practice-layout">
+                <div className="gov-public-grid">
                 {activeList.map((mock) => {
                     const mockColorIndex = (Number(mock.id || 0) || String(mock.title || '').length || 1) % 5 + 1;
                     return (
@@ -11934,7 +11944,7 @@ function GovtPrepPage({ token, routeQuery = null }) {
                         </div>
                         <span className="gov-type">MOCK</span>
                         <h3>{cleanMockTitle(mock.title)}</h3>
-                        <p>{mock.description || mock.category_name || 'Practice test'}</p>
+                        <p>{cardDescription}</p>
                         <div className="gov-card-stats"><span>{mock.question_count || mock.total_questions || 0} Questions</span><span>{mock.duration_minutes || 0} Min</span></div>
                         {mock.last_attempt ? <div className="small">Last score: {safeNumber(mock.last_attempt.score, 2)} / {safeNumber(mock.last_attempt.total_marks, 2)}</div> : null}
                         <span className="gov-access-tag">Included in membership</span>
@@ -11943,6 +11953,16 @@ function GovtPrepPage({ token, routeQuery = null }) {
                     );
                 })}
                 {activeList.length === 0 ? <div className="card"><h3>No content available</h3><p className="muted">Admin se content publish hone ke baad yahan dikhega.</p></div> : null}
+                </div>
+                <aside className="gov-related-exams">
+                    <h3>Other Related Exam's</h3>
+                    {relatedExamParents.map((parent) => (
+                        <a key={parent.id} href={`#/govt-prep?parent=${parent.id}`}>
+                            <i>{initials(parent.name)}</i>
+                            <span><b>{parent.name}</b><em>Read More</em></span>
+                        </a>
+                    ))}
+                </aside>
             </div>
         </section>
     );
