@@ -100,30 +100,12 @@ function phonepe_uses_oauth(): bool
 
 function phonepe_client_id(): string
 {
-    $clientId = trim(app_setting('phonepe_client_id', ''));
-    if ($clientId !== '') {
-        return $clientId;
-    }
-    $legacyMerchant = trim(app_setting('phonepe_merchant_id', ''));
-    $legacySecret = trim(app_setting('phonepe_salt_key', ''));
-    if ($legacyMerchant !== '' && $legacySecret !== '' && (str_contains($legacyMerchant, '_') || strlen($legacySecret) >= 40)) {
-        return $legacyMerchant;
-    }
-    return '';
+    return trim(app_setting('phonepe_client_id', ''));
 }
 
 function phonepe_client_secret(): string
 {
-    $clientSecret = trim(app_setting('phonepe_client_secret', ''));
-    if ($clientSecret !== '') {
-        return $clientSecret;
-    }
-    $legacyMerchant = trim(app_setting('phonepe_merchant_id', ''));
-    $legacySecret = trim(app_setting('phonepe_salt_key', ''));
-    if ($legacyMerchant !== '' && $legacySecret !== '' && (str_contains($legacyMerchant, '_') || strlen($legacySecret) >= 40)) {
-        return $legacySecret;
-    }
-    return '';
+    return trim(app_setting('phonepe_client_secret', ''));
 }
 
 function phonepe_base_url(): string
@@ -327,7 +309,7 @@ function phonepe_create_payment(string $txn, int $studentId, float $amount, stri
         'amount' => max(1, (int) round($amount * 100)),
         'redirectUrl' => $redirectUrl,
         'redirectMode' => 'REDIRECT',
-        'callbackUrl' => api_absolute_url('api/student?action=phonepe_callback&txn=' . rawurlencode($txn)),
+        'callbackUrl' => api_absolute_url('api/student.php?action=phonepe_callback&txn=' . rawurlencode($txn)),
         'paymentInstrument' => ['type' => 'PAY_PAGE'],
     ];
     $encoded = base64_encode(json_encode($payload, JSON_UNESCAPED_SLASHES));
@@ -1738,8 +1720,8 @@ function plan_cycle_details(array $plan, string $cycle = 'monthly'): array
             'limit_reset_period' => 'one_time',
         ];
     }
-    $regularAmount = $cycle === 'yearly' ? ($basePrice * 12) : $basePrice;
-    $offerAmount = round($regularAmount * 0.5, 2);
+    $offerAmount = $cycle === 'yearly' ? ($basePrice === 99.0 ? 999.0 : round($basePrice * 10, 2)) : $basePrice;
+    $regularAmount = round($offerAmount * 2, 2);
     return [
         'billing_cycle' => $cycle,
         'amount' => $offerAmount,
@@ -4110,8 +4092,7 @@ try {
         $studentId = (int) $user['id'];
         $cycle = plan_cycle_details($plan, $billingCycle);
         $baseAmount = max(0, (float) ($cycle['amount'] ?? 0));
-        $taxRate = max(0, (float) app_setting('tax_rate', '18'));
-        $amount = $baseAmount > 0 ? round($baseAmount * (1 + ($taxRate / 100)), 2) : 0.0;
+        $amount = $baseAmount;
         if ($amount > 0 && !phonepe_enabled()) {
             api_out(['success' => false, 'message' => 'PhonePe payment gateway is not configured. Please contact admin.'], 422);
         }
@@ -4129,7 +4110,8 @@ try {
         ');
         $cycleName = (string) ($cycle['billing_cycle'] ?? 'monthly');
         $cycleDays = (int) ($cycle['validity_days'] ?? 30);
-        $stmt->bind_param('iiddsisss', $studentId, $planId, $baseAmount, $amount, $cycleName, $cycleDays, $method, $status, $txn);
+        $originalAmount = max($baseAmount, (float) ($cycle['regular_amount'] ?? $baseAmount));
+        $stmt->bind_param('iiddsisss', $studentId, $planId, $originalAmount, $amount, $cycleName, $cycleDays, $method, $status, $txn);
         $stmt->execute();
         $purchaseId = (int) db()->insert_id;
 

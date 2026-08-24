@@ -8757,9 +8757,9 @@ function StudentBillingPage({ token, view }) {
                     const upgradePlans = (state.plans || []).filter((plan) => Number(plan.monthly_price || 0) > 0 || Number(plan.mock_test_limit || 0) > 0);
                     const selectedPlan = upgradePlans[0] || (state.plans || [])[0] || null;
                     const monthlyPrice = Number(selectedPlan?.monthly_price || 0);
-                    const regularPrice = passCycle === 'yearly' ? monthlyPrice * 12 : monthlyPrice;
-                    const activePrice = selectedPlan ? Math.round(regularPrice * 0.5) : 0;
-                    const planPrice = selectedPlan ? toRupee(activePrice) : 'Open plans';
+                    const offerPrice = selectedPlan ? (passCycle === 'yearly' ? (monthlyPrice === 99 ? 999 : Math.round(monthlyPrice * 10)) : monthlyPrice) : 0;
+                    const regularPrice = offerPrice * 2;
+                    const planPrice = selectedPlan ? toRupee(offerPrice) : 'Open plans';
                     const regularPriceLabel = selectedPlan ? toRupee(regularPrice) : '';
                     const benefits = [
                         `${selectedPlan?.mock_test_limit || 'Unlimited'} mock tests access`,
@@ -12178,10 +12178,10 @@ function GovtMockPage({ token, mockId }) {
             const upgradePlans = (state.plans || []).filter((plan) => Number(plan.monthly_price || 0) > 0 || Number(plan.mock_test_limit || 0) > 0);
             const selectedPlan = upgradePlans[0] || null;
             const monthlyPrice = Number(selectedPlan?.monthly_price || 0);
-            const regularPrice = passCycle === 'yearly' ? monthlyPrice * 12 : monthlyPrice;
-            const activePrice = selectedPlan ? Math.round(regularPrice * 0.5) : 0;
-            const planPrice = selectedPlan ? toRupee(activePrice) : 'Open plans';
-            const regularPriceLabel = selectedPlan ? toRupee(regularPrice) : '';
+                    const offerPrice = selectedPlan ? (passCycle === 'yearly' ? (monthlyPrice === 99 ? 999 : Math.round(monthlyPrice * 10)) : monthlyPrice) : 0;
+                    const regularPrice = offerPrice * 2;
+                    const planPrice = selectedPlan ? toRupee(offerPrice) : 'Open plans';
+                    const regularPriceLabel = selectedPlan ? toRupee(regularPrice) : '';
             const mockLimit = selectedPlan?.mock_test_limit || 'Unlimited';
             const benefits = [
                 `${mockLimit} mock tests access`,
