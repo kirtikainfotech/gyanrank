@@ -4092,7 +4092,8 @@ try {
         $studentId = (int) $user['id'];
         $cycle = plan_cycle_details($plan, $billingCycle);
         $baseAmount = max(0, (float) ($cycle['amount'] ?? 0));
-        $amount = $baseAmount;
+        $taxRate = max(0, (float) app_setting('tax_rate', '18'));
+        $amount = $baseAmount > 0 ? round($baseAmount * (1 + ($taxRate / 100)), 2) : 0.0;
         if ($amount > 0 && !phonepe_enabled()) {
             api_out(['success' => false, 'message' => 'PhonePe payment gateway is not configured. Please contact admin.'], 422);
         }
@@ -4110,7 +4111,8 @@ try {
         ');
         $cycleName = (string) ($cycle['billing_cycle'] ?? 'monthly');
         $cycleDays = (int) ($cycle['validity_days'] ?? 30);
-        $originalAmount = max($baseAmount, (float) ($cycle['regular_amount'] ?? $baseAmount));
+        $originalBaseAmount = max($baseAmount, (float) ($cycle['regular_amount'] ?? $baseAmount));
+        $originalAmount = $originalBaseAmount > 0 ? round($originalBaseAmount * (1 + ($taxRate / 100)), 2) : 0.0;
         $stmt->bind_param('iiddsisss', $studentId, $planId, $originalAmount, $amount, $cycleName, $cycleDays, $method, $status, $txn);
         $stmt->execute();
         $purchaseId = (int) db()->insert_id;
