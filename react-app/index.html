@@ -7246,17 +7246,18 @@
         }
     </style>
     <style id="gyannexa-account-template-all">
+        .student-account-app-shell{padding:0!important;margin:0!important;width:100%!important;max-width:none!important;background:#f5f8fc!important;min-height:100vh!important}
         .student-account-shell,
         .student-account-shell *{font-family:Inter,"Segoe UI",Arial,sans-serif!important;letter-spacing:0!important}
         .student-account-shell{
             width:100%!important;max-width:none!important;margin:0!important;padding:26px 3.2% 46px!important;
             display:grid!important;grid-template-columns:248px minmax(0,1fr)!important;gap:22px!important;
             align-items:start!important;background:linear-gradient(180deg,#f5f8fc 0%,#ffffff 62%)!important;
-            min-height:calc(100vh - 76px)!important;
+            min-height:100vh!important;
         }
         .student-account-content{min-width:0!important;display:grid!important;gap:16px!important}
         .student-account-sidebar{
-            position:sticky!important;top:96px!important;border-radius:22px!important;border:1px solid rgba(255,255,255,.10)!important;
+            position:sticky!important;top:18px!important;border-radius:22px!important;border:1px solid rgba(255,255,255,.10)!important;
             background:linear-gradient(180deg,#07111f 0%,#0e1a31 55%,#13234a 100%)!important;color:#fff!important;
             box-shadow:0 24px 70px rgba(7,17,31,.20)!important;padding:16px 14px!important;overflow:hidden!important;
         }
@@ -12764,6 +12765,8 @@ function App() {
     };
     const isPlayerRoute = currentPath.startsWith('/learn/');
     const isPaymentRoute = currentPath.startsWith('/payment-status/');
+    const accountRoutes = ['/dashboard', '/my-courses', '/progress', '/gcoin', '/active-plan', '/transactions', '/invoices', '/billing-info', '/upgrade-plan', '/profile'];
+    const isStudentAccountRoute = accountRoutes.includes(currentPath);
 
     const page = useMemo(() => {
         const loginRequired = () => <AuthModalPage onLogin={setAuth} onToast={showToast} initialMode="login" />;
@@ -12868,7 +12871,7 @@ function App() {
     return (
         <AppContext.Provider value={auth}>
             <div>
-                {!isPlayerRoute && !isPaymentRoute ? (
+                {!isPlayerRoute && !isPaymentRoute && !isStudentAccountRoute ? (
                     <TopBar
                         user={auth.user}
                         logout={logout}
@@ -12877,9 +12880,9 @@ function App() {
                         onSearch={goSearchCourses}
                     />
                 ) : null}
-                {!isPlayerRoute && !isPaymentRoute ? <MobileAppBar user={auth.user} settings={auth.settings} logout={logout} /> : null}
+                {!isPlayerRoute && !isPaymentRoute && !isStudentAccountRoute ? <MobileAppBar user={auth.user} settings={auth.settings} logout={logout} /> : null}
                 <Toast text={toast} kind={toastKind} onClose={() => setToast('')} />
-                <main className={`app-shell ${isPlayerRoute ? 'player-shell' : ''} ${isPaymentRoute ? 'payment-shell' : ''}`}>
+                <main className={`app-shell ${isPlayerRoute ? 'player-shell' : ''} ${isPaymentRoute ? 'payment-shell' : ''} ${isStudentAccountRoute ? 'student-account-app-shell' : ''}`}>
                     {auth.loading ? <PageLoader label="Checking session" sub="Securing your learner account." /> : page}
                 </main>
                 {visibleAuthMode && !isPlayerRoute && !isPaymentRoute ? (
@@ -12894,8 +12897,8 @@ function App() {
                         }}
                     />
                 ) : null}
-                {!isPlayerRoute && !isPaymentRoute ? <SiteFooter /> : null}
-                {!isPlayerRoute && !isPaymentRoute ? <MobileBottomNav activePath={currentPath} user={auth.user} /> : null}
+                {!isPlayerRoute && !isPaymentRoute && !isStudentAccountRoute ? <SiteFooter /> : null}
+                {!isPlayerRoute && !isPaymentRoute && !isStudentAccountRoute ? <MobileBottomNav activePath={currentPath} user={auth.user} /> : null}
             </div>
         </AppContext.Provider>
     );
