@@ -9480,7 +9480,7 @@ function StudentShortcutIcon({ type }) {
 }
 function HomePage({ token }) {
     const { settings: globalSettings } = React.useContext(AppContext);
-    const [state, setState] = useState({ loading: true, courses: [], plans: [], live: [], exams: [], documents: [], combos: [], myCourses: [], govPrep: { documents: [], live: [], mocks: [] } });
+    const [state, setState] = useState({ loading: true, courses: [], plans: [], live: [], exams: [], documents: [], combos: [], myCourses: [], govPrep: { documents: [], live: [], mocks: [], categories: [] } });
     const [billingCycle, setBillingCycle] = useState('monthly');
     const [activeGovCategory, setActiveGovCategory] = useState('All');
     const [showPlanModal, setShowPlanModal] = useState(false);
@@ -9489,10 +9489,10 @@ function HomePage({ token }) {
         (async () => {
             try {
                 const data = await apiGet('home', {}, token);
-                let govPrep = { documents: [], live: [], mocks: [] };
+                let govPrep = { documents: [], live: [], mocks: [], categories: [] };
                 try {
-                    const gov = await apiGet('gov_prep', {}, token || '');
-                    govPrep = { documents: gov.documents || [], live: gov.live || [], mocks: gov.mocks || [] };
+                    const gov = await apiGet('gov_prep', {}, token || '', { timeoutMs: 30000 });
+                    govPrep = { documents: gov.documents || [], live: gov.live || [], mocks: gov.mocks || [], categories: gov.categories || [] };
                 } catch (_) {}
                 if (!cancelled) {
                     setState({
@@ -9539,7 +9539,8 @@ function HomePage({ token }) {
         ...(state.govPrep.mocks || []).map((item) => ({ ...item, kind: 'MOCK' })),
     ];
     const govCategoryName = (item) => item.subcategory_name || item.category_name || item.exam_category_name || item.course_title || 'Govt Prep';
-    const govCategories = Object.values(govAllItems.reduce((acc, item) => {
+    const govCategorySeeds = govAllItems.length ? govAllItems : (state.govPrep.categories || []).map((cat) => ({ ...cat, category_name: cat.name, subcategory_name: cat.parent_id ? cat.name : '', category_id: cat.parent_id || cat.id, subcategory_id: cat.parent_id ? cat.id : 0, title: cat.name }));
+    const govCategories = Object.values(govCategorySeeds.reduce((acc, item) => {
         const name = govCategoryName(item);
         const logoKey = [name, item.category_name, item.exam_category_name, item.course_title, item.title].filter(Boolean).join(' ');
         const categoryId = Number(item.subcategory_id || item.category_id || 0);
