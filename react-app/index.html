@@ -7890,6 +7890,85 @@
     .student-account-content .pro-loader-card { box-shadow: 0 18px 42px rgba(15, 23, 42, .09) !important; }
     @media (max-width: 760px) { .pro-page-loader { min-height: 360px !important; padding: 28px 12px !important; } .pro-loader-card { width: min(320px, 94vw) !important; padding: 22px 18px 20px !important; } .pro-loader-ring { width: 98px !important; height: 98px !important; } .pro-loader-core { width: 72px !important; height: 72px !important; } .pro-loader-core strong { font-size: 24px !important; } }
 </style>
+
+<style id="gyannexa-loader-center-fix-final">
+    .pro-loader-card {
+        width: min(340px, 92vw) !important;
+        padding: 22px 24px 20px !important;
+        border-top: 0 !important;
+    }
+    .pro-loader-card:before { height: 3px !important; }
+    .pro-loader-ring {
+        width: 108px !important;
+        height: 108px !important;
+        margin: 0 auto 15px !important;
+        background: #eef4fb !important;
+        border: 1px solid #d8e5f5 !important;
+        box-shadow: 0 16px 36px rgba(37, 99, 235, .12) !important;
+        animation: none !important;
+        isolation: isolate !important;
+    }
+    .pro-loader-ring:before {
+        inset: 0 !important;
+        border: 7px solid #e6eef8 !important;
+        border-top-color: #2563eb !important;
+        border-right-color: #2563eb !important;
+        border-bottom-color: #e6eef8 !important;
+        border-left-color: #f97316 !important;
+        animation: proLoaderSpin 1.05s linear infinite !important;
+        box-sizing: border-box !important;
+    }
+    .pro-loader-ring:after {
+        content: '' !important;
+        position: absolute !important;
+        inset: 13px !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        box-shadow: inset 0 0 0 1px #e7eef8 !important;
+        z-index: 0 !important;
+    }
+    .pro-loader-core {
+        position: relative !important;
+        z-index: 1 !important;
+        width: 74px !important;
+        height: 74px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 3px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        text-align: center !important;
+        line-height: 1 !important;
+    }
+    .pro-loader-core strong {
+        display: block !important;
+        font-size: 23px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+        letter-spacing: -.05em !important;
+        color: #0f172a !important;
+    }
+    .pro-loader-core span {
+        display: block !important;
+        font-size: 8px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+        letter-spacing: .12em !important;
+        color: #2563eb !important;
+    }
+    .pro-loader-copy b { font-size: 17px !important; }
+    .pro-loader-copy span { font-size: 12px !important; }
+    .pro-loader-track { height: 5px !important; margin-top: 16px !important; }
+    .pro-loader-track i { width: 34% !important; }
+    .pro-loader-dots { margin-top: 13px !important; }
+    @media (max-width: 760px) {
+        .pro-loader-ring { width: 98px !important; height: 98px !important; }
+        .pro-loader-core { width: 68px !important; height: 68px !important; }
+        .pro-loader-core strong { font-size: 21px !important; }
+    }
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -8279,23 +8358,13 @@ function Message({ text, kind = 'info' }) {
 }
 
 function PageLoader({ label = 'Loading data', sub = 'Please wait while we prepare everything.', compact = false } = {}) {
-    const [progress, setProgress] = useState(18);
-    useEffect(() => {
-        let next = 18;
-        const timer = setInterval(() => {
-            next = next >= 92 ? 24 : Math.min(92, next + Math.floor(Math.random() * 9) + 4);
-            setProgress(next);
-        }, 420);
-        return () => clearInterval(timer);
-    }, []);
-    const ringStyle = { '--loader-progress': `${progress * 3.6}deg` };
     return (
         <section className={`pro-page-loader ${compact ? 'compact' : ''}`} aria-busy="true" aria-live="polite">
             <div className="pro-loader-card">
-                <div className="pro-loader-ring" style={ringStyle}>
+                <div className="pro-loader-ring">
                     <div className="pro-loader-core">
-                        <strong>{progress}</strong>
-                        <span>%</span>
+                        <strong>GN</strong>
+                        <span>LOADING</span>
                     </div>
                 </div>
                 <div className="pro-loader-copy">
