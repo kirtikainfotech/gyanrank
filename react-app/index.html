@@ -7246,79 +7246,46 @@
         }
     </style>
     <style id="gyannexa-account-template-all">
-        .student-account-content .mycourses-v2,
-        .student-account-content .profile-page-v2,
-        .student-account-content .gcoin-page,
-        .student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page){
-            width:100%!important;
-            max-width:none!important;
-            margin:0!important;
-            padding:0!important;
-            font-family:Arial,Helvetica,sans-serif!important;
+        .student-account-shell,
+        .student-account-shell *{font-family:Inter,"Segoe UI",Arial,sans-serif!important;letter-spacing:0!important}
+        .student-account-shell{
+            width:100%!important;max-width:none!important;margin:0!important;padding:26px 3.2% 46px!important;
+            display:grid!important;grid-template-columns:248px minmax(0,1fr)!important;gap:22px!important;
+            align-items:start!important;background:linear-gradient(180deg,#f5f8fc 0%,#ffffff 62%)!important;
+            min-height:calc(100vh - 76px)!important;
         }
-        .student-account-content .mycourses-hero,
-        .student-account-content .profile-dashboard-card,
-        .student-account-content .gcoin-hero,
-        .student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page) > .section-title:first-child{
-            border:1px solid #dbe7f8!important;
-            border-radius:18px!important;
-            background:radial-gradient(circle at 92% 0%,rgba(37,99,235,.11),transparent 28%),linear-gradient(135deg,#fff,#f7fbff)!important;
-            box-shadow:0 14px 38px rgba(15,23,42,.06)!important;
-            padding:20px!important;
-            margin:0 0 14px!important;
+        .student-account-content{min-width:0!important;display:grid!important;gap:16px!important}
+        .student-account-sidebar{
+            position:sticky!important;top:96px!important;border-radius:22px!important;border:1px solid rgba(255,255,255,.10)!important;
+            background:linear-gradient(180deg,#07111f 0%,#0e1a31 55%,#13234a 100%)!important;color:#fff!important;
+            box-shadow:0 24px 70px rgba(7,17,31,.20)!important;padding:16px 14px!important;overflow:hidden!important;
         }
-        .student-account-content .mycourses-hero h2,
-        .student-account-content .profile-dashboard-card h2,
-        .student-account-content > section > .section-title:first-child h2{
-            font-size:28px!important;
-            line-height:1.08!important;
-            font-weight:850!important;
-            letter-spacing:0!important;
-            color:#07111f!important;
-            margin:6px 0 6px!important;
+        .student-account-sidebar:before{content:""!important;display:block!important;width:42px!important;height:42px!important;border-radius:13px!important;margin:0 8px 14px!important;background:linear-gradient(135deg,#ff8a00 0%,#2563eb 70%)!important;box-shadow:0 14px 30px rgba(37,99,235,.22)!important}
+        .student-account-sidebar h3{margin:0 8px 5px!important;color:#fff!important;font-size:20px!important;line-height:1.1!important;font-weight:800!important}
+        .student-account-sidebar p{margin:0 8px 16px!important;color:#aebbd0!important;font-size:12.5px!important;line-height:1.55!important}
+        .student-account-sidebar a{height:42px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;border-radius:13px!important;padding:0 12px!important;color:#d8e2f1!important;text-decoration:none!important;font-size:13.5px!important;font-weight:700!important;transition:.16s ease!important}
+        .student-account-sidebar a span{display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important}.student-account-sidebar a span:before{content:""!important;width:8px!important;height:8px!important;border-radius:50%!important;background:#5f7088!important;box-shadow:0 0 0 5px rgba(148,163,184,.08)!important;flex:0 0 auto!important}
+        .student-account-sidebar a b{font-size:10px!important;font-weight:800!important;color:#91a0b8!important;text-transform:uppercase!important}.student-account-sidebar a.active,.student-account-sidebar a:hover{background:rgba(255,255,255,.105)!important;color:#fff!important;transform:none!important}.student-account-sidebar a.active span:before,.student-account-sidebar a:hover span:before{background:#ff8a00!important;box-shadow:0 0 0 5px rgba(255,138,0,.16)!important}.student-account-sidebar a.active b,.student-account-sidebar a:hover b{color:#fff!important}
+        .student-account-mobile-tabs{display:flex!important;align-items:center!important;gap:8px!important;width:100%!important;margin:0!important;padding:8px!important;border:1px solid #dbe6f5!important;border-radius:18px!important;background:rgba(255,255,255,.92)!important;box-shadow:0 16px 44px rgba(15,23,42,.055)!important;overflow-x:auto!important;scrollbar-width:none!important}.student-account-mobile-tabs::-webkit-scrollbar{display:none!important}
+        .student-account-mobile-tabs a{height:36px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;border-radius:12px!important;padding:0 16px!important;color:#263244!important;text-decoration:none!important;font-size:13px!important;font-weight:750!important;background:transparent!important;border:1px solid transparent!important;white-space:nowrap!important}.student-account-mobile-tabs a.active,.student-account-mobile-tabs a:hover{background:#eef5ff!important;border-color:#c8dbff!important;color:#07111f!important;box-shadow:inset 0 -2px 0 #2563eb!important}
+        .student-dashboard-v2,.student-billing-page,.student-account-content .mycourses-v2,.student-account-content .profile-page-v2,.student-account-content .gcoin-page,.student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page){width:100%!important;max-width:none!important;margin:0!important;padding:0!important;display:grid!important;gap:16px!important;background:transparent!important;color:#0b1220!important}
+        .student-dash-copy,.student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card,.student-account-content .gcoin-hero,.student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page) > .section-title:first-child,.student-billing-page .billing-hero{
+            position:relative!important;overflow:hidden!important;border:1px solid #dbe6f5!important;border-radius:24px!important;
+            background:radial-gradient(circle at 92% -8%,rgba(37,99,235,.16),transparent 30%),linear-gradient(135deg,#ffffff 0%,#f7fbff 100%)!important;
+            box-shadow:0 22px 64px rgba(15,23,42,.075)!important;padding:22px 26px!important;margin:0!important;
         }
-        .student-account-content .mycourses-hero p,
-        .student-account-content .profile-dashboard-card p{
-            color:#526173!important;
-            font-size:13.5px!important;
-            line-height:1.45!important;
-            margin:0!important;
-        }
-        .student-account-content .mycourses-summary,
-        .student-account-content .profile-stat-row,
-        .student-account-content .gcoin-rule-grid{
-            gap:10px!important;
-        }
-        .student-account-content .mycourses-summary span,
-        .student-account-content .profile-stat-row div,
-        .student-account-content .gcoin-rule{
-            border:1px solid #dbe7f8!important;
-            border-radius:14px!important;
-            background:#fff!important;
-            box-shadow:0 8px 22px rgba(15,23,42,.045)!important;
-            padding:12px!important;
-        }
-        .student-account-content .mycourse-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-        .student-account-content .mycourse-card,
-        .student-account-content .pdf-mini-card,
-        .student-account-content .profile-insight-card,
-        .student-account-content .profile-form-card,
-        .student-account-content .gcoin-card,
-        .student-account-content .card{
-            border:1px solid #dbe7f8!important;
-            border-radius:16px!important;
-            background:#fff!important;
-            box-shadow:0 12px 32px rgba(15,23,42,.055)!important;
-        }
-        .student-account-content .gcoin-hero{display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr)!important;gap:12px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
-        .student-account-content .gcoin-card{padding:18px!important}.student-account-content .gcoin-balance{font-size:34px!important;color:#07111f!important}
-        .student-account-content .workspace-grid,
-        .student-account-content .profile-report-grid,
-        .student-account-content .profile-grid-v2{gap:14px!important;margin:0 0 14px!important}
-        .student-account-content .list{display:grid!important;gap:10px!important}.student-account-content .list-item{border-radius:14px!important;border:1px solid #dbe7f8!important;background:#fff!important}
-        .student-account-content .section-title{align-items:center!important;margin:0 0 12px!important}.student-account-content .section-title h2,.student-account-content .section-title h3{font-size:20px!important;font-weight:850!important;color:#07111f!important;letter-spacing:0!important}
-        @media(max-width:1180px){.student-account-content .mycourse-grid,.student-account-content .gcoin-hero,.student-account-content .workspace-grid,.student-account-content .profile-report-grid,.student-account-content .profile-grid-v2{grid-template-columns:1fr!important}}
-        @media(max-width:900px){.student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card,.student-account-content > section:not(.student-dashboard-v2):not(.student-billing-page) > .section-title:first-child{padding:16px!important;border-radius:16px!important}.student-account-content .mycourses-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .profile-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .mycourse-grid{grid-template-columns:1fr!important}}
+        .student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(270px,430px)!important;gap:18px!important;align-items:center!important;min-height:150px!important}
+        .student-account-content .profile-dashboard-card{grid-template-columns:70px minmax(0,1fr) 150px!important}.profile-avatar-lg{width:58px!important;height:58px!important;border-radius:18px!important;background:linear-gradient(135deg,#2563eb,#ff8a00)!important;color:#fff!important;font-size:22px!important;font-weight:850!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 16px 34px rgba(37,99,235,.18)!important}.profile-score-mini{justify-self:end!important}
+        .student-account-content .mycourses-hero h2,.student-account-content .profile-dashboard-card h2,.student-account-content > section > .section-title:first-child h2,.student-billing-page .billing-hero h1{font-size:34px!important;line-height:1.06!important;font-weight:850!important;color:#07111f!important;margin:8px 0 7px!important}
+        .student-account-content .mycourses-hero p,.student-account-content .profile-dashboard-card p,.student-billing-page .billing-hero p{color:#526173!important;font-size:14px!important;line-height:1.45!important;max-width:760px!important;margin:0!important}.dash-kicker{height:28px!important;display:inline-flex!important;align-items:center!important;border-radius:999px!important;padding:0 11px!important;background:#eef5ff!important;border:1px solid #cfe0ff!important;color:#155dfc!important;font-size:11px!important;font-weight:850!important;text-transform:none!important}
+        .student-account-content .mycourses-summary,.student-account-content .profile-stat-row,.student-account-content .gcoin-rule-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}.student-account-content .mycourses-summary span,.student-account-content .profile-stat-row div,.student-account-content .gcoin-rule,.dash-stat{min-height:74px!important;border:1px solid #dbe6f5!important;border-radius:16px!important;background:#fff!important;box-shadow:0 12px 28px rgba(15,23,42,.045)!important;padding:13px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;color:#526173!important;font-size:12px!important;font-weight:550!important}.student-account-content .mycourses-summary b,.student-account-content .profile-stat-row b,.student-account-content .gcoin-rule strong,.dash-stat b{display:block!important;color:#07111f!important;font-size:25px!important;line-height:1!important;font-weight:850!important;margin:0 0 6px!important}
+        .student-account-content .mycourse-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}.student-account-content .mycourse-card,.student-account-content .pdf-mini-card,.student-account-content .profile-insight-card,.student-account-content .profile-form-card,.student-account-content .gcoin-card,.student-account-content .card,.dash-panel,.billing-plan-card,.membership-plan-grid .plan-card{border:1px solid #dbe6f5!important;border-radius:20px!important;background:#fff!important;box-shadow:0 18px 50px rgba(15,23,42,.06)!important;overflow:hidden!important}.student-account-content .mycourse-card{display:grid!important;grid-template-columns:150px minmax(0,1fr)!important;min-height:188px!important}.mycourse-art{height:100%!important;min-height:188px!important;border-radius:0!important;background:linear-gradient(135deg,#10203a,#2563eb)!important;color:#fff!important;padding:18px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important}.mycourse-art span{font-size:12px!important;font-weight:700!important;color:#dbeafe!important}.mycourse-art b{width:42px!important;height:42px!important;border-radius:50%!important;background:#fff!important;color:#155dfc!important;display:flex!important;align-items:center!important;justify-content:center!important}.mycourse-content{padding:18px!important}.mycourse-content h3{font-size:19px!important;line-height:1.25!important;font-weight:800!important;color:#07111f!important;margin:0 0 8px!important}.mycourse-content p{font-size:12.5px!important;color:#64748b!important;line-height:1.45!important;margin:0 0 14px!important}.progress-wrap{height:9px!important;background:#e9eff8!important;border-radius:999px!important}.progress-fill{background:linear-gradient(90deg,#2563eb,#ff8a00)!important}.mycourse-actions{display:flex!important;gap:8px!important;margin-top:14px!important}
+        .student-account-content .btn,.student-billing-page .btn,.mycourse-actions .btn{height:40px!important;min-height:40px!important;border-radius:11px!important;padding:0 15px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-size:13px!important;font-weight:800!important;box-shadow:none!important}.student-account-content .btn:not(.secondary),.student-billing-page .btn:not(.secondary){background:#0b1220!important;border-color:#0b1220!important;color:#fff!important}.student-account-content .btn.secondary,.student-billing-page .btn.secondary{background:#fff!important;border:1px solid #dbe6f5!important;color:#0b1220!important}
+        .student-account-content .list{display:grid!important;gap:12px!important}.student-account-content .pdf-mini-card,.student-account-content .list-item{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:14px 16px!important;border-radius:16px!important}.student-account-content .pdf-mini-card h3,.student-account-content .list-item strong{font-size:15px!important;font-weight:800!important;color:#07111f!important;margin:0 0 3px!important}.student-account-content .pdf-mini-card p,.student-account-content .list-item .small{font-size:12.5px!important;color:#64748b!important;margin:0!important}.mini-icon{width:42px!important;height:42px!important;border-radius:13px!important;background:#eef5ff!important;color:#155dfc!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:11px!important;font-weight:850!important;flex:0 0 auto!important}
+        .student-account-content .section-title{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:2px 0 0!important}.student-account-content .section-title h2,.student-account-content .section-title h3{font-size:22px!important;line-height:1.15!important;font-weight:850!important;color:#07111f!important;margin:0!important}.student-account-content .empty-detail{grid-column:1 / -1!important;border:1px dashed #cfe0ff!important;border-radius:16px!important;background:#f8fbff!important;padding:18px!important;text-align:center!important;color:#526173!important;font-size:13.5px!important}
+        .student-account-content .workspace-grid,.student-account-content .profile-report-grid,.student-account-content .profile-grid-v2{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin:0!important}.student-account-content .gcoin-hero{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(300px,.8fr)!important;gap:14px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}.student-account-content .gcoin-card{padding:20px!important}.student-account-content .gcoin-balance{font-size:38px!important;line-height:1!important;color:#07111f!important;font-weight:850!important;margin:12px 0!important}.table th,.table td{font-size:12.5px!important;padding:10px!important;border-bottom:1px solid #eef2f8!important}.tag,.badge,.pill{border-radius:999px!important;background:#eef5ff!important;border:1px solid #cfe0ff!important;color:#155dfc!important;font-weight:800!important}
+        @media(max-width:1180px){.student-account-shell{grid-template-columns:220px minmax(0,1fr)!important;padding-left:2%!important;padding-right:2%!important}.student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card,.student-account-content .gcoin-hero,.student-account-content .workspace-grid,.student-account-content .profile-report-grid,.student-account-content .profile-grid-v2{grid-template-columns:1fr!important}.student-account-content .mycourses-summary,.student-account-content .profile-stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .mycourse-grid{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.student-account-shell{display:block!important;width:100%!important;padding:10px 12px 100px!important}.student-account-sidebar{display:none!important}.student-account-content{display:block!important}.student-account-mobile-tabs{position:sticky!important;top:56px!important;z-index:20!important;margin:0 -12px 12px!important;border-radius:0!important;border-left:0!important;border-right:0!important;padding:8px 12px!important;background:rgba(255,255,255,.96)!important}.student-account-content .mycourses-hero,.student-account-content .profile-dashboard-card,.student-billing-page .billing-hero{padding:16px!important;border-radius:18px!important;min-height:auto!important}.student-account-content .mycourses-hero h2,.student-account-content .profile-dashboard-card h2,.student-billing-page .billing-hero h1{font-size:25px!important}.student-account-content .mycourses-summary,.student-account-content .profile-stat-row,.student-account-content .gcoin-rule-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.student-account-content .mycourse-card{grid-template-columns:1fr!important}.mycourse-art{min-height:96px!important}.student-account-content .workspace-grid,.student-account-content .profile-report-grid,.student-account-content .profile-grid-v2{grid-template-columns:1fr!important}}
     </style>
 </head>
 <body>
