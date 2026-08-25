@@ -7381,7 +7381,7 @@ const apiRequest = async (baseUrl, action, options = {}) => {
     if (options.token) headers.Authorization = `Bearer ${options.token}`;
     const config = options.config || {};
     const controller = config.signal ? null : new AbortController();
-    const timeoutMs = Number(config.timeoutMs || options.timeoutMs || 12000);
+    const timeoutMs = Number(config.timeoutMs || options.timeoutMs || 25000);
     const timer = controller ? window.setTimeout(() => controller.abort(), timeoutMs) : null;
     try {
         const resp = await fetch(reqUrl.toString(), {
@@ -7403,8 +7403,9 @@ const apiRequest = async (baseUrl, action, options = {}) => {
         return payload;
     } catch (error) {
         if (error?.name === 'AbortError') {
-            const timeoutError = new Error('Request timed out. Please refresh and try again.');
+            const timeoutError = new Error('Server response slow hai. Please ek baar dobara try karein.');
             timeoutError.status = 0;
+            timeoutError.isTimeout = true;
             throw timeoutError;
         }
         throw error;
@@ -7414,15 +7415,28 @@ const apiRequest = async (baseUrl, action, options = {}) => {
 };
 
 const apiWithFallback = async (action, options = {}) => {
-    const candidates = [API_BASE, API_FALLBACK_BASE, API_LAN_BASE].filter((url, index, list) => url && list.indexOf(url) === index);
+    const isLocalHost = /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname || '');
+    const baseList = [API_BASE, API_FALLBACK_BASE];
+    if (!isLocalHost || /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/)/i.test(API_LAN_BASE || '')) {
+        baseList.push(API_LAN_BASE);
+    }
+    const candidates = baseList.filter((url, index, list) => url && list.indexOf(url) === index);
+    const maxAttempts = Math.max(1, Number(options.retries || options.config?.retries || 1) + 1);
     let lastError = null;
-    for (const url of candidates) {
-        try {
-            return await apiRequest(url, action, options);
-        } catch (error) {
-            lastError = error;
-            if (error.fromApi && ![0, 403, 404, 500, 502, 503, 504].includes(Number(error.status || 0))) {
-                throw error;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        for (const url of candidates) {
+            try {
+                return await apiRequest(url, action, options);
+            } catch (error) {
+                lastError = error;
+                const status = Number(error.status || 0);
+                const retryable = error.isTimeout || status === 0 || [500, 502, 503, 504].includes(status);
+                if (error.fromApi && ![0, 403, 404, 500, 502, 503, 504].includes(status)) {
+                    throw error;
+                }
+                if (!retryable) {
+                    throw error;
+                }
             }
         }
     }
@@ -7433,12 +7447,13 @@ const apiGet = async (action, query = {}, token = '', config = {}) => {
     return apiWithFallback(action, { query, token, config });
 };
 
-const apiPost = async (action, body = {}, token = '') => {
+const apiPost = async (action, body = {}, token = '', config = {}) => {
     return apiWithFallback(action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-        token
+        token,
+        config
     });
 };
 
@@ -8968,8 +8983,8 @@ function StudentBillingPage({ token, view }) {
         (async () => {
             try {
                 const [plansResult, reportResult] = await Promise.allSettled([
-                    apiGet('membership_plans', {}, token, { timeoutMs: 12000 }),
-                    apiGet('student_report', {}, token, { timeoutMs: 18000 })
+                    apiGet('membership_plans', {}, token, { timeoutMs: 30000, retries: 1 }),
+                    apiGet('student_report', {}, token, { timeoutMs: 35000, retries: 1 })
                 ]);
                 const plans = plansResult.status === 'fulfilled' ? (plansResult.value.plans || []) : [];
                 const report = reportResult.status === 'fulfilled' ? reportResult.value : null;
@@ -9163,7 +9178,7 @@ function DashboardPage({ token, user }) {
         let stop = false;
         (async () => {
             try {
-                const data = await apiGet('dashboard_home', {}, token, { timeoutMs: 8000 });
+                const data = await apiGet('dashboard_home', {}, token, { timeoutMs: 30000, retries: 1 });
                 let report = null;
                 if (token) {
                     try { report = await apiGet('student_report', {}, token); } catch (_) { report = null; }
@@ -9546,7 +9561,7 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null
         setErr('');
         setMsg('');
         try {
-            const data = await apiPost('login', { identity, password }, '');
+            const data = await apiPost('login', { identity, password }, '', { timeoutMs: 45000, retries: 1 });
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
                 return;
@@ -9565,7 +9580,7 @@ function AuthModalPage({ onLogin, onToast, initialMode = 'login', onClose = null
         setErr('');
         setMsg('');
         try {
-            const body = await apiPost('signup', form, '');
+            const body = await apiPost('signup', form, '', { timeoutMs: 45000, retries: 1 });
             setMsg(body.message || 'Account created');
             if (body.token) {
                 onLogin(body.user, body.token, body.settings || null);
@@ -12487,7 +12502,7 @@ function GovtMockPage({ token, mockId }) {
                     let plans = [];
                     if (/limit reached|upgrade your plan|membership/i.test(message)) {
                         try {
-                            const planData = await apiGet('membership_plans', {}, token, { timeoutMs: 12000 });
+                            const planData = await apiGet('membership_plans', {}, token, { timeoutMs: 30000, retries: 1 });
                             plans = planData.plans || [];
                         } catch (_) { plans = []; }
                     }
