@@ -7582,6 +7582,116 @@
         .student-account-content .dash-stat-grid { gap: 10px !important; }
     }
 </style>
+
+<style id="gyannexa-account-flat-compact-final">
+    .student-account-app-shell,
+    .student-account-shell,
+    .student-account-content {
+        background: #f5f8fc !important;
+    }
+    .student-account-content {
+        padding: 16px 22px 28px !important;
+        gap: 10px !important;
+        color: #0f172a !important;
+    }
+    .student-account-sidebar {
+        background: #0b1625 !important;
+        width: 230px !important;
+        padding: 16px 11px !important;
+    }
+    .student-account-shell { grid-template-columns: 230px minmax(0, 1fr) !important; }
+    .student-account-content { max-width: calc(100vw - 230px) !important; }
+    .student-account-brand { width: 190px !important; height: 48px !important; margin: 0 8px 14px !important; }
+    .student-account-brand img { width: 184px !important; max-width: 184px !important; max-height: 46px !important; filter: none !important; }
+    .student-account-sidebar h3 { margin: 0 10px 12px !important; font-size: 16px !important; }
+    .student-account-sidebar a:not(.student-account-brand) { height: 36px !important; margin: 1px 0 !important; padding-left: 14px !important; font-size: 10.8px !important; }
+    .student-account-content .student-dash-hero {
+        grid-template-columns: minmax(0, 1fr) 220px !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+    .student-account-content .student-dash-copy {
+        min-height: 142px !important;
+        padding: 18px 20px !important;
+        background: #123a7a !important;
+        border: 1px solid #d6e4f7 !important;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, .08) !important;
+    }
+    .student-account-content .student-dash-copy .eyebrow { height: 26px !important; padding: 0 11px !important; font-size: 10px !important; }
+    .student-account-content .student-dash-copy h1 { font-size: 26px !important; line-height: 1.08 !important; margin: 10px 0 6px !important; }
+    .student-account-content .student-dash-copy p { font-size: 13px !important; line-height: 1.5 !important; max-width: 760px !important; }
+    .student-account-content .dash-actions { margin-top: 14px !important; gap: 8px !important; }
+    .student-account-content .dash-actions .btn { height: 36px !important; min-height: 36px !important; padding: 0 14px !important; font-size: 11px !important; }
+    .student-account-content .student-dash-score {
+        min-height: 142px !important;
+        padding: 16px !important;
+        background: #ffffff !important;
+    }
+    .student-account-content .dash-ring { width: 78px !important; height: 78px !important; background: #eef4fb !important; border: 8px solid #dbe7f5 !important; }
+    .student-account-content .dash-ring:after { display: none !important; }
+    .student-account-content .dash-ring b { font-size: 18px !important; position: static !important; transform: none !important; }
+    .student-account-content .student-dash-score h3 { font-size: 17px !important; margin-top: 12px !important; }
+    .student-account-content .student-dash-score p { font-size: 12px !important; }
+    .student-account-content .dash-stat-grid { gap: 10px !important; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+    .student-account-content .dash-stat {
+        min-height: 68px !important;
+        padding: 11px 12px !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, .055) !important;
+    }
+    .student-account-content .dash-stat b { font-size: 22px !important; line-height: 1 !important; }
+    .student-account-content .dash-stat span { margin-top: 7px !important; font-size: 10.5px !important; }
+    .student-account-content .dash-layout,
+    .student-account-content .dash-layout.secondary {
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, .9fr) !important;
+        gap: 12px !important;
+        align-items: start !important;
+    }
+    .student-account-content .dash-panel {
+        padding: 16px !important;
+        background: #ffffff !important;
+        box-shadow: 0 9px 22px rgba(15, 23, 42, .055) !important;
+    }
+    .student-account-content .dash-panel-head { padding-bottom: 10px !important; margin-bottom: 10px !important; }
+    .student-account-content .dash-panel h3 { font-size: 20px !important; line-height: 1.1 !important; }
+    .student-account-content .dash-panel p { font-size: 12px !important; }
+    .student-account-content .dash-course-list { gap: 9px !important; }
+    .student-account-content .dash-course-card {
+        grid-template-columns: 64px minmax(0, 1fr) !important;
+        min-height: 76px !important;
+        background: #ffffff !important;
+    }
+    .student-account-content .dash-course-cover {
+        min-height: 76px !important;
+        background: #16469a !important;
+        font-size: 10px !important;
+        line-height: 1.15 !important;
+    }
+    .student-account-content .dash-course-card:nth-child(3n+1) .dash-course-cover,
+    .student-account-content .dash-course-card:nth-child(3n+2) .dash-course-cover,
+    .student-account-content .dash-course-card:nth-child(3n+3) .dash-course-cover { background: #16469a !important; }
+    .student-account-content .dash-course-body { padding: 10px 12px !important; }
+    .student-account-content .dash-course-body h4 { font-size: 14px !important; margin-bottom: 6px !important; }
+    .student-account-content .dash-course-meta { font-size: 10.5px !important; }
+    .student-account-content .dash-progress { height: 7px !important; margin-top: 7px !important; }
+    .student-account-content .empty-state,
+    .student-account-content .account-empty { padding: 18px !important; min-height: 58px !important; }
+    @media (max-width: 1280px) {
+        .student-account-content .dash-stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    }
+    @media (max-width: 1180px) {
+        .student-account-shell { grid-template-columns: 210px minmax(0, 1fr) !important; }
+        .student-account-sidebar { width: 210px !important; }
+        .student-account-content { max-width: calc(100vw - 210px) !important; padding: 16px !important; }
+        .student-account-content .student-dash-hero,
+        .student-account-content .dash-layout,
+        .student-account-content .dash-layout.secondary { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 900px) {
+        .student-account-content { max-width: 100vw !important; padding: 10px !important; }
+        .student-account-content .dash-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    }
+</style>
 </head>
 <body>
 <div id="root"></div>
