@@ -7863,6 +7863,33 @@
     }
     .student-account-content .performance-empty { background: #071424 !important; color: #dbe7f5 !important; }
 </style>
+
+<style id="gyannexa-pro-loader-final">
+    .pro-page-loader { min-height: min(58vh, 520px) !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 42px 16px !important; background: transparent !important; }
+    .pro-page-loader.compact { min-height: 280px !important; padding: 22px 12px !important; }
+    .pro-loader-card { width: min(360px, 92vw) !important; padding: 24px 24px 22px !important; border: 1px solid #d5e3f5 !important; background: #ffffff !important; color: #0f172a !important; text-align: center !important; box-shadow: 0 20px 55px rgba(15, 23, 42, .10) !important; border-radius: 0 !important; position: relative !important; overflow: hidden !important; }
+    .pro-loader-card:before { content: '' !important; position: absolute !important; left: 0 !important; top: 0 !important; right: 0 !important; height: 4px !important; background: #2563eb !important; }
+    .pro-loader-ring { --loader-progress: 64deg; width: 112px !important; height: 112px !important; margin: 0 auto 16px !important; border-radius: 50% !important; display: grid !important; place-items: center !important; background: conic-gradient(#2563eb var(--loader-progress), #e8eef7 0deg) !important; box-shadow: inset 0 0 0 1px rgba(37, 99, 235, .10), 0 14px 34px rgba(37, 99, 235, .18) !important; position: relative !important; animation: proLoaderFloat 1.8s ease-in-out infinite !important; transition: background .28s ease !important; }
+    .pro-loader-ring:before { content: '' !important; position: absolute !important; inset: -7px !important; border-radius: 50% !important; border: 1px solid rgba(37, 99, 235, .20) !important; border-top-color: #f97316 !important; animation: proLoaderSpin 1.05s linear infinite !important; }
+    .pro-loader-core { width: 82px !important; height: 82px !important; border-radius: 50% !important; display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 1px !important; background: #ffffff !important; color: #0f172a !important; box-shadow: inset 0 0 0 1px #e5edf8 !important; }
+    .pro-loader-core strong { font-size: 28px !important; line-height: 1 !important; font-weight: 900 !important; letter-spacing: -.04em !important; }
+    .pro-loader-core span { font-size: 13px !important; font-weight: 900 !important; color: #2563eb !important; }
+    .pro-loader-copy b { display: block !important; color: #0f172a !important; font-size: 18px !important; line-height: 1.2 !important; font-weight: 900 !important; letter-spacing: -.02em !important; }
+    .pro-loader-copy span { display: block !important; margin-top: 6px !important; color: #5b708d !important; font-size: 12.5px !important; line-height: 1.45 !important; }
+    .pro-loader-track { height: 7px !important; margin: 18px auto 0 !important; width: 100% !important; background: #e9f0f9 !important; overflow: hidden !important; border-radius: 0 !important; }
+    .pro-loader-track i { display: block !important; height: 100% !important; width: 42% !important; background: #2563eb !important; animation: proLoaderBar 1.15s ease-in-out infinite !important; }
+    .pro-loader-dots { display: flex !important; justify-content: center !important; gap: 7px !important; margin-top: 14px !important; }
+    .pro-loader-dots i { width: 7px !important; height: 7px !important; border-radius: 50% !important; background: #2563eb !important; opacity: .35 !important; animation: proLoaderDot 1s ease-in-out infinite !important; }
+    .pro-loader-dots i:nth-child(2) { animation-delay: .16s !important; background: #f97316 !important; }
+    .pro-loader-dots i:nth-child(3) { animation-delay: .32s !important; background: #14b8a6 !important; }
+    @keyframes proLoaderSpin { to { transform: rotate(360deg); } }
+    @keyframes proLoaderFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes proLoaderBar { 0% { transform: translateX(-120%); } 55% { transform: translateX(70%); } 100% { transform: translateX(250%); } }
+    @keyframes proLoaderDot { 0%,100% { transform: translateY(0); opacity: .35; } 50% { transform: translateY(-4px); opacity: 1; } }
+    .student-account-content .pro-page-loader { min-height: 360px !important; }
+    .student-account-content .pro-loader-card { box-shadow: 0 18px 42px rgba(15, 23, 42, .09) !important; }
+    @media (max-width: 760px) { .pro-page-loader { min-height: 360px !important; padding: 28px 12px !important; } .pro-loader-card { width: min(320px, 94vw) !important; padding: 22px 18px 20px !important; } .pro-loader-ring { width: 98px !important; height: 98px !important; } .pro-loader-core { width: 72px !important; height: 72px !important; } .pro-loader-core strong { font-size: 24px !important; } }
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -8251,29 +8278,40 @@ function Message({ text, kind = 'info' }) {
     return <div className={kind === 'error' ? 'msg danger' : 'msg'}>{text}</div>;
 }
 
-function PageLoader() {
-    return null;
-}
-
-function GovPrepLineLoader() {
+function PageLoader({ label = 'Loading data', sub = 'Please wait while we prepare everything.', compact = false } = {}) {
+    const [progress, setProgress] = useState(18);
+    useEffect(() => {
+        let next = 18;
+        const timer = setInterval(() => {
+            next = next >= 92 ? 24 : Math.min(92, next + Math.floor(Math.random() * 9) + 4);
+            setProgress(next);
+        }, 420);
+        return () => clearInterval(timer);
+    }, []);
+    const ringStyle = { '--loader-progress': `${progress * 3.6}deg` };
     return (
-        <section className="gov-prep-line-loader" aria-busy="true" aria-live="polite">
-            <div className="gov-loader-card">
-                <div className="gov-loader-topline">
-                    <span></span>
-                    <b>Loading exam preparation</b>
+        <section className={`pro-page-loader ${compact ? 'compact' : ''}`} aria-busy="true" aria-live="polite">
+            <div className="pro-loader-card">
+                <div className="pro-loader-ring" style={ringStyle}>
+                    <div className="pro-loader-core">
+                        <strong>{progress}</strong>
+                        <span>%</span>
+                    </div>
                 </div>
-                <div className="gov-loader-bar"><i></i></div>
-                <div className="gov-loader-lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div className="pro-loader-copy">
+                    <b>{label}</b>
+                    <span>{sub}</span>
                 </div>
+                <div className="pro-loader-track"><i></i></div>
+                <div className="pro-loader-dots" aria-hidden="true"><i></i><i></i><i></i></div>
             </div>
         </section>
     );
 }
 
+function GovPrepLineLoader() {
+    return <PageLoader label="Loading exam preparation" sub="Exam categories, papers aur plans arrange ho rahe hain." />;
+}
 function CourseCard({ course, onClick, showButton = true }) {
     const price = course.is_free === '1' || course.is_free === 1 ? 0 : Number(course.price || 0);
     const category = course.category_name || course.category || 'Course';
