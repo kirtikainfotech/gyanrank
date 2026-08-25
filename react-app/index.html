@@ -7969,6 +7969,275 @@
         .pro-loader-core strong { font-size: 21px !important; }
     }
 </style>
+
+<style id="gyannexa-dashboard-table-fix-final">
+    .student-account-content .dash-layout,
+    .student-account-content .dash-layout.secondary {
+        grid-template-columns: minmax(0, 1.55fr) minmax(360px, .85fr) !important;
+        align-items: start !important;
+        gap: 14px !important;
+    }
+    .student-account-content .dash-panel {
+        padding: 16px 18px !important;
+        overflow: hidden !important;
+    }
+    .student-account-content .dash-panel-head {
+        margin-bottom: 12px !important;
+        padding-bottom: 10px !important;
+    }
+    .student-account-content .dash-course-list {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    .student-account-content .dash-course-card {
+        display: grid !important;
+        grid-template-columns: 82px minmax(220px, 1fr) 150px 82px !important;
+        align-items: center !important;
+        min-height: 74px !important;
+        border: 1px solid #dbe7f5 !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        text-decoration: none !important;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, .055) !important;
+    }
+    .student-account-content .dash-course-cover {
+        height: 74px !important;
+        min-height: 74px !important;
+        padding: 10px !important;
+        background: #16469a !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        overflow: hidden !important;
+    }
+    .student-account-content .dash-course-cover span {
+        max-width: 100% !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        color: #ffffff !important;
+        font-size: 10.5px !important;
+        line-height: 1.12 !important;
+        font-weight: 850 !important;
+    }
+    .student-account-content .dash-course-cover b { display: none !important; }
+    .student-account-content .dash-course-body {
+        display: contents !important;
+    }
+    .student-account-content .dash-course-body h4 {
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 16px !important;
+        color: #0f172a !important;
+        font-size: 15px !important;
+        line-height: 1.25 !important;
+        font-weight: 850 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .student-account-content .dash-course-body p {
+        margin: 0 !important;
+        padding: 0 12px !important;
+        color: #58708f !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        text-align: right !important;
+    }
+    .student-account-content .dash-course-meta {
+        margin: 0 !important;
+        padding: 0 14px 0 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        gap: 5px !important;
+        color: #1d4ed8 !important;
+        font-size: 11px !important;
+        font-weight: 850 !important;
+        white-space: nowrap !important;
+    }
+    .student-account-content .dash-course-meta span:last-child { color: #334e70 !important; }
+    .student-account-content .dash-course-body .progress-wrap,
+    .student-account-content .dash-course-body small { display: none !important; }
+    .student-account-content .dash-course-card:hover {
+        transform: translateY(-1px) !important;
+        border-color: #9ec5fe !important;
+        box-shadow: 0 14px 30px rgba(37, 99, 235, .12) !important;
+    }
+    .student-account-content .dash-panel > .dashboard-live-row,
+    .student-account-content .dash-panel > .live-row,
+    .student-account-content .live-mini-row {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: center !important;
+        gap: 14px !important;
+        min-height: 62px !important;
+        margin: 8px 0 !important;
+        padding: 12px 14px 12px 18px !important;
+        border: 1px solid #dbe7f5 !important;
+        border-left: 4px solid #2563eb !important;
+        background: #ffffff !important;
+        box-shadow: 0 7px 18px rgba(15, 23, 42, .045) !important;
+    }
+    .student-account-content .dash-panel > .dashboard-live-row:first-of-type,
+    .student-account-content .dash-panel > .live-row:first-of-type { border-left-color: #ef4444 !important; background: #fffafa !important; }
+    .student-account-content .dash-panel > .dashboard-live-row b,
+    .student-account-content .dash-panel > .live-row b,
+    .student-account-content .live-mini-row b {
+        color: #0f172a !important;
+        font-size: 15px !important;
+        line-height: 1.2 !important;
+        font-weight: 850 !important;
+    }
+    .student-account-content .dash-panel > .dashboard-live-row small,
+    .student-account-content .dash-panel > .live-row small,
+    .student-account-content .live-mini-row small {
+        color: #64748b !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+    }
+    .student-account-content .dash-panel > .dashboard-live-row em,
+    .student-account-content .dash-panel > .live-row em,
+    .student-account-content .live-time {
+        min-width: 122px !important;
+        height: 30px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 10px !important;
+        border: 1px solid #bcd5fb !important;
+        background: #edf5ff !important;
+        color: #1555c0 !important;
+        font-size: 11px !important;
+        font-weight: 850 !important;
+        font-style: normal !important;
+        white-space: nowrap !important;
+    }
+    .student-account-content .subscription-box {
+        padding: 14px !important;
+        margin-bottom: 10px !important;
+        border: 1px solid #dbe7f5 !important;
+        background: #f8fbff !important;
+        box-shadow: 0 7px 18px rgba(15, 23, 42, .04) !important;
+    }
+    .student-account-content .subscription-box > b {
+        color: #0f172a !important;
+        font-size: 16px !important;
+        line-height: 1.15 !important;
+        margin-bottom: 3px !important;
+    }
+    .student-account-content .subscription-box > span { color: #607895 !important; font-size: 12px !important; }
+    .student-account-content .sub-mini-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+    }
+    .student-account-content .sub-mini-grid small {
+        min-height: 56px !important;
+        padding: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        border: 1px solid #dbe7f5 !important;
+        background: #ffffff !important;
+        color: #607895 !important;
+        font-size: 11px !important;
+    }
+    .student-account-content .sub-mini-grid small b { margin-top: 5px !important; color: #0f172a !important; font-size: 15px !important; }
+    .student-account-content .upgrade-note {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 13px 14px !important;
+        margin-bottom: 10px !important;
+        border: 1px solid #fed7aa !important;
+        background: #fff8ed !important;
+    }
+    .student-account-content .upgrade-note span { color: #9a3412 !important; font-size: 12px !important; line-height: 1.35 !important; }
+    .student-account-content .upgrade-note span b { display: block !important; color: #0f172a !important; font-size: 14px !important; margin-bottom: 2px !important; }
+    .student-account-content .upgrade-note a {
+        height: 36px !important;
+        padding: 0 14px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        background: #f97316 !important;
+        color: #ffffff !important;
+        font-size: 12px !important;
+        font-weight: 850 !important;
+        text-decoration: none !important;
+    }
+    .student-account-content .action-grid.compact {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+    .student-account-content .action-tile {
+        min-height: 58px !important;
+        padding: 10px 12px !important;
+        display: grid !important;
+        grid-template-columns: 36px minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: 10px !important;
+        border: 1px solid #dbe7f5 !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        text-decoration: none !important;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, .04) !important;
+    }
+    .student-account-content .action-tile > span:first-child {
+        width: 36px !important;
+        height: 36px !important;
+        display: grid !important;
+        place-items: center !important;
+        background: #edf5ff !important;
+        color: #2563eb !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+    }
+    .student-account-content .action-tile > span:last-child {
+        min-width: 0 !important;
+        color: #0f172a !important;
+        font-size: 14px !important;
+        font-weight: 850 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .student-account-content .action-tile small {
+        display: block !important;
+        margin-top: 2px !important;
+        color: #607895 !important;
+        font-size: 11px !important;
+        font-weight: 650 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    @media (max-width: 1280px) {
+        .student-account-content .dash-course-card { grid-template-columns: 76px minmax(170px, 1fr) 120px 74px !important; }
+        .student-account-content .dash-layout,
+        .student-account-content .dash-layout.secondary { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 760px) {
+        .student-account-content .dash-course-card { grid-template-columns: 64px minmax(0, 1fr) !important; min-height: 72px !important; }
+        .student-account-content .dash-course-body { display: grid !important; grid-template-columns: 1fr !important; padding: 10px 12px !important; }
+        .student-account-content .dash-course-body h4,
+        .student-account-content .dash-course-body p,
+        .student-account-content .dash-course-meta { padding: 0 !important; text-align: left !important; }
+        .student-account-content .dash-course-body p { display: none !important; }
+        .student-account-content .dash-course-meta { align-items: flex-start !important; flex-direction: row !important; }
+        .student-account-content .action-grid.compact,
+        .student-account-content .sub-mini-grid { grid-template-columns: 1fr !important; }
+    }
+</style>
 </head>
 <body>
 <div id="root"></div>
