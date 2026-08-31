@@ -56,6 +56,31 @@ $statusStats = [
     ],
 ];
 
+$coverageTab = (string) ($_GET['tab'] ?? 'categories');
+if (!in_array($coverageTab, ['categories', 'subcategories'], true)) {
+    $coverageTab = 'categories';
+}
+$coveragePerPageOptions = [10, 25, 50, 100];
+$coveragePerPage = (int) ($_GET['per_page'] ?? 10);
+if (!in_array($coveragePerPage, $coveragePerPageOptions, true)) {
+    $coveragePerPage = 10;
+}
+$coveragePage = max(1, (int) ($_GET['page'] ?? 1));
+$coverageTotalRows = $coverageTab === 'subcategories' ? $counts['Sub Categories'] : $counts['Main Categories'];
+$coverageTotalPages = max(1, (int) ceil($coverageTotalRows / $coveragePerPage));
+if ($coveragePage > $coverageTotalPages) {
+    $coveragePage = $coverageTotalPages;
+}
+$coverageOffset = ($coveragePage - 1) * $coveragePerPage;
+$coverageStart = $coverageTotalRows > 0 ? $coverageOffset + 1 : 0;
+$coverageEnd = min($coverageOffset + $coveragePerPage, $coverageTotalRows);
+$coveragePageFrom = max(1, $coveragePage - 2);
+$coveragePageTo = min($coverageTotalPages, $coveragePage + 2);
+
+function gov_admin_coverage_url(string $tab, int $page, int $perPage): string
+{
+    return app_url('sadmin/govt-prep?tab=' . rawurlencode($tab) . '&page=' . max(1, $page) . '&per_page=' . max(1, $perPage));
+}
 $mockDepth = gov_admin_rows("SELECT m.id, m.title, m.status, m.total_questions AS target_questions, COUNT(q.id) AS added_questions, c.name AS category_name, s.name AS subcategory_name
     FROM gov_exam_mock_tests m
     LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = m.id
@@ -65,41 +90,84 @@ $mockDepth = gov_admin_rows("SELECT m.id, m.title, m.status, m.total_questions A
     ORDER BY added_questions DESC, m.id DESC
     LIMIT 8");
 
-$categoryCoverage = gov_admin_rows("SELECT p.id, p.name, p.status,
-        COUNT(DISTINCT c.id) AS subcategories,
-        SUM(CASE WHEN c.status = 'active' THEN 1 ELSE 0 END) AS active_subcategories,
-        COALESCE(d.total_docs, 0) AS documents,
-        COALESCE(d.published_docs, 0) AS published_documents,
-        COALESCE(l.total_live, 0) AS live_sessions,
-        COALESCE(l.live_now, 0) AS live_now,
-        COALESCE(m.total_mocks, 0) AS mock_tests,
-        COALESCE(m.published_mocks, 0) AS published_mocks,
-        COALESCE(q.total_questions, 0) AS questions
-    FROM gov_exam_categories p
-    LEFT JOIN gov_exam_categories c ON c.parent_id = p.id
-    LEFT JOIN (
-        SELECT category_id, COUNT(*) total_docs, SUM(status = 'published') published_docs
-        FROM gov_exam_documents GROUP BY category_id
-    ) d ON d.category_id = p.id
-    LEFT JOIN (
-        SELECT category_id, COUNT(*) total_live, SUM(status = 'live') live_now
-        FROM gov_exam_live_sessions GROUP BY category_id
-    ) l ON l.category_id = p.id
-    LEFT JOIN (
-        SELECT category_id, COUNT(*) total_mocks, SUM(status = 'published') published_mocks
-        FROM gov_exam_mock_tests GROUP BY category_id
-    ) m ON m.category_id = p.id
-    LEFT JOIN (
-        SELECT mt.category_id, COUNT(q.id) total_questions
-        FROM gov_exam_mock_tests mt
-        LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = mt.id
-        GROUP BY mt.category_id
-    ) q ON q.category_id = p.id
-    WHERE p.parent_id IS NULL
-    GROUP BY p.id, p.name, p.status, d.total_docs, d.published_docs, l.total_live, l.live_now, m.total_mocks, m.published_mocks, q.total_questions
-    ORDER BY (COALESCE(d.total_docs,0) + COALESCE(l.total_live,0) + COALESCE(m.total_mocks,0) + COALESCE(q.total_questions,0)) DESC, p.sort_order, p.name
-    LIMIT 12");
+$mainCategoryCoverage = [];
+$subCategoryCoverage = [];
 
+if ($coverageTab === 'categories') {
+    $mainCategoryCoverage = gov_admin_rows("SELECT p.id, p.name, p.status,
+            COUNT(DISTINCT c.id) AS subcategories,
+            SUM(CASE WHEN c.status = 'active' THEN 1 ELSE 0 END) AS active_subcategories,
+            COALESCE(d.total_docs, 0) AS documents,
+            COALESCE(d.published_docs, 0) AS published_documents,
+            COALESCE(l.total_live, 0) AS live_sessions,
+            COALESCE(l.live_now, 0) AS live_now,
+            COALESCE(m.total_mocks, 0) AS mock_tests,
+            COALESCE(m.published_mocks, 0) AS published_mocks,
+            COALESCE(q.total_questions, 0) AS questions
+        FROM gov_exam_categories p
+        LEFT JOIN gov_exam_categories c ON c.parent_id = p.id
+        LEFT JOIN (
+            SELECT category_id, COUNT(*) total_docs, SUM(status = 'published') published_docs
+            FROM gov_exam_documents GROUP BY category_id
+        ) d ON d.category_id = p.id
+        LEFT JOIN (
+            SELECT category_id, COUNT(*) total_live, SUM(status = 'live') live_now
+            FROM gov_exam_live_sessions GROUP BY category_id
+        ) l ON l.category_id = p.id
+        LEFT JOIN (
+            SELECT category_id, COUNT(*) total_mocks, COUNT(*) published_mocks
+            FROM gov_exam_mock_tests
+            WHERE status = 'published' AND title NOT LIKE '%Quality Check Set%'
+            GROUP BY category_id
+        ) m ON m.category_id = p.id
+        LEFT JOIN (
+            SELECT mt.category_id, COUNT(q.id) total_questions
+            FROM gov_exam_mock_tests mt
+            LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = mt.id AND q.status = 'active'
+            WHERE mt.status = 'published' AND mt.title NOT LIKE '%Quality Check Set%'
+            GROUP BY mt.category_id
+        ) q ON q.category_id = p.id
+        WHERE p.parent_id IS NULL
+        GROUP BY p.id, p.name, p.status, d.total_docs, d.published_docs, l.total_live, l.live_now, m.total_mocks, m.published_mocks, q.total_questions
+        ORDER BY p.sort_order, p.name
+        LIMIT {$coveragePerPage} OFFSET {$coverageOffset}");
+} else {
+    $subCategoryCoverage = gov_admin_rows("SELECT s.id, s.name, p.name AS parent_name, s.status,
+            COALESCE(d.total_docs, 0) AS documents,
+            COALESCE(d.published_docs, 0) AS published_documents,
+            COALESCE(l.total_live, 0) AS live_sessions,
+            COALESCE(l.live_now, 0) AS live_now,
+            COALESCE(m.total_mocks, 0) AS mock_tests,
+            COALESCE(m.published_mocks, 0) AS published_mocks,
+            COALESCE(q.total_questions, 0) AS questions
+        FROM gov_exam_categories s
+        LEFT JOIN gov_exam_categories p ON p.id = s.parent_id
+        LEFT JOIN (
+            SELECT subcategory_id, COUNT(*) total_docs, SUM(status = 'published') published_docs
+            FROM gov_exam_documents WHERE subcategory_id IS NOT NULL GROUP BY subcategory_id
+        ) d ON d.subcategory_id = s.id
+        LEFT JOIN (
+            SELECT subcategory_id, COUNT(*) total_live, SUM(status = 'live') live_now
+            FROM gov_exam_live_sessions WHERE subcategory_id IS NOT NULL GROUP BY subcategory_id
+        ) l ON l.subcategory_id = s.id
+        LEFT JOIN (
+            SELECT subcategory_id, COUNT(*) total_mocks, COUNT(*) published_mocks
+            FROM gov_exam_mock_tests
+            WHERE subcategory_id IS NOT NULL AND status = 'published' AND title NOT LIKE '%Quality Check Set%'
+            GROUP BY subcategory_id
+        ) m ON m.subcategory_id = s.id
+        LEFT JOIN (
+            SELECT mt.subcategory_id, COUNT(q.id) total_questions
+            FROM gov_exam_mock_tests mt
+            LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = mt.id AND q.status = 'active'
+            WHERE mt.subcategory_id IS NOT NULL AND mt.status = 'published' AND mt.title NOT LIKE '%Quality Check Set%'
+            GROUP BY mt.subcategory_id
+        ) q ON q.subcategory_id = s.id
+        WHERE s.parent_id IS NOT NULL
+        GROUP BY s.id, s.name, p.name, s.status, d.total_docs, d.published_docs, l.total_live, l.live_now, m.total_mocks, m.published_mocks, q.total_questions
+        ORDER BY p.sort_order, p.name, s.sort_order, s.name
+        LIMIT {$coveragePerPage} OFFSET {$coverageOffset}");
+}
 $subCategoryDepth = gov_admin_rows("SELECT s.id, s.name, p.name AS parent_name, s.status,
         COALESCE(d.total_docs, 0) AS documents,
         COALESCE(l.total_live, 0) AS live_sessions,
@@ -112,10 +180,10 @@ $subCategoryDepth = gov_admin_rows("SELECT s.id, s.name, p.name AS parent_name, 
     LEFT JOIN (SELECT subcategory_id, COUNT(*) total_mocks FROM gov_exam_mock_tests WHERE subcategory_id IS NOT NULL GROUP BY subcategory_id) m ON m.subcategory_id = s.id
     LEFT JOIN (
         SELECT mt.subcategory_id, COUNT(q.id) total_questions
-        FROM gov_exam_mock_tests mt
-        LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = mt.id
-        WHERE mt.subcategory_id IS NOT NULL
-        GROUP BY mt.subcategory_id
+            FROM gov_exam_mock_tests mt
+            LEFT JOIN gov_exam_mock_questions q ON q.mock_test_id = mt.id AND q.status = 'active'
+            WHERE mt.subcategory_id IS NOT NULL AND mt.status = 'published' AND mt.title NOT LIKE '%Quality Check Set%'
+            GROUP BY mt.subcategory_id
     ) q ON q.subcategory_id = s.id
     WHERE s.parent_id IS NOT NULL
     ORDER BY (COALESCE(d.total_docs,0) + COALESCE(l.total_live,0) + COALESCE(m.total_mocks,0) + COALESCE(q.total_questions,0)) DESC, s.name
@@ -181,38 +249,86 @@ $recentItems = gov_admin_rows("SELECT 'Document' type, title, status, created_at
             <?php endforeach; ?>
         </section>
 
-        <section class="card custom-card gov-prep-card">
-            <div class="card-header justify-content-between">
+        <section class="card custom-card gov-prep-card gov-coverage-card">
+            <div class="card-header justify-content-between gov-coverage-head">
                 <div>
                     <span class="text-primary fs-11 fw-semibold text-uppercase d-block mb-1">Category Coverage</span>
-                    <h6 class="mb-1 fw-semibold">Main categories with subcategory and content depth</h6>
-                    <p class="mb-0 text-muted fs-12">Shows how many PDFs, live sessions, mocks and questions exist under each main category.</p>
+                    <h6 class="mb-1 fw-semibold">All categories and subcategories with content count</h6>
+                    <p class="mb-0 text-muted fs-12">Tab view me complete category depth, content count aur status.</p>
                 </div>
-                <a class="btn btn-sm btn-light btn-wave" href="<?= h(app_url('sadmin/govt-prep-categories')); ?>">Full Category List</a>
+                <a class="btn btn-sm btn-light btn-wave" href="<?= h(app_url('sadmin/govt-prep-categories')); ?>">Manage Categories</a>
+            </div>
+            <div class="card-body gov-coverage-toolbar">
+                <nav class="gov-coverage-tabs" aria-label="Category coverage tabs">
+                    <a class="<?= $coverageTab === 'categories' ? 'active' : ''; ?>" href="<?= h(gov_admin_coverage_url('categories', 1, $coveragePerPage)); ?>">
+                        <span>Main Categories</span><em><?= h((string) $counts['Main Categories']); ?></em>
+                    </a>
+                    <a class="<?= $coverageTab === 'subcategories' ? 'active' : ''; ?>" href="<?= h(gov_admin_coverage_url('subcategories', 1, $coveragePerPage)); ?>">
+                        <span>Sub Categories</span><em><?= h((string) $counts['Sub Categories']); ?></em>
+                    </a>
+                </nav>
+                <form class="gov-coverage-size" method="get">
+                    <input type="hidden" name="tab" value="<?= h($coverageTab); ?>">
+                    <input type="hidden" name="page" value="1">
+                    <select class="form-select form-select-sm" name="per_page" onchange="this.form.submit()">
+                        <?php foreach ($coveragePerPageOptions as $option): ?>
+                            <option value="<?= (int) $option; ?>" <?= $coveragePerPage === $option ? 'selected' : ''; ?>><?= (int) $option; ?> rows</option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 gov-overview-table">
-                        <thead><tr><th>Category</th><th>Sub Categories</th><th>Documents</th><th>Live</th><th>Mocks</th><th>Questions</th><th>Status</th></tr></thead>
-                        <tbody>
-                        <?php foreach ($categoryCoverage as $row): ?>
-                            <tr>
-                                <td><strong><?= h($row['name']); ?></strong><small>ID #<?= (int) $row['id']; ?></small></td>
-                                <td><b><?= (int) $row['subcategories']; ?></b><small><?= (int) $row['active_subcategories']; ?> active</small></td>
-                                <td><b><?= (int) $row['documents']; ?></b><small><?= (int) $row['published_documents']; ?> published</small></td>
-                                <td><b><?= (int) $row['live_sessions']; ?></b><small><?= (int) $row['live_now']; ?> live now</small></td>
-                                <td><b><?= (int) $row['mock_tests']; ?></b><small><?= (int) $row['published_mocks']; ?> published</small></td>
-                                <td><b><?= (int) $row['questions']; ?></b><small>question bank</small></td>
-                                <td><?= gov_exam_status((string) $row['status']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        <?php if (!$categoryCoverage): ?><tr><td colspan="7" class="empty-state premium-empty"><strong>No category data</strong><small>Add main categories to start coverage tracking.</small></td></tr><?php endif; ?>
-                        </tbody>
+                    <table class="table table-hover align-middle mb-0 gov-overview-table gov-coverage-table">
+                        <?php if ($coverageTab === 'categories'): ?>
+                            <thead><tr><th>Category</th><th>Sub Categories</th><th>Documents</th><th>Live</th><th>Mocks</th><th>Questions</th><th>Status</th></tr></thead>
+                            <tbody>
+                            <?php foreach ($mainCategoryCoverage as $row): ?>
+                                <tr>
+                                    <td><strong><?= h($row['name']); ?></strong><small>ID #<?= (int) $row['id']; ?></small></td>
+                                    <td><b><?= (int) $row['subcategories']; ?></b><small><?= (int) $row['active_subcategories']; ?> active</small></td>
+                                    <td><b><?= (int) $row['documents']; ?></b><small><?= (int) $row['published_documents']; ?> published</small></td>
+                                    <td><b><?= (int) $row['live_sessions']; ?></b><small><?= (int) $row['live_now']; ?> live now</small></td>
+                                    <td><b><?= (int) $row['mock_tests']; ?></b><small><?= (int) $row['published_mocks']; ?> published</small></td>
+                                    <td><b><?= (int) $row['questions']; ?></b><small>question bank</small></td>
+                                    <td><?= gov_exam_status((string) $row['status']); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php if (!$mainCategoryCoverage): ?><tr><td colspan="7" class="empty-state premium-empty"><strong>No category data</strong><small>Add main categories to start coverage tracking.</small></td></tr><?php endif; ?>
+                            </tbody>
+                        <?php else: ?>
+                            <thead><tr><th>Sub Category</th><th>Main Category</th><th>Documents</th><th>Live</th><th>Mocks</th><th>Questions</th><th>Status</th></tr></thead>
+                            <tbody>
+                            <?php foreach ($subCategoryCoverage as $row): ?>
+                                <tr>
+                                    <td><strong><?= h($row['name']); ?></strong><small>ID #<?= (int) $row['id']; ?></small></td>
+                                    <td><span class="gov-parent-name"><?= h($row['parent_name'] ?: 'Main'); ?></span></td>
+                                    <td><b><?= (int) $row['documents']; ?></b><small><?= (int) $row['published_documents']; ?> published</small></td>
+                                    <td><b><?= (int) $row['live_sessions']; ?></b><small><?= (int) $row['live_now']; ?> live now</small></td>
+                                    <td><b><?= (int) $row['mock_tests']; ?></b><small><?= (int) $row['published_mocks']; ?> published</small></td>
+                                    <td><b><?= (int) $row['questions']; ?></b><small>question bank</small></td>
+                                    <td><?= gov_exam_status((string) $row['status']); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php if (!$subCategoryCoverage): ?><tr><td colspan="7" class="empty-state premium-empty"><strong>No subcategory data</strong><small>Add subcategories to start coverage tracking.</small></td></tr><?php endif; ?>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>
+            <div class="card-footer gov-coverage-pagination">
+                <span><?= h((string) $coverageStart); ?>-<?= h((string) $coverageEnd); ?> of <?= h((string) $coverageTotalRows); ?> <?= $coverageTab === 'categories' ? 'main categories' : 'sub categories'; ?></span>
+                <div class="page-links">
+                    <a class="<?= $coveragePage <= 1 ? 'disabled' : ''; ?>" href="<?= h(gov_admin_coverage_url($coverageTab, 1, $coveragePerPage)); ?>">First</a>
+                    <a class="<?= $coveragePage <= 1 ? 'disabled' : ''; ?>" href="<?= h(gov_admin_coverage_url($coverageTab, max(1, $coveragePage - 1), $coveragePerPage)); ?>">Prev</a>
+                    <?php for ($pageNo = $coveragePageFrom; $pageNo <= $coveragePageTo; $pageNo++): ?>
+                        <a class="<?= $pageNo === $coveragePage ? 'active' : ''; ?>" href="<?= h(gov_admin_coverage_url($coverageTab, $pageNo, $coveragePerPage)); ?>"><?= h((string) $pageNo); ?></a>
+                    <?php endfor; ?>
+                    <a class="<?= $coveragePage >= $coverageTotalPages ? 'disabled' : ''; ?>" href="<?= h(gov_admin_coverage_url($coverageTab, min($coverageTotalPages, $coveragePage + 1), $coveragePerPage)); ?>">Next</a>
+                    <a class="<?= $coveragePage >= $coverageTotalPages ? 'disabled' : ''; ?>" href="<?= h(gov_admin_coverage_url($coverageTab, $coverageTotalPages, $coveragePerPage)); ?>">Last</a>
+                </div>
+            </div>
         </section>
-
         <section class="gov-two-col">
             <article class="card custom-card gov-prep-card">
                 <div class="card-header"><div><span class="text-primary fs-11 fw-semibold text-uppercase d-block mb-1">Subcategory Depth</span><h6 class="mb-0 fw-semibold">Top subcategories by content</h6></div></div>
@@ -278,6 +394,23 @@ $recentItems = gov_admin_rows("SELECT 'Document' type, title, status, created_at
         .sadmin-govt-main .gov-module-card b { display: inline-flex; align-items: center; min-height: 1.55rem; padding: .18rem .55rem; border-radius: .35rem; background: rgba(var(--primary-rgb), .1); color: rgb(var(--primary-rgb)); font-size: .67rem; }
         .sadmin-govt-main .gov-detail-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .85rem; }
         .sadmin-govt-main .gov-status-card .card-body { display: grid; gap: .55rem; }
+        .sadmin-govt-main .gov-coverage-toolbar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .75rem 1rem; border-bottom: 1px solid var(--default-border); background: var(--default-background); }
+        .sadmin-govt-main .gov-coverage-tabs { display: inline-flex; gap: .35rem; padding: .25rem; border: 1px solid var(--default-border); border-radius: .55rem; background: var(--custom-white); }
+        .sadmin-govt-main .gov-coverage-tabs a { display: inline-flex; align-items: center; gap: .45rem; min-height: 2rem; padding: .28rem .7rem; border-radius: .42rem; color: var(--default-text-color); text-decoration: none; font-size: .74rem; font-weight: 500; white-space: nowrap; }
+        .sadmin-govt-main .gov-coverage-tabs a.active { background: rgb(var(--primary-rgb)); color: #fff; }
+        .sadmin-govt-main .gov-coverage-tabs em { min-width: 1.45rem; padding: .05rem .38rem; border-radius: 999px; background: rgba(var(--primary-rgb), .1); color: rgb(var(--primary-rgb)); font-style: normal; font-size: .68rem; font-weight: 500; text-align: center; }
+        .sadmin-govt-main .gov-coverage-tabs a.active em { background: rgba(255, 255, 255, .2); color: #fff; }
+        .sadmin-govt-main .gov-coverage-size { margin: 0; }
+        .sadmin-govt-main .gov-coverage-size .form-select { min-width: 6.6rem; min-height: 2rem; font-size: .74rem; }
+        .sadmin-govt-main .gov-coverage-table { min-width: 72rem; }
+        .sadmin-govt-main .gov-coverage-table th, .sadmin-govt-main .gov-coverage-table td { padding: .42rem .75rem !important; font-size: .75rem; line-height: 1.18; }
+        .sadmin-govt-main .gov-coverage-table td strong, .sadmin-govt-main .gov-coverage-table td b, .sadmin-govt-main .gov-parent-name { font-weight: 500 !important; }
+        .sadmin-govt-main .gov-coverage-table .status-pill { min-height: 1.25rem; padding: .12rem .5rem; font-size: .65rem; font-weight: 500; }
+        .sadmin-govt-main .gov-coverage-pagination { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .65rem 1rem; border-top: 1px solid var(--default-border); background: var(--custom-white); color: var(--text-muted); font-size: .74rem; }
+        .sadmin-govt-main .gov-coverage-pagination .page-links { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; justify-content: flex-end; }
+        .sadmin-govt-main .gov-coverage-pagination a { display: inline-flex; align-items: center; justify-content: center; min-width: 1.75rem; min-height: 1.65rem; padding: .16rem .55rem; border: 1px solid var(--default-border); border-radius: .35rem; background: var(--default-background); color: var(--default-text-color); text-decoration: none; font-size: .68rem; font-weight: 500; }
+        .sadmin-govt-main .gov-coverage-pagination a.active { border-color: rgb(var(--primary-rgb)); background: rgb(var(--primary-rgb)); color: #fff; }
+        .sadmin-govt-main .gov-coverage-pagination a.disabled { color: var(--text-muted); pointer-events: none; opacity: .5; }
         .sadmin-govt-main .gov-overview-table th { color: var(--text-muted); font-size: .68rem; text-transform: uppercase; white-space: nowrap; }
         .sadmin-govt-main .gov-overview-table td { vertical-align: middle; }
         .sadmin-govt-main .gov-overview-table td strong, .sadmin-govt-main .gov-overview-table td b { display: block; color: var(--default-text-color); }
@@ -295,7 +428,8 @@ $recentItems = gov_admin_rows("SELECT 'Document' type, title, status, created_at
         .sadmin-govt-main .footer { margin-inline: 0 !important; width: 100%; }
         @media (max-width: 1399.98px) { .sadmin-govt-main .gov-prep-grid-menu, .sadmin-govt-main .govt-mini-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sadmin-govt-main .gov-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         @media (max-width: 991.98px) { .sadmin-govt-main .gov-two-col { grid-template-columns: 1fr; } .sadmin-govt-main .gov-prep-grid-menu, .sadmin-govt-main .govt-mini-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 767.98px) { .sadmin-govt-main .gov-prep-grid-menu, .sadmin-govt-main .govt-mini-stats, .sadmin-govt-main .gov-detail-grid { grid-template-columns: 1fr; } .sadmin-govt-main .gov-rich-row { grid-template-columns: 1fr 1fr; } .sadmin-govt-main .gov-rich-row div { grid-column: 1 / -1; } }
+        @media (max-width: 767.98px) { .sadmin-govt-main .gov-prep-grid-menu, .sadmin-govt-main .govt-mini-stats, .sadmin-govt-main .gov-detail-grid { grid-template-columns: 1fr; } .sadmin-govt-main .gov-rich-row { grid-template-columns: 1fr 1fr; } .sadmin-govt-main .gov-rich-row div { grid-column: 1 / -1; } .sadmin-govt-main .gov-coverage-toolbar, .sadmin-govt-main .gov-coverage-pagination { align-items: stretch; flex-direction: column; } .sadmin-govt-main .gov-coverage-tabs { display: grid; grid-template-columns: 1fr; } .sadmin-govt-main .gov-coverage-pagination .page-links { justify-content: flex-start; } }
     </style>
 </main>
 <?php include __DIR__ . '/includes/footer.php'; ?>
+

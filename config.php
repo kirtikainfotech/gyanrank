@@ -44,6 +44,23 @@ function app_base_path(): string
         return rtrim('/' . trim($envBase, '/'), '/');
     }
 
+    $envUrl = getenv('APP_URL');
+    if (is_string($envUrl) && trim($envUrl) !== '') {
+        $urlPath = parse_url(trim($envUrl), PHP_URL_PATH);
+        if (is_string($urlPath) && trim($urlPath, '/') !== '') {
+            return rtrim('/' . trim($urlPath, '/'), '/');
+        }
+    }
+
+    $scriptName = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+    $requestUri = str_replace('\\', '/', (string) ($_SERVER['REQUEST_URI'] ?? ''));
+
+    foreach ([$scriptName, $requestUri] as $path) {
+        if (preg_match('#^(/edu)(?:/|$)#i', $path, $matches)) {
+            return rtrim($matches[1], '/');
+        }
+    }
+
     $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
     $isLocalHost =
         $host === ''
@@ -51,18 +68,12 @@ function app_base_path(): string
         || strpos($host, '127.0.0.1') !== false
         || preg_match('/^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/', $host);
 
-    $scriptName = (string) ($_SERVER['SCRIPT_NAME'] ?? '');
     if ($isLocalHost) {
-        if (preg_match('#^(/edu)(?:/|$)#i', $scriptName, $matches)) {
-            return rtrim($matches[1], '/');
-        }
-
         return '/edu';
     }
 
     return '';
 }
-
 if (!function_exists('str_contains')) {
     function str_contains(string $haystack, string $needle): bool
     {
@@ -110,7 +121,7 @@ function start_secure_session(): void
 
     session_set_cookie_params([
         'lifetime' => 0,
-        'path' => '/',
+        'path' => APP_BASE !== '' ? APP_BASE : '/',
         'httponly' => true,
         'samesite' => 'Lax',
         'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
@@ -749,3 +760,4 @@ function save_role_with_permissions(?int $roleId, string $name, ?int $parentId, 
         $insert->execute();
     }
 }
+

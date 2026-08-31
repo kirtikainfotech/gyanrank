@@ -4,7 +4,6 @@ ErrorDocument 404 /404.php
 
 RewriteEngine On
 
-RewriteRule ^react-app/index\.html$ index.php [L]
 RewriteRule ^$ index.php [L]
 RewriteRule ^index/?$ ./ [R=302,L]
 RewriteRule ^index/(.+)$ $1 [R=302,L]

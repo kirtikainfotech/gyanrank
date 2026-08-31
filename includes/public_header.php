@@ -6,9 +6,6 @@ $publicNavItems = [
     ['label' => 'Categories', 'url' => app_url('index#categories')],
     ['label' => 'Instructors', 'url' => app_url('index#instructors')],
     ['label' => 'Institute Manage', 'url' => app_url('register-institution')],
-    ['label' => 'My Courses', 'url' => app_url('react-app/index.html#/my-courses')],
-    ['label' => 'Progress', 'url' => app_url('react-app/index.html#/progress')],
-    ['label' => 'Gcoin', 'url' => app_url('react-app/index.html#/gcoin')],
 ];
 ?>
 <header class="site-header">
